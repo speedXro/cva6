@@ -33,6 +33,13 @@ if {$::env(BOARD) eq "genesys2"} {
   set_property PROGRAM.FILE {work-fpga/ariane_xilinx.bit} [get_hw_devices xc7vx485t_0]
   program_hw_devices [get_hw_devices xc7vx485t_0]
   refresh_hw_device [lindex [get_hw_devices xc7vx485t_0] 0]
+} elseif {$::env(BOARD) eq "kcu116"} {
+  open_hw_target {localhost:3121/xilinx_tcf/Digilent/210308AE5B0C}
+
+  current_hw_device [get_hw_devices xcku5p_0]
+  set_property PROGRAM.FILE {work-fpga/ariane_xilinx.bit} [get_hw_devices xcku5p_0]
+  program_hw_devices [get_hw_devices xcku5p_0]
+  refresh_hw_device [lindex [get_hw_devices xcku5p_0] 0]
 } else {
       exit 1
 }

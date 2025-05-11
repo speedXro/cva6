@@ -12,7 +12,7 @@
 
 `include "register_interface/assign.svh"
 `include "register_interface/typedef.svh"
-
+`include "kcu116.svh"
 module ariane_peripherals #(
     parameter int AxiAddrWidth = -1,
     parameter int AxiDataWidth = -1,
@@ -37,6 +37,7 @@ module ariane_peripherals #(
     // UART
     input  logic       rx_i            ,
     output logic       tx_o            ,
+    `ifndef KCU116
     // Ethernet
     input  logic       eth_clk_i       ,
     input  wire        eth_rxck        ,
@@ -46,10 +47,13 @@ module ariane_peripherals #(
     output wire        eth_txctl       ,
     output wire [3:0]  eth_txd         ,
     output wire        eth_rst_n       ,
-    input  logic       phy_tx_clk_i    , // 125 MHz Clock
-    // MDIO Interface
     inout  wire        eth_mdio        ,
     output logic       eth_mdc         ,
+    input  logic       phy_tx_clk_i    , // 125 MHz Clock
+    `endif
+    
+    // MDIO Interface
+    
     // SPI
     output logic       spi_clk_o       ,
     output logic       spi_mosi        ,
@@ -507,7 +511,7 @@ module ariane_peripherals #(
     // ---------------
     // 4. Ethernet
     // ---------------
-
+    `ifndef KCU116
     if (InclEthernet) begin : gen_ethernet
 
     logic                    clk_200_int, clk_rgmii, clk_rgmii_quad;
@@ -593,6 +597,23 @@ module ariane_peripherals #(
         assign ethernet.r_data = 'hdeadbeef;
         assign ethernet.r_last = 1'b1;
     end
+    `else
+    assign irq_sources [2] = 1'b0;
+    assign ethernet.aw_ready = 1'b1;
+    assign ethernet.ar_ready = 1'b1;
+    assign ethernet.w_ready = 1'b1;
+
+    assign ethernet.b_valid = ethernet.aw_valid;
+    assign ethernet.b_id = ethernet.aw_id;
+    assign ethernet.b_resp = axi_pkg::RESP_SLVERR;
+    assign ethernet.b_user = '0;
+
+    assign ethernet.r_valid = ethernet.ar_valid;
+    assign ethernet.r_resp = axi_pkg::RESP_SLVERR;
+    assign ethernet.r_data = 'hdeadbeef;
+    assign ethernet.r_last = 1'b1;
+    `endif
+
 
     // 5. GPIO
     assign gpio.b_user = 1'b0;

@@ -10,6 +10,9 @@
 
 int gpt_find_boot_partition(uint8_t* dest, uint32_t size)
 {
+    /*uint8_t* start_adr = (uint8_t *) 0x80000000;
+    uint8_t val=0;*/
+
     int ret = init_sd();
     if (ret != 0) {
         print_uart("could not initialize sd... exiting\r\n");
@@ -19,6 +22,7 @@ int gpt_find_boot_partition(uint8_t* dest, uint32_t size)
     print_uart("sd initialized!\r\n");
 
     // load LBA1
+    int i;
     size_t block_size = 512;
     uint8_t lba1_buf[block_size];
 
@@ -106,6 +110,19 @@ int gpt_find_boot_partition(uint8_t* dest, uint32_t size)
         print_uart("\r\n");
         return -2;
     }
+
+    /*for(i=0;i<11083423;++i)
+    {
+        if((i%16)==0) print_uart_addr((uint64_t)start_adr);
+        print_uart(" : ");
+        val = (uint8_t) (*start_adr);
+        print_uart_byte(val);
+        print_uart(" ");
+        start_adr++;
+        if((i%8)==7) print_uart(" ");
+        if((i%16)==15) print_uart("\n");
+    }*/
+    
 
     print_uart(" done!\r\n");
     return 0;

@@ -1,0 +1,25 @@
+# Terminal 0 - Build C Application Elf
+# source tools/cva6_utils/cva6_setvars.sh 
+# cd /tools/cva6/corev_apu/fpga/src/bootrom
+# make bootrom_64.elf
+
+# Terminal 1 - FPGA Configuration - Programming Bitfile
+# source /tools/cva6_utils/cva6_setvars.sh
+# cd /tools/cva6/corev_apu/fpga
+# vivado -mode batch -source scripts/program.tcl
+
+# Terminal 2 - Starting OpenOCD - RISC-V Version => to be run in parallel with Terminal 3 and Terminal 4
+# openocd -f fpga/ariane.cfg
+
+# Terminal 3 - Opening UART connection => to be run in parallel with Terminal 2 and Terminal 4
+# cd /usr/local/bin
+# ./pyserial-miniterm /dev/ttyUSB4 115200
+# Ctrl + ] for exit
+
+# Terminal 4 - Connecting with gdb to OpenOCD GDB Server and flashing => to be run in parallel with Terminal 2 and Terminal 4
+# cd /tools/riscv-newlib/bin
+# ./riscv64-unknown-elf-gdb
+# target remote localhost:3333
+# load ../../cva6/corev_apu/fpga/src/bootrom/bootrom_64.elf
+# file ../../cva6/corev_apu/fpga/src/bootrom/bootrom_64.elf
+# jump _prog_start

@@ -17,67 +17,49 @@ static inline uintptr_t get_cycle_count() {
     return cycle;
 }
 
-int update(uint8_t *dest)
-{
-    int i;
-    uint32_t size = 0;
-
-    print_uart("receiving boot image\r\nsize: ");
-    for(i = 0; i < sizeof(uint32_t); i++) {
-        while(!read_serial(&((uint8_t *) &size)[i]));
-    }
-
-    print_uart_int(size);
-    print_uart("\r\nreceiving ");
-
-    for(i = 0; i < size; i++) {
-        while(!read_serial(&dest[i]));
-
-        if(i % (size >> 4) == 0) {
-            print_uart(".");
-        }
-    }
-
-    print_uart(" done!\r\n");
-    return 0;
-}
-
 int main()
 {
-    int i, ret = 0;
+    uint32_t i, ret = 0;
     uint8_t uart_res = 0;
     uintptr_t start;
+    int mode=0;
+    
 
-    #ifndef PLAT_AGILEX
-    init_uart(CLOCK_FREQUENCY, UART_BITRATE); //not needed in intel setup as UART IP is already configured via HW
-    #endif 
+
+    init_uart(50000000, 115200); //not needed in intel setup as UART IP is already configured via HW
     print_uart("Hello World!\r\n");
 
-    // See if we should enter update mode
-    print_uart("Hit any key to enter update mode ");
-    for(i = 0; i < WAIT_SECONDS && !ret; i++) {
-        print_uart(".");
-        start = get_cycle_count();
-        while(get_cycle_count() - start < SECOND_CYCLES) {
-            ret = read_serial(&uart_res);
-            if(ret) {
-                break;
-            }
-        }
-    }
-
     int res;
-    if(ret) {
-        print_uart(" updating!\r\n");
-        res = update((uint8_t *)0x80000000UL);
-    } else {
-        print_uart(" booting!\r\n");
-        #ifndef PLAT_AGILEX
-        res = gpt_find_boot_partition((uint8_t *)0x80000000UL, 2 * 16384); // linux boot not yet supported for altera
-        #endif 
-    }
+    print_uart(" booting!\r\n");
+    res = gpt_find_boot_partition((uint8_t *)0x80000000UL, 2 * 16384); // 2 * 16384 // linux boot not yet supported for altera
 
-    #ifndef PLAT_AGILEX // linux boot not yet supported for altera
+    /*uint32_t* adresa=(uint32_t*)0x80000000;
+    int a,b;
+    for(i=0;i<268435456;++i)
+    {
+        //print_uart_addr(i);
+        //print_uart("\n");
+        if((i%1024) == 0)
+        {
+            print_uart_int(i);
+            print_uart("\n");           
+        }
+        a=1;b=2;
+        a=3*i+2;
+        *adresa = a;
+        b = *adresa;
+        if(a!=b)
+        {
+            print_uart("error ");
+            print_uart_addr(i);
+            print_uart("\n");
+        }
+        adresa++;
+    }*/
+
+    print_uart("res is ");
+    print_uart_addr(res);
+    print_uart("\n");
     if (res == 0)
     {
         // jump to the address
@@ -86,7 +68,9 @@ int main()
             "la a1, _dtb;"
             "jr s0");
     }
-    #endif 
+
+
+    
 
     while (1)
     {

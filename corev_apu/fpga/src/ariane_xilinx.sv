@@ -10,7 +10,7 @@
 
 // Description: Xilinx FPGA top-level
 // Author: Florian Zaruba <zarubaf@iis.ee.ethz.ch>
-
+`include "kcu116.svh"
 module ariane_xilinx (
 // WARNING: Do not define input parameters. This causes the FPGA build to fail.
 `ifdef GENESYSII
@@ -170,6 +170,35 @@ module ariane_xilinx (
   input  logic [ 7:0]  sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
+
+`elsif KCU116
+  input  wire          c0_sys_clk_p    ,  // 250 MHz Clock for DDR
+  input  wire          c0_sys_clk_n    ,  // 250 MHz Clock for DDR
+  //input  wire          sys_clk_p       ,  // 100 MHz Clock for PCIe
+  //input  wire          sys_clk_n       ,  // 100 MHz Clock for PCIE
+  //input  wire          sys_rst_n       ,  // PCIe Reset
+  input  logic         cpu_reset       ,  // CPU subsystem reset
+  output wire [16:0]   c0_ddr4_adr     ,
+  output wire [1:0]    c0_ddr4_ba      ,
+  output wire [0:0]    c0_ddr4_cke     ,
+  output wire [0:0]    c0_ddr4_cs_n    ,
+  inout  wire [3:0]    c0_ddr4_dm_dbi_n,
+  inout  wire [31:0]   c0_ddr4_dq      ,
+  inout  wire [3:0]    c0_ddr4_dqs_c   ,
+  inout  wire [3:0]    c0_ddr4_dqs_t   ,
+  output wire [0:0]    c0_ddr4_odt     ,
+  output wire [0:0]    c0_ddr4_bg      ,
+  output wire          c0_ddr4_reset_n ,
+  output wire          c0_ddr4_act_n   ,
+  output wire [0:0]    c0_ddr4_ck_c    ,
+  output wire [0:0]    c0_ddr4_ck_t    ,
+  //output wire [7:0]    pci_exp_txp     ,
+  //output wire [7:0]    pci_exp_txn     ,
+  //input  wire [7:0]    pci_exp_rxp     ,
+  //input  wire [7:0]    pci_exp_rxn     ,
+  output logic [ 7:0]  led             ,
+  input logic  [4:0]   push_buttons    ,
+
 `endif
   // SPI
   output logic        spi_mosi    ,
@@ -177,13 +206,23 @@ module ariane_xilinx (
   output logic        spi_ss      ,
   output logic        spi_clk_o   ,
   // common part
-  // input logic      trst_n      ,
+  input logic         trst_n      ,
   input  logic        tck         ,
   input  logic        tms         ,
   input  logic        tdi         ,
   output wire         tdo         ,
   input  logic        rx          ,
-  output logic        tx
+  output logic        tx          
+  //output  wire [31:0]  pwms_o
+  
+  //output logic  da_sync_n,
+  //output logic  da_sclk,
+  //output logic  da_din,
+
+  //output logic  ad_cs_n,
+  //output logic  ad_sclk,
+  //input  logic  ad_dout, 
+  //output logic  ad_digitized  
 );
 
 // CVA6 Xilinx configuration
@@ -262,6 +301,7 @@ logic sd_clk_sys;
 
 logic ddr_sync_reset;
 logic ddr_clock_out;
+logic ddr_clock_out_200;
 
 logic rst_n, rst;
 logic rtc;
@@ -281,6 +321,9 @@ assign trst_n = ~trst;
 `elsif NEXYS_VIDEO
 logic cpu_reset;
 assign cpu_reset  = ~cpu_resetn;
+`elsif KCU116
+logic cpu_resetn;
+assign cpu_resetn = ~cpu_reset;
 `endif
 
 logic pll_locked;
@@ -461,6 +504,28 @@ axi2mem #(
     .data_o     ( dm_slave_wdata            ),
     .data_i     ( dm_slave_rdata            )
 );
+/*axi2mem #(
+    .AXI_ID_WIDTH   ( AxiIdWidthSlaves    ),
+    .AXI_ADDR_WIDTH ( AxiAddrWidth        ),
+    .AXI_DATA_WIDTH ( AxiDataWidth        ),
+    .AXI_USER_WIDTH ( AxiUserWidth        )
+) i_dm_axi2mem (
+    .clk_i      ( clk                       ),
+    .rst_ni     ( rst_n                     ),
+    .slave      ( master[ariane_soc::Debug] ),
+    .req_o      ( dm_slave_req              ),
+    .we_o       ( dm_slave_we               ),
+    .addr_o     ( dm_slave_addr             ),
+    .be_o       ( dm_slave_be               ),
+    .data_o     ( dm_slave_wdata            ),
+    .data_i     ( dm_slave_rdata            )
+);*/
+/*AXI_BUS #(
+    .AXI_ADDR_WIDTH ( riscv::XLEN      ),
+    .AXI_DATA_WIDTH ( riscv::XLEN      ),
+    .AXI_ID_WIDTH   ( AxiIdWidthSlaves ),
+    .AXI_USER_WIDTH ( AxiUserWidth     )
+) master_to_dm[0:0]();*/
 
 if (CVA6Cfg.XLEN==32 ) begin
 
@@ -612,8 +677,6 @@ end else begin
 
 end
 
-
-
 logic [1:0]    axi_adapter_size;
 
 assign axi_adapter_size = (CVA6Cfg.XLEN == 64) ? 2'b11 : 2'b10;
@@ -746,7 +809,8 @@ end else begin
     `AXI_ASSIGN_FROM_REQ(slave[1], dm_axi_m_req)
     `AXI_ASSIGN_TO_RESP(dm_axi_m_resp, slave[1])
 end
-
+`AXI_ASSIGN_FROM_REQ(slave[1], dm_axi_m_req)
+`AXI_ASSIGN_TO_RESP(dm_axi_m_resp, slave[1])
 
 // ---------------
 // Core
@@ -771,6 +835,14 @@ ariane #(
     .debug_req_i  ( debug_req_irq       ),
     .noc_req_o    ( axi_ariane_req      ),
     .noc_resp_i   ( axi_ariane_resp     )
+    //.pwms_o       ( pwms_o              )
+    //.da_sync_n            ( da_sync_n           ),
+    //.da_sclk              ( da_sclk             ),
+    //.da_din               ( da_din              ),
+    //.ad_cs_n              ( ad_cs_n             ),
+    //.ad_sclk              ( ad_sclk             ),
+    //.ad_dout              ( ad_dout             ),
+    //.ad_digitized         ( ad_digitized        )
 );
 
 `AXI_ASSIGN_FROM_REQ(slave[0], axi_ariane_req)
@@ -790,6 +862,9 @@ end
 
 axi_slave_req_t  axi_clint_req;
 axi_slave_resp_t axi_clint_resp;
+
+/*ariane_axi::req_t  axi_clint_req;
+ariane_axi::resp_t axi_clint_resp;*/
 
 clint #(
     .CVA6Cfg        ( CVA6Cfg          ),
@@ -881,6 +956,9 @@ ariane_peripherals #(
     `elsif NEXYS_VIDEO
     .InclSPI      ( 1'b1         ),
     .InclEthernet ( 1'b0         )
+    `elsif KCU116
+    .InclSPI      ( 1'b1         ),
+    .InclEthernet ( 1'b0         )
     `endif
 ) i_ariane_peripherals (
     .clk_i        ( clk                          ),
@@ -889,13 +967,15 @@ ariane_peripherals #(
     .plic         ( master[ariane_soc::PLIC]     ),
     .uart         ( master[ariane_soc::UART]     ),
     .spi          ( master[ariane_soc::SPI]      ),
-    .gpio         ( master[ariane_soc::GPIO]     ),
-    .eth_clk_i    ( eth_clk                      ),
+    .gpio         ( master[ariane_soc::GPIO]     ), 
     .ethernet     ( master[ariane_soc::Ethernet] ),
     .timer        ( master[ariane_soc::Timer]    ),
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
+
+    `ifndef KCU116
+    .eth_clk_i    ( eth_clk                      ),
     .eth_txck,
     .eth_rxck,
     .eth_rxctl,
@@ -906,7 +986,10 @@ ariane_peripherals #(
     .eth_mdio,
     .eth_mdc,
     .phy_tx_clk_i   ( phy_tx_clk                  ),
+    `endif
+
     .sd_clk_i       ( sd_clk_sys                  ),
+    
     .spi_clk_o      ( spi_clk_o                   ),
     .spi_mosi       ( spi_mosi                    ),
     .spi_miso       ( spi_miso                    ),
@@ -914,9 +997,12 @@ ariane_peripherals #(
     `ifdef KC705
       .leds_o         ( {led[3:0], unused_led[7:4]}),
       .dip_switches_i ( {sw, unused_switches}     )
+    `elsif KCU116
+      .leds_o(led),
+      .dip_switches_i({3'd0,push_buttons})
     `else
       .leds_o         ( led                       ),
-      .dip_switches_i ( sw                        )
+      .dip_switches_i ( {3'd0,push_buttons}       )
     `endif
 );
 
@@ -1144,8 +1230,19 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_in1  ( ddr_clock_out   )  // 100MHz input clock
 );
 
-`else
+`elsif KCU116
+xlnx_clk_gen i_xlnx_clk_gen (
+  .clk_out1 ( clk           ), // 100 MHz
+  .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
+  .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
+  .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
+  .reset    ( cpu_reset     ),
+  .locked   ( pll_locked    ),
+  .clk_in1  ( ddr_clock_out_200 )
+);
+assign clk_200MHz_ref = ddr_clock_out_200;
 
+`else
 xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out1 ( clk           ), // 50 MHz
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
@@ -1904,6 +2001,191 @@ axi_clock_converter_0 pcie_axi_clock_converter (
   .s_axi_rvalid   ( pcie_dwidth_axi_rvalid   ),
   .s_axi_rready   ( pcie_dwidth_axi_rready   )
 );
+`elsif KCU116
+
+  logic [29:0]  dram_dwidth_axi_awaddr;
+  logic [7:0]   dram_dwidth_axi_awlen;
+  logic [2:0]   dram_dwidth_axi_awsize;
+  logic [1:0]   dram_dwidth_axi_awburst;
+  logic [0:0]   dram_dwidth_axi_awlock;
+  logic [3:0]   dram_dwidth_axi_awcache;
+  logic [2:0]   dram_dwidth_axi_awprot;
+  logic [3:0]   dram_dwidth_axi_awqos;
+  logic         dram_dwidth_axi_awvalid;
+  logic         dram_dwidth_axi_awready;
+  logic [255:0] dram_dwidth_axi_wdata;
+  logic [31:0]  dram_dwidth_axi_wstrb;
+  logic         dram_dwidth_axi_wlast;
+  logic         dram_dwidth_axi_wvalid;
+  logic         dram_dwidth_axi_wready;
+  logic         dram_dwidth_axi_bready;
+  logic [1:0]   dram_dwidth_axi_bresp;
+  logic         dram_dwidth_axi_bvalid;
+  logic [29:0]  dram_dwidth_axi_araddr;
+  logic [7:0]   dram_dwidth_axi_arlen;
+  logic [2:0]   dram_dwidth_axi_arsize;
+  logic [1:0]   dram_dwidth_axi_arburst;
+  logic [0:0]   dram_dwidth_axi_arlock;
+  logic [3:0]   dram_dwidth_axi_arcache;
+  logic [2:0]   dram_dwidth_axi_arprot;
+  logic [3:0]   dram_dwidth_axi_arqos;
+  logic         dram_dwidth_axi_arvalid;
+  logic         dram_dwidth_axi_arready;
+  logic         dram_dwidth_axi_rready;
+  logic         dram_dwidth_axi_rlast;
+  logic         dram_dwidth_axi_rvalid;
+  logic [1:0]   dram_dwidth_axi_rresp;
+  logic [255:0] dram_dwidth_axi_rdata;
+  //logic [3:0]   dram_dwidth_s_axi_bid;
+ // logic [3:0]   dram_dwidth_s_axi_arid;
+
+xlnx_axi_dwidth_converter_256_64 i_axi_dwidth_converter_256_64 (
+  .s_axi_aclk     ( ddr_clock_out            ),
+  .s_axi_aresetn  ( ndmreset_n               ),
+
+  .s_axi_awid     ( s_axi_awid               ),
+  .s_axi_awaddr   ( s_axi_awaddr             ),
+  .s_axi_awlen    ( s_axi_awlen              ),
+  .s_axi_awsize   ( s_axi_awsize             ),
+  .s_axi_awburst  ( s_axi_awburst            ),
+  .s_axi_awlock   ( s_axi_awlock             ),
+  .s_axi_awcache  ( s_axi_awcache            ),
+  .s_axi_awprot   ( s_axi_awprot             ),
+  .s_axi_awregion ( '0                       ),
+  .s_axi_awqos    ( s_axi_awqos              ),
+  .s_axi_awvalid  ( s_axi_awvalid            ),
+  .s_axi_awready  ( s_axi_awready            ),
+  .s_axi_wdata    ( s_axi_wdata              ),
+  .s_axi_wstrb    ( s_axi_wstrb              ),
+  .s_axi_wlast    ( s_axi_wlast              ),
+  .s_axi_wvalid   ( s_axi_wvalid             ),
+  .s_axi_wready   ( s_axi_wready             ),
+  .s_axi_bid      ( s_axi_bid                ),
+  .s_axi_bresp    ( s_axi_bresp              ),
+  .s_axi_bvalid   ( s_axi_bvalid             ),
+  .s_axi_bready   ( s_axi_bready             ),
+  .s_axi_arid     ( s_axi_arid               ),
+  .s_axi_araddr   ( s_axi_araddr             ),
+  .s_axi_arlen    ( s_axi_arlen              ),
+  .s_axi_arsize   ( s_axi_arsize             ),
+  .s_axi_arburst  ( s_axi_arburst            ),
+  .s_axi_arlock   ( s_axi_arlock             ),
+  .s_axi_arcache  ( s_axi_arcache            ),
+  .s_axi_arprot   ( s_axi_arprot             ),
+  .s_axi_arregion ( '0                       ),
+  .s_axi_arqos    ( s_axi_arqos              ),
+  .s_axi_arvalid  ( s_axi_arvalid            ),
+  .s_axi_arready  ( s_axi_arready            ),
+  .s_axi_rid      ( s_axi_rid                ),
+  .s_axi_rdata    ( s_axi_rdata              ),
+  .s_axi_rresp    ( s_axi_rresp              ),
+  .s_axi_rlast    ( s_axi_rlast              ),
+  .s_axi_rvalid   ( s_axi_rvalid             ),
+  .s_axi_rready   ( s_axi_rready             ),
+
+  .m_axi_awaddr   ( dram_dwidth_axi_awaddr   ),
+  .m_axi_awlen    ( dram_dwidth_axi_awlen    ),
+  .m_axi_awsize   ( dram_dwidth_axi_awsize   ),
+  .m_axi_awburst  ( dram_dwidth_axi_awburst  ),
+  .m_axi_awlock   ( dram_dwidth_axi_awlock   ),
+  .m_axi_awcache  ( dram_dwidth_axi_awcache  ),
+  .m_axi_awprot   ( dram_dwidth_axi_awprot   ),
+  .m_axi_awregion (                          ), // left open
+  .m_axi_awqos    ( dram_dwidth_axi_awqos    ),
+  .m_axi_awvalid  ( dram_dwidth_axi_awvalid  ),
+  .m_axi_awready  ( dram_dwidth_axi_awready  ),
+  .m_axi_wdata    ( dram_dwidth_axi_wdata    ),
+  .m_axi_wstrb    ( dram_dwidth_axi_wstrb    ),
+  .m_axi_wlast    ( dram_dwidth_axi_wlast    ),
+  .m_axi_wvalid   ( dram_dwidth_axi_wvalid   ),
+  .m_axi_wready   ( dram_dwidth_axi_wready   ),
+  .m_axi_bresp    ( dram_dwidth_axi_bresp    ),
+  .m_axi_bvalid   ( dram_dwidth_axi_bvalid   ),
+  .m_axi_bready   ( dram_dwidth_axi_bready   ),
+  .m_axi_araddr   ( dram_dwidth_axi_araddr   ),
+  .m_axi_arlen    ( dram_dwidth_axi_arlen    ),
+  .m_axi_arsize   ( dram_dwidth_axi_arsize   ),
+  .m_axi_arburst  ( dram_dwidth_axi_arburst  ),
+  .m_axi_arlock   ( dram_dwidth_axi_arlock   ),
+  .m_axi_arcache  ( dram_dwidth_axi_arcache  ),
+  .m_axi_arprot   ( dram_dwidth_axi_arprot   ),
+  .m_axi_arregion (                          ),
+  .m_axi_arqos    ( dram_dwidth_axi_arqos    ),
+  .m_axi_arvalid  ( dram_dwidth_axi_arvalid  ),
+  .m_axi_arready  ( dram_dwidth_axi_arready  ),
+  .m_axi_rdata    ( dram_dwidth_axi_rdata    ),
+  .m_axi_rresp    ( dram_dwidth_axi_rresp    ),
+  .m_axi_rlast    ( dram_dwidth_axi_rlast    ),
+  .m_axi_rvalid   ( dram_dwidth_axi_rvalid   ),
+  .m_axi_rready   ( dram_dwidth_axi_rready   )
+);
+
+  xlnx_mig_ddr4 i_ddr (
+    .c0_init_calib_complete (                              ),
+    .dbg_clk                (                              ),
+    .c0_sys_clk_p           ( c0_sys_clk_p                 ),
+    .c0_sys_clk_n           ( c0_sys_clk_n                 ),
+    .dbg_bus                (                              ),
+    .c0_ddr4_adr            ( c0_ddr4_adr                  ),
+    .c0_ddr4_ba             ( c0_ddr4_ba                   ),
+    .c0_ddr4_cke            ( c0_ddr4_cke                  ),
+    .c0_ddr4_cs_n           ( c0_ddr4_cs_n                 ),
+    .c0_ddr4_dm_dbi_n       ( c0_ddr4_dm_dbi_n             ),
+    .c0_ddr4_dq             ( c0_ddr4_dq                   ),
+    .c0_ddr4_dqs_c          ( c0_ddr4_dqs_c                ),
+    .c0_ddr4_dqs_t          ( c0_ddr4_dqs_t                ),
+    .c0_ddr4_odt            ( c0_ddr4_odt                  ),
+    .c0_ddr4_bg             ( c0_ddr4_bg                   ),
+    .c0_ddr4_reset_n        ( c0_ddr4_reset_n              ),
+    .c0_ddr4_act_n          ( c0_ddr4_act_n                ),
+    .c0_ddr4_ck_c           ( c0_ddr4_ck_c                 ),
+    .c0_ddr4_ck_t           ( c0_ddr4_ck_t                 ),
+    .c0_ddr4_ui_clk         ( ddr_clock_out                ),
+    .c0_ddr4_ui_clk_sync_rst( ddr_sync_reset               ),
+    .addn_ui_clkout1        (ddr_clock_out_200		   ),
+    .c0_ddr4_aresetn        ( ndmreset_n                   ),
+    .c0_ddr4_s_axi_awid     ( '0                           ),
+    //.c0_ddr4_s_axi_awaddr   ( dram_dwidth_axi_awaddr[29:0] ),
+    .c0_ddr4_s_axi_awaddr   ( dram_dwidth_axi_awaddr       ),
+    .c0_ddr4_s_axi_awlen    ( dram_dwidth_axi_awlen        ),
+    .c0_ddr4_s_axi_awsize   ( dram_dwidth_axi_awsize       ),
+    .c0_ddr4_s_axi_awburst  ( dram_dwidth_axi_awburst      ),
+    .c0_ddr4_s_axi_awlock   ( dram_dwidth_axi_awlock       ),
+    .c0_ddr4_s_axi_awcache  ( dram_dwidth_axi_awcache      ),
+    .c0_ddr4_s_axi_awprot   ( dram_dwidth_axi_awprot       ),
+    .c0_ddr4_s_axi_awqos    ( dram_dwidth_axi_awqos        ),
+    .c0_ddr4_s_axi_awvalid  ( dram_dwidth_axi_awvalid      ),
+    .c0_ddr4_s_axi_awready  ( dram_dwidth_axi_awready      ),
+    .c0_ddr4_s_axi_wdata    ( dram_dwidth_axi_wdata        ),
+    .c0_ddr4_s_axi_wstrb    ( dram_dwidth_axi_wstrb        ),
+    .c0_ddr4_s_axi_wlast    ( dram_dwidth_axi_wlast        ),
+    .c0_ddr4_s_axi_wvalid   ( dram_dwidth_axi_wvalid       ),
+    .c0_ddr4_s_axi_wready   ( dram_dwidth_axi_wready       ),
+    .c0_ddr4_s_axi_bready   ( dram_dwidth_axi_bready       ),
+    .c0_ddr4_s_axi_bid      (                              ),
+    .c0_ddr4_s_axi_bresp    ( dram_dwidth_axi_bresp        ),
+    .c0_ddr4_s_axi_bvalid   ( dram_dwidth_axi_bvalid       ),
+    .c0_ddr4_s_axi_arid     ( '0                           ),
+    //.c0_ddr4_s_axi_araddr   ( dram_dwidth_axi_araddr[29:0] ),
+    .c0_ddr4_s_axi_araddr   ( dram_dwidth_axi_araddr       ),
+    .c0_ddr4_s_axi_arlen    ( dram_dwidth_axi_arlen        ),
+    .c0_ddr4_s_axi_arsize   ( dram_dwidth_axi_arsize       ),
+    .c0_ddr4_s_axi_arburst  ( dram_dwidth_axi_arburst      ),
+    .c0_ddr4_s_axi_arlock   ( dram_dwidth_axi_arlock       ),
+    .c0_ddr4_s_axi_arcache  ( dram_dwidth_axi_arcache      ),
+    .c0_ddr4_s_axi_arprot   ( dram_dwidth_axi_arprot       ),
+    .c0_ddr4_s_axi_arqos    ( dram_dwidth_axi_arqos        ),
+    .c0_ddr4_s_axi_arvalid  ( dram_dwidth_axi_arvalid      ),
+    .c0_ddr4_s_axi_arready  ( dram_dwidth_axi_arready      ),
+    .c0_ddr4_s_axi_rready   ( dram_dwidth_axi_rready       ),
+    .c0_ddr4_s_axi_rlast    ( dram_dwidth_axi_rlast        ),
+    .c0_ddr4_s_axi_rvalid   ( dram_dwidth_axi_rvalid       ),
+    .c0_ddr4_s_axi_rresp    ( dram_dwidth_axi_rresp        ),
+    .c0_ddr4_s_axi_rid      (                              ),
+    .c0_ddr4_s_axi_rdata    ( dram_dwidth_axi_rdata        ),
+    .sys_rst                ( cpu_reset                    )
+  );
+  
 `endif
 
 endmodule

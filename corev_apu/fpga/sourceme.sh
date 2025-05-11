@@ -2,7 +2,7 @@
 
 # genesys2
 if [ -z "${BOARD}" ]; then
-    export BOARD="genesys2"
+    export BOARD="kcu116"
 fi
 
 if [ "$BOARD" = "genesys2" ]; then
@@ -35,4 +35,12 @@ if [ "$BOARD" = "nexys_video" ]; then
   export XILINX_PART="xc7a200tsbg484-1"
   export XILINX_BOARD="digilentinc.com:nexys_video:part0:1.1"
   export CLK_PERIOD_NS="40"
+fi
+
+if [ "$BOARD" = "kcu116" ]; then
+  echo -n "Configuring for "
+  echo "Kintex kcu116"
+  export XILINX_PART="xcku5p-ffvb676-2-e"
+  export XILINX_BOARD="xilinx.com:kcu116:part0:1.5"
+  export CLK_PERIOD_NS="10"
 fi

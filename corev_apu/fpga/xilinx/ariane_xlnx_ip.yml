@@ -60,6 +60,22 @@ xlnx_ila:
     c_data_depth: 16384
     c_input_pipe_stages: 1
 
+xlnx_mig_ddr4:
+  ip: xlnx_mig_ddr4
+  vendor: xilinx.com
+  config:
+    ADDN_UI_CLKOUT1_FREQ_HZ:200
+    C0_DDR4_BOARD_INTERFACE: ddr4_sdram_075
+    System_Clock: Differential
+
+xlnx_axi_dwidth_converter256_64:
+  ip: axi_dwidth_converter
+  vendor: xilinx.com
+  config:
+    si_data_width: 64
+    si_id_width: 5
+    mi_data_width: 256
+
 xlnx_mig_7_ddr3:
   ip: mig_7series
   vendor: xilinx.com

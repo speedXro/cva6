@@ -24,12 +24,15 @@ if {$::env(BOARD) eq "genesys2"} {
       add_files -fileset constrs_1 -norecurse constraints/vc707.xdc
 } elseif {$::env(BOARD) eq "nexys_video"} {
       add_files -fileset constrs_1 -norecurse constraints/nexys_video.xdc
+} elseif {$::env(BOARD) eq "kcu116"} {
+      add_files -fileset constrs_1 -norecurse constraints/kcu116.xdc
 } else {
       exit 1
 }
 
 read_ip { \
-      "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.xci"
+      "xilinx/xlnx_mig_ddr4/xlnx_mig_ddr4.srcs/sources_1/ip/xlnx_mig_ddr4/xlnx_mig_ddr4.xci" \
       "xilinx/xlnx_axi_clock_converter/xlnx_axi_clock_converter.srcs/sources_1/ip/xlnx_axi_clock_converter/xlnx_axi_clock_converter.xci" \
       "xilinx/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.srcs/sources_1/ip/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.xci" \
       "xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.xci" \
@@ -38,7 +41,10 @@ read_ip { \
       "xilinx/xlnx_axi_quad_spi/xlnx_axi_quad_spi.srcs/sources_1/ip/xlnx_axi_quad_spi/xlnx_axi_quad_spi.xci" \
       "xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xci" \
 }
+
 # read_ip xilinx/xlnx_protocol_checker/ip/xlnx_protocol_checker.xci
+#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
+#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
 
 set_property include_dirs { \
 	"src/axi_sd_bridge/include" \
@@ -69,6 +75,11 @@ if {$::env(BOARD) eq "genesys2"} {
       read_verilog -sv {src/nexys_video.svh ../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh}
       set file "src/nexys_video.svh"
       set registers "../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh"
+} elseif {$::env(BOARD) eq "kcu116"} {
+      puts "I stepped in kcu116"
+      read_verilog -sv {src/kcu116.svh ../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh}
+      set file "src/kcu116.svh"
+      set registers "../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh"      
 } else {
     exit 1
 }
@@ -94,7 +105,8 @@ exec rm -rf reports/*
 check_timing -verbose                                                   -file reports/$project.check_timing.rpt
 report_timing -max_paths 100 -nworst 100 -delay_type max -sort_by slack -file reports/$project.timing_WORST_100.rpt
 report_timing -nworst 1 -delay_type max -sort_by group                  -file reports/$project.timing.rpt
-report_utilization -hierarchical                                        -file reports/$project.utilization.rpt
+#report_utilization -hierarchical                                        -file reports/$project.utilization.rpt
+report_utilization -hierarchical -hierarchical_percentages                                       -file reports/$project.utilization.rpt
 report_cdc                                                              -file reports/$project.cdc.rpt
 report_clock_interaction                                                -file reports/$project.clock_interaction.rpt
 
@@ -118,5 +130,5 @@ exec mkdir -p reports/
 exec rm -rf reports/*
 check_timing                                                              -file reports/${project}.check_timing.rpt
 report_timing -max_paths 100 -nworst 100 -delay_type max -sort_by slack   -file reports/${project}.timing_WORST_100.rpt
-report_timing -nworst 1 -delay_type max -sort_by group                    -file reports/${project}.timing.rpt
-report_utilization -hierarchical                                          -file reports/${project}.utilization.rpt
+#report_utilization -hierarchical                                          -file reports/${project}.utilization.rpt
+report_utilization -hierarchical -hierarchical_percentages                                       -file reports/${project}.utilization.rpt
