@@ -26,7 +26,7 @@ int main()
     
 
 
-    init_uart(50000000, 115200); //not needed in intel setup as UART IP is already configured via HW
+    init_uart(100000000, 115200); //not needed in intel setup as UART IP is already configured via HW
     print_uart("Hello World!\r\n");
 
     int res;

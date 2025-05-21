@@ -91,7 +91,7 @@ else ifeq ($(BOARD), nexys_video)
 else ifeq ($(BOARD), kcu116)
 	XILINX_PART              := xcku5p-ffvb676-2-e
 	XILINX_BOARD             := xilinx.com:kcu116:part0:1.5
-	CLK_PERIOD_NS            := 20
+	CLK_PERIOD_NS            := 10
 else
 $(error Unknown board - please specify a supported FPGA board)
 endif

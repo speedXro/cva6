@@ -5,6 +5,8 @@ if [ -z "${BOARD}" ]; then
     export BOARD="kcu116"
 fi
 
+echo "in sourceme.sh board is $BOARD"
+
 if [ "$BOARD" = "genesys2" ]; then
   echo -n "Configuring for "
   echo "Genesys II"

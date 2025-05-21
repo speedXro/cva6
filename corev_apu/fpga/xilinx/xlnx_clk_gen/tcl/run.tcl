@@ -24,12 +24,13 @@ if {$::env(BOARD) eq "nexys_video"} {
                         CONFIG.CLKIN1_JITTER_PS {50.0} \
                        ] [get_ips $ipName]
 } elseif {$::env(BOARD) eq "kcu116"} {
+    puts "Board is KCU116 in run.tcl"
     set_property -dict [list CONFIG.PRIM_IN_FREQ {200.000} \
                         CONFIG.NUM_OUT_CLKS {4} \
                         CONFIG.CLKOUT2_USED {true} \
                         CONFIG.CLKOUT3_USED {true} \
                         CONFIG.CLKOUT4_USED {true} \
-                        CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {50} \
+                        CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {100} \
                         CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {125} \
                         CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {125} \
                         CONFIG.CLKOUT3_REQUESTED_PHASE {90.000} \
