@@ -212,17 +212,16 @@ module ariane_xilinx (
   input  logic        tdi         ,
   output wire         tdo         ,
   input  logic        rx          ,
-  output logic        tx          
-  //output  wire [31:0]  pwms_o
+  output logic        tx          ,          
   
-  //output logic  da_sync_n,
-  //output logic  da_sclk,
-  //output logic  da_din,
+  output logic  da_sync_n,
+  output logic  da_sclk,
+  output logic  da_din,
 
-  //output logic  ad_cs_n,
-  //output logic  ad_sclk,
-  //input  logic  ad_dout, 
-  //output logic  ad_digitized  
+  output logic  ad_cs_n,
+  output logic  ad_sclk,
+  input  logic  ad_dout, 
+  output logic  ad_digitized  
 );
 
 // CVA6 Xilinx configuration
@@ -834,15 +833,15 @@ ariane #(
     .rvfi_probes_o( /* open */          ),
     .debug_req_i  ( debug_req_irq       ),
     .noc_req_o    ( axi_ariane_req      ),
-    .noc_resp_i   ( axi_ariane_resp     )
-    //.pwms_o       ( pwms_o              )
-    //.da_sync_n            ( da_sync_n           ),
-    //.da_sclk              ( da_sclk             ),
-    //.da_din               ( da_din              ),
-    //.ad_cs_n              ( ad_cs_n             ),
-    //.ad_sclk              ( ad_sclk             ),
-    //.ad_dout              ( ad_dout             ),
-    //.ad_digitized         ( ad_digitized        )
+    .noc_resp_i   ( axi_ariane_resp     ),
+
+    .da_sync_n            ( da_sync_n           ),
+    .da_sclk              ( da_sclk             ),
+    .da_din               ( da_din              ),
+    .ad_cs_n              ( ad_cs_n             ),
+    .ad_sclk              ( ad_sclk             ),
+    .ad_dout              ( ad_dout             ),
+    .ad_digitized         ( ad_digitized        )
 );
 
 `AXI_ASSIGN_FROM_REQ(slave[0], axi_ariane_req)

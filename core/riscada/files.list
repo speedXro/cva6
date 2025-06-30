@@ -1,0 +1,23 @@
+core/riscada/ADA_CoProcessor.sv   \
+core/riscada/ADA_CVXIF_Adapter.sv \
+core/riscada/ADA_Extension.sv     \
+core/riscada/ADA_Rd_Mux.sv        \
+core/riscada/AD_BitBanging.sv	  \
+core/riscada/AD_Blocks.sv	  \
+core/riscada/AD_Block.sv	  \
+core/riscada/AD_Controller.sv	  \
+core/riscada/AD_Extension.sv	  \
+core/riscada/AD_Meas.sv		  \
+core/riscada/AD_SigCon.sv	  \
+core/riscada/AD_Timestamp.sv	  \
+core/riscada/AD_Values_CDC.sv	  \
+core/riscada/ClockDivider.sv	  \
+core/riscada/DA_BB_Busy_CDC.sv	  \
+core/riscada/DA_BitBanging.sv	  \
+core/riscada/DA_Blocks.sv	  \
+core/riscada/DA_Block.sv	  \
+core/riscada/DA_Config_CDC.sv	  \
+core/riscada/DA_Configurator.sv	  \
+core/riscada/DA_Controller.sv	  \
+core/riscada/DA_Extension.sv	  \
+files.list

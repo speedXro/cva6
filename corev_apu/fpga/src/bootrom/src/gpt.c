@@ -22,7 +22,7 @@ int gpt_find_boot_partition(uint8_t* dest, uint32_t size)
     print_uart("sd initialized!\r\n");
 
     // load LBA1
-    int i;
+    //int i;
     size_t block_size = 512;
     uint8_t lba1_buf[block_size];
 
