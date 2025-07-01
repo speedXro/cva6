@@ -7,6 +7,8 @@ This branch contains the RiscADA extensions files, the extension for controlling
 - */verif/tests/custom/riscada* - the files of RiscADA C library based on inline assembly snippets for GCC compiler named *ADA_functions.h* and *ADA_functions.c* and the C tests file *riscada_tests.c*; also the Gtkwave template file is available in this directory;
 - */verif/regress/* - the bash script for executing the RiscADA tests named *riscada_c_tests.sh*.
 
+Many thanks to [Florentin Ilie](https://github.com/florentin05) for pioneering the CVA6 support for KCU116 development board as part of his Computer Engineering bachelor thesis in the Department of Computer Engineering at Technical University of Iasi.
+
 CVA6 is a 6-stage, single-issue, in-order CPU which implements the 64-bit RISC-V instruction set. It fully implements I, M, A and C extensions as specified in Volume I: User-Level ISA V 2.3 as well as the draft privilege extension 1.10. It implements three privilege levels M, S, U to fully support a Unix-like operating system. Furthermore, it is compliant to the draft external debug spec 0.13.
 
 It has a configurable size, separate TLBs, a hardware PTW and branch-prediction (branch target buffer and branch history table). The primary design goal was on reducing critical path length.
