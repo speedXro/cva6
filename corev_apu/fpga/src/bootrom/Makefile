@@ -34,7 +34,7 @@ LDFLAGS = -nostdlib -nodefaultlibs -nostartfiles
 
 INCLUDES = -I./ -I./src
 
-SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c ../../../../verif/tests/custom/dwt/DiWaTo_functions.c ../../../../verif/tests/custom/dwt/dwt.c ../../../../verif/tests/custom/dwt/compression.c
+SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c ../../../../verif/tests/custom/cdf53/CDF53_functions.c ../../../../verif/tests/custom/cdf53/cdf53.c ../../../../verif/tests/custom/cdf53/compression.c
 
 SRCS_ASM = startup.S
 OBJS_C = $(SRCS_C:.c=.o)

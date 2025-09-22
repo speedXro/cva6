@@ -6,18 +6,13 @@
 #include "spi.h"
 #include "sd.h"
 #include "gpt.h"
-
-//#include "../../../../../verif/tests/custom/riscada/ADA_functions.h"
-
-#include "../../../../../verif/tests/custom/dwt/DiWaTo_functions.h"
-#include "../../../../../verif/tests/custom/dwt/dwt.h"
-#include "../../../../../verif/tests/custom/dwt/compression.h"
+#include "../../../../../verif/tests/custom/cdf53/CDF53_functions.h"
+#include "../../../../../verif/tests/custom/cdf53/cdf53.h"
+#include "../../../../../verif/tests/custom/cdf53/compression.h"
 
 // 1 second at 50MHz
 #define SECOND_CYCLES   (50 * 1000 * 1000)
 #define WAIT_SECONDS    (5)
-
-//void Application_RiscADA(void);
 
 uint64_t gccs(void);
 
@@ -30,13 +25,6 @@ static inline uintptr_t get_cycle_count() {
     __asm__ volatile ("csrr %0, cycle" : "=r" (cycle));
     return cycle;
 }
-
-/*static uint32_t gccs()
-{
-    uint32_t res;
-    __asm__ volatile ("csrr %0, cycle" : "=r" (res));
-    return res;
-}*/
 
 uint64_t gccs(void)
 {
@@ -58,25 +46,25 @@ int Application_CDF53_Compression_SW(void)
     uint64_t t_start=0;
     uint64_t t_stop=0;
     uint64_t tdiff=0;
-    /* Prepare input */
+
     uint8_t text[NBYTES];
     make_text_1024(text);
 
-    /* Encode per 16-byte block */    
+ 
     uint8_t stream[NBYTES * 4];
     uint8_t *p = stream;
 
     t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++){
-        /* Convert 16 input bytes to signed centered int8_t */
+    for (int b = 0; b < NBYTES/BLK; b++)
+    {
         int8_t blk[BLK];
-        for (int i = 0; i < BLK; i++){
+        for (int i = 0; i < BLK; i++)
+        {
             blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
         }
         size_t used = SW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
-        if (used == 0){
-            //fprintf(stderr, "encode failed at block %d\n", b);
-            //free(stream);
+        if (used == 0)
+        {
             return 1;
         }
         p += used;
@@ -88,25 +76,21 @@ int Application_CDF53_Compression_SW(void)
     print_uart_int(tdiff);
     print_uart("\r\n");
 
-    /* Decode back and verify */
     uint8_t *src = stream;
     uint8_t *end = stream + enc_size;
     t_start = gccs();
     for (int b = 0; b < NBYTES/BLK; b++){
         int8_t recon_blk[BLK];
         size_t used = SW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
-        if (used == 0){
-            //fprintf(stderr, "decode failed at block %d\n", b);
-            //free(stream);
+        if (used == 0)
+        {
             return 1;
         }
-        /* Convert back to bytes and compare */
-        for (int i = 0; i < BLK; i++){
+        for (int i = 0; i < BLK; i++)
+        {
             int recon_byte = (int)recon_blk[i] + 128;
-            if (recon_byte != (int)text[b*BLK + i]){
-                //fprintf(stderr, "mismatch at block %d, i=%d: orig=%d recon=%d\n",
-                //        b, i, (int)text[b*BLK+i], recon_byte);
-                //free(stream);
+            if (recon_byte != (int)text[b*BLK + i])
+            {
                 return 1;
             }
         }
@@ -118,16 +102,6 @@ int Application_CDF53_Compression_SW(void)
     print_uart_int(tdiff);
     print_uart("\r\n");
 
-    /* Report */
-    //printf("Original size: %d bytes\n", NBYTES);
-    //printf("Encoded size (per-block): %zu bytes\n", enc_size);
-    //printf("Compression ratio (orig/encoded): %.3f\n", (double)NBYTES / (double)enc_size);
-
-    /* Preview first 64 chars */
-    //printf("Original preview: ");
-    //for (int i = 0; i < 64; i++) putchar(text[i]);
-    //putchar('\n');
-
     return 0;
 }
 
@@ -136,25 +110,24 @@ int Application_CDF53_Compression_HW(void)
     uint64_t t_start=0;
     uint64_t t_stop=0;
     uint64_t tdiff=0;
-    /* Prepare input */
+
     uint8_t text[NBYTES];
     make_text_1024(text);
 
-    /* Encode per 16-byte block */    
     uint8_t stream[NBYTES * 4];
     uint8_t *p = stream;
 
     t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++){
-        /* Convert 16 input bytes to signed centered int8_t */
+    for (int b = 0; b < NBYTES/BLK; b++)
+    {
         int8_t blk[BLK];
-        for (int i = 0; i < BLK; i++){
+        for (int i = 0; i < BLK; i++)
+        {
             blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
         }
         size_t used = HW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
-        if (used == 0){
-            //fprintf(stderr, "encode failed at block %d\n", b);
-            //free(stream);
+        if (used == 0)
+        {
             return 1;
         }
         p += used;
@@ -166,25 +139,19 @@ int Application_CDF53_Compression_HW(void)
     print_uart_int(tdiff);
     print_uart("\r\n");
 
-    /* Decode back and verify */
     uint8_t *src = stream;
     uint8_t *end = stream + enc_size;
     t_start = gccs();
     for (int b = 0; b < NBYTES/BLK; b++){
         int8_t recon_blk[BLK];
         size_t used = HW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
-        if (used == 0){
-            //fprintf(stderr, "decode failed at block %d\n", b);
-            //free(stream);
+        if (used == 0)
+        {
             return 1;
         }
-        /* Convert back to bytes and compare */
         for (int i = 0; i < BLK; i++){
             int recon_byte = (int)recon_blk[i] + 128;
             if (recon_byte != (int)text[b*BLK + i]){
-                //fprintf(stderr, "mismatch at block %d, i=%d: orig=%d recon=%d\n",
-                //        b, i, (int)text[b*BLK+i], recon_byte);
-                //free(stream);
                 return 1;
             }
         }
@@ -195,16 +162,6 @@ int Application_CDF53_Compression_HW(void)
     print_uart("De-Compression HW :\r\n");
     print_uart_int(tdiff);
     print_uart("\r\n");
-
-    /* Report */
-    //printf("Original size: %d bytes\n", NBYTES);
-    //printf("Encoded size (per-block): %zu bytes\n", enc_size);
-    //printf("Compression ratio (orig/encoded): %.3f\n", (double)NBYTES / (double)enc_size);
-
-    /* Preview first 64 chars */
-    //printf("Original preview: ");
-    //for (int i = 0; i < 64; i++) putchar(text[i]);
-    //putchar('\n');
 
     return 0;
 }

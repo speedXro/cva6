@@ -1,11 +1,11 @@
 # CVA6 RISC-V CPU [![Build Status](https://github.com/openhwgroup/cva6/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/openhwgroup/cva6/actions/workflows/ci.yml) [![CVA6 dashboard](https://riscv-ci.pages.thales-invia.fr/dashboard/badge_master.svg)](https://riscv-ci.pages.thales-invia.fr/dashboard/dashboard_cva6.html) [![Documentation Status](https://readthedocs.com/projects/openhw-group-cva6-user-manual/badge/?version=latest)](https://docs.openhwgroup.org/projects/cva6-user-manual/?badge=latest) [![GitHub release](https://img.shields.io/github/release/openhwgroup/cva6?include_prereleases=&sort=semver&color=blue)](https://github.com/openhwgroup/cva6/releases/)
 
 This is the KCU116 branch of the CVA6 fork used for AMD KCU116 development board running at 100 MHz.
-This branch contains the RiscADA extensions files, the extension for controlling external ADCs and DACs:
-- */core/riscada* - RTL files describing the RiscADA extension, the CV-X-IF adapter and the coprocessor wrapper;
+This branch contains the DWT CDF 5/3 extensions files, the extension for implementing Discrete Wavelet Transform using CDF 5/3 lifting scheme:
+- */core/cdf53* - RTL files describing the DWT CDF 5/3 extension, the CV-X-IF adapter and the coprocessor wrapper;
 - *corev_apu/fpga/constraints* - the constraints file for the AMD KCU116 FPGA development board;
-- */verif/tests/custom/riscada* - the files of RiscADA C library based on inline assembly snippets for GCC compiler named *ADA_functions.h* and *ADA_functions.c* and the C tests file *riscada_tests.c*; also the Gtkwave template file is available in this directory;
-- */verif/regress/* - the bash script for executing the RiscADA tests named *riscada_c_tests.sh*.
+- */verif/tests/custom/cdf53* - the files of DWT CDF 5/3 C library based on inline assembly snippets for GCC compiler named *CDF53_functions.h* and *CDF53_functions.c* and the C tests file *CDF53_tests.c*; also the Gtkwave template file is available in this directory;
+- */verif/regress/* - the bash script for executing the DWT CDF 5/3 tests named *cdf53_c_tests.sh*.
 
 Many thanks to [Florentin Ilie](https://github.com/florentin05) for pioneering the CVA6 support for KCU116 development board as part of his Computer Engineering bachelor thesis in the Department of Computer Engineering at Technical University of Iasi.
 
