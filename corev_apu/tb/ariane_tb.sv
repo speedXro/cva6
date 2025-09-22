@@ -64,14 +64,14 @@ module ariane_tb;
 
     logic [31:0] exit_o;
 
-    logic [ 0:0] da_sync_n;
+    /*logic [ 0:0] da_sync_n;
     logic [ 0:0] da_sclk;
     logic [ 0:0] da_din;
 
     logic [ 0:0] ad_cs_n;
     logic [ 0:0] ad_sclk;
     logic [ 0:0] ad_dout; 
-    logic [ 0:0] ad_digitized;
+    logic [ 0:0] ad_digitized;*/
 
 
     string binary = "";
@@ -87,16 +87,16 @@ module ariane_tb;
         .clk_i,
         .rst_ni,
         .rtc_i,
-        .exit_o,
+        .exit_o
 
-        .da_sync_n,
-        .da_sclk,
-        .da_din,
+        //,.da_sync_n,
+        //.da_sclk,
+        //.da_din,
 
-        .ad_cs_n,
-        .ad_sclk,
-        .ad_dout,
-        .ad_digitized
+        //.ad_cs_n,
+        //.ad_sclk,
+        //.ad_dout,
+        //.ad_digitized
     );
 
     // Clock process

@@ -7,23 +7,23 @@
 #include "sd.h"
 #include "gpt.h"
 
-#include "../../../../../verif/tests/custom/riscada/ADA_functions.h"
+//#include "../../../../../verif/tests/custom/riscada/ADA_functions.h"
+
+#include "../../../../../verif/tests/custom/dwt/DiWaTo_functions.h"
+#include "../../../../../verif/tests/custom/dwt/dwt.h"
+#include "../../../../../verif/tests/custom/dwt/compression.h"
 
 // 1 second at 50MHz
 #define SECOND_CYCLES   (50 * 1000 * 1000)
 #define WAIT_SECONDS    (5)
 
-void Application_RiscADA(void);
+//void Application_RiscADA(void);
 
-uintptr_t start;
-uintptr_t stop;
+uint64_t gccs(void);
 
-uint16_t DA_values[16] = {
-    0x100,0x200,0x300,0x400,
-    0x500,0x600,0x700,0x800,
-    0x900,0xA00,0xB00,0xC00,
-    0xD00,0xE00,0xF00,0x000
-};
+int Application_CDF53_Compression_SW(void);
+int Application_CDF53_Compression_HW(void);
+
 
 static inline uintptr_t get_cycle_count() {
     uintptr_t cycle;
@@ -31,99 +31,198 @@ static inline uintptr_t get_cycle_count() {
     return cycle;
 }
 
-void Application_RiscADA(void)
+/*static uint32_t gccs()
 {
-    uint16_t i;
-    
-    uint16_t DA_get=0;
-    uint16_t AD_get=0;
-    uint32_t ts=0;
+    uint32_t res;
+    __asm__ volatile ("csrr %0, cycle" : "=r" (res));
+    return res;
+}*/
 
-    uint8_t rxb;
-    uint32_t retts=0;
-    uint16_t retda=0;
-    uint16_t retad=0;
+uint64_t gccs(void)
+{
+    uint64_t res;
+    uint64_t result;
+    __asm__ volatile ("csrr %0, cycle" : "=r" (res));
 
-    uint8_t exit_now=0;
+    asm volatile (
+		"add %0, %1, x0"
+		: "=r" (result)
+		: "r" (res)
+	);  
 
-    for(i=0;i<16;++i)
-    {
-        DA_get=0;
-        AD_get=0;
-        DA_SetValue(0, DA_values[i]);
-        print_uart_int(DA_values[i]);
-        print_uart("\r\n");
-        start = get_cycle_count();
-        while(get_cycle_count() - start < SECOND_CYCLES/10) {}
-        DA_GetValue(0, &DA_get);
-        print_uart_int(DA_get);
-        print_uart("\r\n");
-        AD_Get_ADC_Val(0, &ts, &AD_get);
-        print_uart_int(AD_get);
-        print_uart("\r\n");
-        start = get_cycle_count();
-        while(get_cycle_count() - start < SECOND_CYCLES/10) {}
-    }
+    return result;
+}
 
-    while (exit_now==0)
-    {
-        if(read_serial(&rxb)==1)
-        {
-            switch(rxb)
-            {
-                case '0': DA_SetValue(0,0x000); break;
-                case '1': DA_SetValue(0,0x100); break;
-                case '2': DA_SetValue(0,0x200); break;
-                case '3': DA_SetValue(0,0x300); break;
-                case '4': DA_SetValue(0,0x400); break;
-                case '5': DA_SetValue(0,0x500); break;
-                case '6': DA_SetValue(0,0x600); break;
-                case '7': DA_SetValue(0,0x700); break;
-                case '8': DA_SetValue(0,0x800); break;
-                case '9': DA_SetValue(0,0x900); break;
-                case 'A': DA_SetValue(0,0xA00); break;
-                case 'B': DA_SetValue(0,0xB00); break;
-                case 'C': DA_SetValue(0,0xC00); break;
-                case 'D': DA_SetValue(0,0xD00); break; 
-                case 'E': DA_SetValue(0,0xE00); break;
-                case 'F': DA_SetValue(0,0xF00); break;
-                case 'G': DA_SetValue(0,0xFFF); break;
-                case 'j':
-                case 'J': DA_SetValue(0,0x000); exit_now = 1; break;
-                default : DA_SetValue(0,0x000); break;
-            }
-            DA_GetValue(0, &retda);
-            
-            start = get_cycle_count();
-            while(get_cycle_count() - start < 10000) {}
-            
-            AD_Get_ADC_Val(0, &retts, &retad);
-            
-            print_uart("Configured value is ");
-            print_uart_int(retda);
-            print_uart("\n");
+int Application_CDF53_Compression_SW(void)
+{
+    uint64_t t_start=0;
+    uint64_t t_stop=0;
+    uint64_t tdiff=0;
+    /* Prepare input */
+    uint8_t text[NBYTES];
+    make_text_1024(text);
 
-            print_uart_int(retts);
-            print_uart(" : ");
-            print_uart("Measured value is ");
-            print_uart_int(retad);
-            print_uart("\n\n");
+    /* Encode per 16-byte block */    
+    uint8_t stream[NBYTES * 4];
+    uint8_t *p = stream;
+
+    t_start = gccs();
+    for (int b = 0; b < NBYTES/BLK; b++){
+        /* Convert 16 input bytes to signed centered int8_t */
+        int8_t blk[BLK];
+        for (int i = 0; i < BLK; i++){
+            blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
         }
-        start = get_cycle_count();
-        while(get_cycle_count() - start < 100) {}
+        size_t used = SW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
+        if (used == 0){
+            //fprintf(stderr, "encode failed at block %d\n", b);
+            //free(stream);
+            return 1;
+        }
+        p += used;
     }
-    
-    
+    size_t enc_size = (size_t)(p - stream);
+    t_stop = gccs();
+    tdiff = t_stop-t_start;
+    print_uart("Compression SW :\r\n");
+    print_uart_int(tdiff);
+    print_uart("\r\n");
+
+    /* Decode back and verify */
+    uint8_t *src = stream;
+    uint8_t *end = stream + enc_size;
+    t_start = gccs();
+    for (int b = 0; b < NBYTES/BLK; b++){
+        int8_t recon_blk[BLK];
+        size_t used = SW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
+        if (used == 0){
+            //fprintf(stderr, "decode failed at block %d\n", b);
+            //free(stream);
+            return 1;
+        }
+        /* Convert back to bytes and compare */
+        for (int i = 0; i < BLK; i++){
+            int recon_byte = (int)recon_blk[i] + 128;
+            if (recon_byte != (int)text[b*BLK + i]){
+                //fprintf(stderr, "mismatch at block %d, i=%d: orig=%d recon=%d\n",
+                //        b, i, (int)text[b*BLK+i], recon_byte);
+                //free(stream);
+                return 1;
+            }
+        }
+        src += used;
+    }
+    t_stop = gccs();
+    tdiff = t_stop-t_start;
+    print_uart("De-Compression SW :\r\n");
+    print_uart_int(tdiff);
+    print_uart("\r\n");
+
+    /* Report */
+    //printf("Original size: %d bytes\n", NBYTES);
+    //printf("Encoded size (per-block): %zu bytes\n", enc_size);
+    //printf("Compression ratio (orig/encoded): %.3f\n", (double)NBYTES / (double)enc_size);
+
+    /* Preview first 64 chars */
+    //printf("Original preview: ");
+    //for (int i = 0; i < 64; i++) putchar(text[i]);
+    //putchar('\n');
+
+    return 0;
+}
+
+int Application_CDF53_Compression_HW(void)
+{
+    uint64_t t_start=0;
+    uint64_t t_stop=0;
+    uint64_t tdiff=0;
+    /* Prepare input */
+    uint8_t text[NBYTES];
+    make_text_1024(text);
+
+    /* Encode per 16-byte block */    
+    uint8_t stream[NBYTES * 4];
+    uint8_t *p = stream;
+
+    t_start = gccs();
+    for (int b = 0; b < NBYTES/BLK; b++){
+        /* Convert 16 input bytes to signed centered int8_t */
+        int8_t blk[BLK];
+        for (int i = 0; i < BLK; i++){
+            blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
+        }
+        size_t used = HW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
+        if (used == 0){
+            //fprintf(stderr, "encode failed at block %d\n", b);
+            //free(stream);
+            return 1;
+        }
+        p += used;
+    }
+    size_t enc_size = (size_t)(p - stream);
+    t_stop = gccs();
+    tdiff = t_stop-t_start;
+    print_uart("Compression HW :\r\n");
+    print_uart_int(tdiff);
+    print_uart("\r\n");
+
+    /* Decode back and verify */
+    uint8_t *src = stream;
+    uint8_t *end = stream + enc_size;
+    t_start = gccs();
+    for (int b = 0; b < NBYTES/BLK; b++){
+        int8_t recon_blk[BLK];
+        size_t used = HW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
+        if (used == 0){
+            //fprintf(stderr, "decode failed at block %d\n", b);
+            //free(stream);
+            return 1;
+        }
+        /* Convert back to bytes and compare */
+        for (int i = 0; i < BLK; i++){
+            int recon_byte = (int)recon_blk[i] + 128;
+            if (recon_byte != (int)text[b*BLK + i]){
+                //fprintf(stderr, "mismatch at block %d, i=%d: orig=%d recon=%d\n",
+                //        b, i, (int)text[b*BLK+i], recon_byte);
+                //free(stream);
+                return 1;
+            }
+        }
+        src += used;
+    }
+    t_stop = gccs();
+    tdiff = t_stop-t_start;
+    print_uart("De-Compression HW :\r\n");
+    print_uart_int(tdiff);
+    print_uart("\r\n");
+
+    /* Report */
+    //printf("Original size: %d bytes\n", NBYTES);
+    //printf("Encoded size (per-block): %zu bytes\n", enc_size);
+    //printf("Compression ratio (orig/encoded): %.3f\n", (double)NBYTES / (double)enc_size);
+
+    /* Preview first 64 chars */
+    //printf("Original preview: ");
+    //for (int i = 0; i < 64; i++) putchar(text[i]);
+    //putchar('\n');
+
+    return 0;
 }
 
 
 int main()
 {
+    int result_SW, result_HW;
+
     init_uart(100000000, 115200); //not needed in intel setup as UART IP is already configured via HW
     print_uart("Hello World DC TUIASI!\r\n");
     print_uart("\r\n");
     
-    Application_RiscADA();
+    result_SW = Application_CDF53_Compression_SW();
+    result_HW = Application_CDF53_Compression_HW();
+
+    if(result_SW == 0) print_uart("SW_SUCESS\r\n"); else print_uart("SW_ERROR\r\n");
+    if(result_HW == 0) print_uart("HW_SUCESS\r\n"); else print_uart("HW_ERROR\r\n");
 
     int res;
     print_uart(" booting!\r\n");

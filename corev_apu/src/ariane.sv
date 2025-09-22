@@ -63,16 +63,16 @@ module ariane import ariane_pkg::*; #(
   output rvfi_probes_t rvfi_probes_o,
   // memory side
   output noc_req_t                     noc_req_o,
-  input  noc_resp_t                    noc_resp_i,
+  input  noc_resp_t                    noc_resp_i
 
-  output logic  da_sync_n,
-  output logic  da_sclk,
-  output logic  da_din,
+  //,output logic  da_sync_n,
+  //output logic  da_sclk,
+  //output logic  da_din,
 
-  output logic  ad_cs_n,
-  output logic  ad_sclk,
-  input  logic  ad_dout, 
-  output logic  ad_digitized
+  //output logic  ad_cs_n,
+  //output logic  ad_sclk,
+  //input  logic  ad_dout, 
+  //output logic  ad_digitized
 );
 
   cvxif_req_t  cvxif_req;
@@ -150,7 +150,44 @@ module ariane import ariane_pkg::*; #(
     assign cvxif_resp = '0;
   end*/
 
-  if (CVA6Cfg.CvxifEn) begin : gen_RiscAda
+  if (CVA6Cfg.CvxifEn) begin : gen_Risc_DiWaTo
+    DiWato_CoProcessor #(
+      .NrRgprPorts (CVA6Cfg.NrRgprPorts),
+      .XLEN (CVA6Cfg.XLEN),
+      .X_HARTID_WIDTH(CVA6Cfg.X_HARTID_WIDTH),
+      .X_ID_WIDTH(CVA6Cfg.X_ID_WIDTH),
+      .X_DUALWRITE(CVA6Cfg.X_DUALWRITE),
+      .X_NUM_RS(CVA6Cfg.X_NUM_RS),
+
+      .readregflags_t (readregflags_t),
+      .writeregflags_t (writeregflags_t),
+      .id_t (id_t),
+      .hartid_t (hartid_t),
+      .x_compressed_req_t (x_compressed_req_t),
+      .x_compressed_resp_t (x_compressed_resp_t),
+      .x_issue_req_t (x_issue_req_t),
+      .x_issue_resp_t (x_issue_resp_t),
+      .x_register_t (x_register_t),
+      .x_commit_t (x_commit_t),
+      .x_result_t (x_result_t),
+      .cvxif_req_t (cvxif_req_t),
+      .cvxif_resp_t (cvxif_resp_t)
+    ) i_diwato_coprocessor (
+      .clk_i                ( clk_i                          ),
+      .rst_ni               ( rst_ni                         ),
+      .cvxif_req_i          ( cvxif_req                      ),
+      .cvxif_resp_o         ( cvxif_resp                     )
+    );
+  end else begin
+    always_comb begin
+      cvxif_resp = '0;
+      cvxif_resp.compressed_ready = 1'b1;
+      cvxif_resp.issue_ready = 1'b1;
+      cvxif_resp.register_ready = 1'b1;
+    end
+  end
+
+  /*if (CVA6Cfg.CvxifEn) begin : gen_RiscAda
     ADA_CoProcessor #(
       .NrRgprPorts (CVA6Cfg.NrRgprPorts),
       .XLEN (CVA6Cfg.XLEN),
@@ -194,6 +231,6 @@ module ariane import ariane_pkg::*; #(
       cvxif_resp.issue_ready = 1'b1;
       cvxif_resp.register_ready = 1'b1;
     end
-  end
+  end*/
 
 endmodule // ariane
