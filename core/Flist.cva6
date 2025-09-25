@@ -82,13 +82,12 @@ ${CVA6_REPO_DIR}/core/cvxif_example/instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/compressed_instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/copro_alu.sv
 
-//DWT CDF 5/3
-${CVA6_REPO_DIR}/core/cdf53/forward/HW_dwt53_forward.v
-${CVA6_REPO_DIR}/core/cdf53/inverse/HW_dwt53_inverse_HW_dwt53_inverse_core.v
-${CVA6_REPO_DIR}/core/cdf53/inverse/HW_dwt53_inverse.v
+//DWT CDF53
+${CVA6_REPO_DIR}/core/cdf53/forward/fdwt_cdf_53.sv
+${CVA6_REPO_DIR}/core/cdf53/inverse/idwt_cdf_53.sv
 ${CVA6_REPO_DIR}/core/cdf53/CDF53_CoProcessor.sv
 ${CVA6_REPO_DIR}/core/cdf53/CDF53_CVXIF_Adapter.sv
-${CVA6_REPO_DIR}/core/cdf53/fi_dwt_hls.v
+${CVA6_REPO_DIR}/core/cdf53/fi_dwt_hdl.v
 
 // Common Cells
 ${CVA6_REPO_DIR}/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv

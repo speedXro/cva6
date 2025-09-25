@@ -1,0 +1,51 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:105:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="HW_dwt53_forward" ARG_PragmaIsValid="1" ARG_PragmaOptions="min=1" ARG_PragmaType="latency" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="HW_dwt53_inverse" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=HW_dwt53_inverse" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:240:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="HW_dwt53_inverse" ARG_PragmaIsValid="1" ARG_PragmaOptions="min=1" ARG_PragmaType="latency" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:188:0" msg_body="Inlining function 'clamp_i8' into 'HW_dwt53_inverse_core'">
+        <args Callee="clamp_i8" Callee-DebugLoc="File ../c_sources/dwt_idwt_cdf_5_3.c Line 8 Column 0" Caller="HW_dwt53_inverse_core" Caller-DebugLoc="File ../c_sources/dwt_idwt_cdf_5_3.c Line 188 Column 0"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-449" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:242:10" msg_body="Automatically partitioning array 'in_low' dimension 1 completely based on constant index.">
+        <args Dim="1" Value="in_low"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-449" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:243:13" msg_body="Automatically partitioning array 'in_high' dimension 1 completely based on constant index.">
+        <args Dim="1" Value="in_high"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-449" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:245:12" msg_body="Automatically partitioning array 'out' dimension 1 completely based on constant index.">
+        <args Dim="1" Value="out"/>
+    </msg>
+    <msg msg_groups="AUTOMATION_VERBOSE_PASSED" msg_id="214-335" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:242:10" msg_body="array_partition dim=1 type=complete  variable=in_low 1 HW_dwt53_inverse ../c_sources/dwt_idwt_cdf_5_3.c:242:10 in_low">
+        <args PragmaFunction="HW_dwt53_inverse" PragmaIsAuto="1" PragmaOptions="dim=1 type=complete  variable=in_low" PragmaType="array_partition" VarName="in_low" varLoc="../c_sources/dwt_idwt_cdf_5_3.c:242:10"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-270" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:242:10" msg_body="Inferring pragma 'array_partition type=complete dim=1' for array 'in_low' due to pipeline pragma">
+        <args Dim="1" Mode="complete" Name="in_low" PragmaType="array_partition"/>
+    </msg>
+    <msg msg_groups="AUTOMATION_VERBOSE_PASSED" msg_id="214-335" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:243:13" msg_body="array_partition dim=1 type=complete  variable=in_high 1 HW_dwt53_inverse ../c_sources/dwt_idwt_cdf_5_3.c:243:13 in_high">
+        <args PragmaFunction="HW_dwt53_inverse" PragmaIsAuto="1" PragmaOptions="dim=1 type=complete  variable=in_high" PragmaType="array_partition" VarName="in_high" varLoc="../c_sources/dwt_idwt_cdf_5_3.c:243:13"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-270" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:243:13" msg_body="Inferring pragma 'array_partition type=complete dim=1' for array 'in_high' due to pipeline pragma">
+        <args Dim="1" Mode="complete" Name="in_high" PragmaType="array_partition"/>
+    </msg>
+    <msg msg_groups="AUTOMATION_VERBOSE_PASSED" msg_id="214-335" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:245:12" msg_body="array_partition dim=1 type=complete  variable=out 1 HW_dwt53_inverse ../c_sources/dwt_idwt_cdf_5_3.c:245:12 out">
+        <args PragmaFunction="HW_dwt53_inverse" PragmaIsAuto="1" PragmaOptions="dim=1 type=complete  variable=out" PragmaType="array_partition" VarName="out" varLoc="../c_sources/dwt_idwt_cdf_5_3.c:245:12"/>
+    </msg>
+    <msg msg_groups="AUTOMATION PRAGMA_MISC" msg_id="214-270" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:245:12" msg_body="Inferring pragma 'array_partition type=complete dim=1' for array 'out' due to pipeline pragma">
+        <args Dim="1" Mode="complete" Name="out" PragmaType="array_partition"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:242:10" msg_body="Applying array_partition to 'in_low': Complete partitioning on dimension 1.">
+        <args Dim="1" Mode="Complete" UOName="in_low"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:243:13" msg_body="Applying array_partition to 'in_high': Complete partitioning on dimension 1.">
+        <args Dim="1" Mode="Complete" UOName="in_high"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="../c_sources/dwt_idwt_cdf_5_3.c:245:12" msg_body="Applying array_partition to 'out': Complete partitioning on dimension 1.">
+        <args Dim="1" Mode="Complete" UOName="out"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

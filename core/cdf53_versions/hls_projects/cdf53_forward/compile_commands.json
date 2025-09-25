@@ -1,0 +1,27 @@
+[
+  {
+    "directory": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward",
+    "arguments": [
+      "/tools/Xilinx/Vitis/2024.2/vcxx/libexec/clang++",
+      "--gcc-toolchain=/tools/Xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0",
+      "-fhls",
+      "-hls-syn-headers-dir=/tools/Xilinx/Vitis/2024.2/common/technology/autopilot",
+      "-fhlstoplevel=HW_dwt53_forward",
+      "-c",
+      "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c"
+    ],
+    "file": "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c"
+  },
+  {
+    "directory": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward",
+    "arguments": [
+      "/tools/Xilinx/Vitis/2024.2/vcxx/libexec/clang++",
+      "--gcc-toolchain=/tools/Xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0",
+      "-fhls-tb",
+      "-hls-sim-headers-dir=/tools/Xilinx/Vitis/2024.2/include",
+      "-c",
+      "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/main.c"
+    ],
+    "file": "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/main.c"
+  }
+]

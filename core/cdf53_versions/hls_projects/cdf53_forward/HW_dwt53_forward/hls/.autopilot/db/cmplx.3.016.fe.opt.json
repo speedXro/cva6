@@ -1,0 +1,33 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "1",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 103,
+    "instructions": 154,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_forward",
+    "stores": {
+      "L": 16,
+      "T": 4
+    },
+    "total_instructions": 275
+  },
+  "1": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 42,
+    "instructions": 121,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_forward_core",
+    "stores": {
+      "L": 16
+    },
+    "total_instructions": 121
+  }
+}

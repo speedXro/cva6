@@ -1,0 +1,158 @@
+<ENTRY>
+{
+ "thisFile": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/HW_dwt53_forward/HW_dwt53_forward.hlsrun_csim_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Sep 25 08:37:57 2025",
+ "timestampMillis": "1758778677946",
+ "buildStep": {
+  "cmdId": "fcf2f438-57a8-464c-9d8d-3b0b9d151f62",
+  "name": "vitis-run",
+  "logFile": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/HW_dwt53_forward/logs/HW_dwt53_forward.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2024.2/bin/unwrapped/lnx64.o/vitis-run  --mode hls --csim --config /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/hls_config.cfg --work_dir HW_dwt53_forward ",
+  "args": [
+   "--mode",
+   "hls",
+   "--csim",
+   "--config",
+   "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/hls_config.cfg",
+   "--work_dir",
+   "HW_dwt53_forward"
+  ],
+  "iniFiles": [],
+  "cwd": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Sep 25 08:37:57 2025",
+ "timestampMillis": "1758778677946",
+ "status": {
+  "cmdId": "fcf2f438-57a8-464c-9d8d-3b0b9d151f62",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680412",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_RUN",
+  "target": "TT_HLS_C_SIM",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "HW_dwt53_forward",
+     "file": "",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.h",
+     "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c",
+     "/tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/structs.h"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2024.2"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680412",
+ "buildStep": {
+  "cmdId": "44cbff7b-dd7d-4faa-baa6-73a75273fa64",
+  "name": "",
+  "logFile": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/HW_dwt53_forward/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680412",
+ "status": {
+  "cmdId": "44cbff7b-dd7d-4faa-baa6-73a75273fa64",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680733",
+ "status": {
+  "cmdId": "44cbff7b-dd7d-4faa-baa6-73a75273fa64",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680810",
+ "status": {
+  "cmdId": "fcf2f438-57a8-464c-9d8d-3b0b9d151f62",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680810",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Sep 25 08:38:00 2025",
+ "timestampMillis": "1758778680810",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

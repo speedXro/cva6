@@ -1,0 +1,12 @@
+{
+  "name": "cdf53_inverse",
+  "type": "HLS",
+  "configuration": {
+    "componentType": "HLS",
+    "configFiles": [
+      "hls_config.cfg"
+    ],
+    "work_dir": "HW_dwt53_inverse"
+  },
+  "template": "empty_hls_component"
+}

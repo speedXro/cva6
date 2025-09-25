@@ -1,0 +1,6 @@
+sv work "glbl.v"
+sv xil_defaultlib "HW_dwt53_inverse_HW_dwt53_inverse_core.v"
+sv xil_defaultlib "HW_dwt53_inverse.autotb.v"
+sv xil_defaultlib "HW_dwt53_inverse.v"
+sv xil_defaultlib "dataflow_monitor.sv"
+

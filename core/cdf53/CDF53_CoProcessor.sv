@@ -134,7 +134,7 @@ module CDF53_CoProcessor
         .i_result_mem_dat(result_mem_dat)
     );
 
-    fi_dwt_hls fi_dwt_hls_inst(
+    fi_dwt_hdl fi_dwt_hdl_inst(
         .clk(clk_i),
         .reset(reset_p),
 

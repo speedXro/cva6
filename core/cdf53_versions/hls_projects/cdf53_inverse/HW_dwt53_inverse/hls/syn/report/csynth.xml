@@ -1,0 +1,639 @@
+<profile>
+    <ReportVersion>
+        <Version>2024.2</Version>
+    </ReportVersion>
+    <UserAssignments>
+        <unit>ns</unit>
+        <ProductFamily>kintexuplus</ProductFamily>
+        <Part>xcku5p-ffvb676-2-e</Part>
+        <TopModelName>HW_dwt53_inverse</TopModelName>
+        <TargetClockPeriod>10.00</TargetClockPeriod>
+        <ClockUncertainty>2.70</ClockUncertainty>
+        <FlowTarget>vivado</FlowTarget>
+    </UserAssignments>
+    <PerformanceEstimates>
+        <PipelineType>no</PipelineType>
+        <SummaryOfTimingAnalysis>
+            <unit>ns</unit>
+            <EstimatedClockPeriod>5.627</EstimatedClockPeriod>
+        </SummaryOfTimingAnalysis>
+        <SummaryOfOverallLatency>
+            <unit>clock cycles</unit>
+            <Best-caseLatency>1</Best-caseLatency>
+            <Average-caseLatency>1</Average-caseLatency>
+            <Worst-caseLatency>1</Worst-caseLatency>
+            <Best-caseRealTimeLatency>10.000 ns</Best-caseRealTimeLatency>
+            <Average-caseRealTimeLatency>10.000 ns</Average-caseRealTimeLatency>
+            <Worst-caseRealTimeLatency>10.000 ns</Worst-caseRealTimeLatency>
+            <Interval-min>2</Interval-min>
+            <Interval-max>2</Interval-max>
+        </SummaryOfOverallLatency>
+        <SummaryOfViolations>
+            <IssueType>-</IssueType>
+            <ViolationType>-</ViolationType>
+            <SourceLocation>../c_sources/dwt_idwt_cdf_5_3.c:238</SourceLocation>
+        </SummaryOfViolations>
+    </PerformanceEstimates>
+    <AreaEstimates>
+        <Resources>
+            <FF>2</FF>
+            <LUT>2286</LUT>
+            <BRAM_18K>0</BRAM_18K>
+            <DSP>0</DSP>
+            <URAM>0</URAM>
+        </Resources>
+        <AvailableResources>
+            <BRAM_18K>960</BRAM_18K>
+            <DSP>1824</DSP>
+            <FF>433920</FF>
+            <LUT>216960</LUT>
+            <URAM>64</URAM>
+        </AvailableResources>
+    </AreaEstimates>
+    <InterfaceSummary>
+        <RtlPorts>
+            <name>ap_clk</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_rst</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_start</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_done</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_idle</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>ap_ready</name>
+            <Object>HW_dwt53_inverse</Object>
+            <Type>return value</Type>
+            <Scope/>
+            <IOProtocol>ap_ctrl_hs</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+        </RtlPorts>
+        <RtlPorts>
+            <name>low_03</name>
+            <Object>low_03</Object>
+            <Type>scalar</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>low_47</name>
+            <Object>low_47</Object>
+            <Type>scalar</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>high_03</name>
+            <Object>high_03</Object>
+            <Type>scalar</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>high_47</name>
+            <Object>high_47</Object>
+            <Type>scalar</Type>
+            <Scope/>
+            <IOProtocol>ap_none</IOProtocol>
+            <IOConfig/>
+            <Dir>in</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>p_out_0</name>
+            <Object>p_out_0</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_vld</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>p_out_0_ap_vld</name>
+            <Object>p_out_0</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_vld</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>p_out_1</name>
+            <Object>p_out_1</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_vld</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>64</Bits>
+            <Attribute>data</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+        <RtlPorts>
+            <name>p_out_1_ap_vld</name>
+            <Object>p_out_1</Object>
+            <Type>pointer</Type>
+            <Scope/>
+            <IOProtocol>ap_vld</IOProtocol>
+            <IOConfig/>
+            <Dir>out</Dir>
+            <Bits>1</Bits>
+            <Attribute>control</Attribute>
+            <CType>int</CType>
+        </RtlPorts>
+    </InterfaceSummary>
+    <RTLDesignHierarchy>
+        <TopModule MAX_DEPTH="3">
+            <ModuleName>HW_dwt53_inverse</ModuleName>
+            <InstancesList>
+                <Instance>
+                    <InstName>call_ret_HW_dwt53_inverse_core_fu_94</InstName>
+                    <ModuleName>HW_dwt53_inverse_core</ModuleName>
+                    <IsCompInst>true</IsCompInst>
+                    <ID>94</ID>
+                    <BindInstances>add_ln210_fu_286_p2 add_ln210_1_fu_296_p2 s_fu_316_p2 add_ln211_fu_326_p2 s_1_fu_346_p2 add_ln212_fu_356_p2 add_ln212_1_fu_366_p2 s_2_fu_386_p2 add_ln213_fu_396_p2 add_ln213_1_fu_406_p2 s_3_fu_426_p2 add_ln214_fu_436_p2 add_ln214_1_fu_446_p2 s_4_fu_466_p2 add_ln215_fu_476_p2 add_ln215_1_fu_486_p2 s_5_fu_506_p2 add_ln216_fu_516_p2 add_ln216_1_fu_526_p2 s_6_fu_546_p2 add_ln217_fu_556_p2 add_ln217_1_fu_566_p2 s_7_fu_586_p2 icmp_ln9_fu_606_p2 icmp_ln10_fu_612_p2 select_ln9_fu_622_p3 or_ln9_fu_630_p2 select_ln9_1_fu_636_p3 icmp_ln9_1_fu_654_p2 icmp_ln10_1_fu_660_p2 select_ln9_2_fu_670_p3 or_ln9_1_fu_678_p2 select_ln9_3_fu_684_p3 icmp_ln9_2_fu_702_p2 icmp_ln10_2_fu_708_p2 select_ln9_4_fu_718_p3 or_ln9_2_fu_726_p2 select_ln9_5_fu_732_p3 icmp_ln9_3_fu_750_p2 icmp_ln10_3_fu_756_p2 select_ln9_6_fu_766_p3 or_ln9_3_fu_774_p2 select_ln9_7_fu_780_p3 icmp_ln9_4_fu_798_p2 icmp_ln10_4_fu_804_p2 select_ln9_8_fu_814_p3 or_ln9_4_fu_822_p2 select_ln9_9_fu_828_p3 icmp_ln9_5_fu_846_p2 icmp_ln10_5_fu_852_p2 select_ln9_10_fu_862_p3 or_ln9_5_fu_870_p2 select_ln9_11_fu_876_p3 icmp_ln9_6_fu_894_p2 icmp_ln10_6_fu_900_p2 select_ln9_12_fu_910_p3 or_ln9_6_fu_918_p2 select_ln9_13_fu_924_p3 icmp_ln9_7_fu_942_p2 icmp_ln10_7_fu_948_p2 select_ln9_14_fu_958_p3 or_ln9_7_fu_966_p2 select_ln9_15_fu_972_p3 add_ln228_fu_980_p2 add_ln228_1_fu_1000_p2 icmp_ln9_8_fu_1016_p2 icmp_ln10_8_fu_1022_p2 select_ln9_16_fu_1032_p3 or_ln9_8_fu_1040_p2 select_ln9_17_fu_1046_p3 add_ln229_fu_1054_p2 add_ln229_1_fu_1074_p2 icmp_ln9_9_fu_1090_p2 icmp_ln10_9_fu_1096_p2 select_ln9_18_fu_1106_p3 or_ln9_9_fu_1114_p2 select_ln9_19_fu_1120_p3 add_ln230_fu_1128_p2 add_ln230_1_fu_1148_p2 icmp_ln9_10_fu_1164_p2 icmp_ln10_10_fu_1170_p2 select_ln9_20_fu_1180_p3 or_ln9_10_fu_1188_p2 select_ln9_21_fu_1194_p3 add_ln231_fu_1202_p2 add_ln231_1_fu_1222_p2 icmp_ln9_11_fu_1238_p2 icmp_ln10_11_fu_1244_p2 select_ln9_22_fu_1254_p3 or_ln9_11_fu_1262_p2 select_ln9_23_fu_1268_p3 add_ln232_fu_1276_p2 add_ln232_1_fu_1296_p2 icmp_ln9_12_fu_1312_p2 icmp_ln10_12_fu_1318_p2 select_ln9_24_fu_1328_p3 or_ln9_12_fu_1336_p2 select_ln9_25_fu_1342_p3 add_ln233_fu_1350_p2 add_ln233_1_fu_1370_p2 icmp_ln9_13_fu_1386_p2 icmp_ln10_13_fu_1392_p2 select_ln9_26_fu_1402_p3 or_ln9_13_fu_1410_p2 select_ln9_27_fu_1416_p3 add_ln234_fu_1424_p2 add_ln234_1_fu_1444_p2 icmp_ln9_14_fu_1460_p2 icmp_ln10_14_fu_1466_p2 select_ln9_28_fu_1476_p3 or_ln9_14_fu_1484_p2 select_ln9_29_fu_1490_p3 add_ln235_fu_1498_p2 add_ln235_1_fu_1518_p2 icmp_ln9_15_fu_1534_p2 icmp_ln10_15_fu_1540_p2 select_ln9_30_fu_1550_p3 or_ln9_15_fu_1558_p2 select_ln9_31_fu_1564_p3</BindInstances>
+                </Instance>
+            </InstancesList>
+        </TopModule>
+    </RTLDesignHierarchy>
+    <ModuleInformation>
+        <Module>
+            <Name>HW_dwt53_inverse_core</Name>
+            <PerformanceEstimates>
+                <SummaryOfTimingAnalysis>
+                    <TargetClockPeriod>10.00</TargetClockPeriod>
+                    <ClockUncertainty>2.70</ClockUncertainty>
+                    <EstimatedClockPeriod>5.627</EstimatedClockPeriod>
+                </SummaryOfTimingAnalysis>
+                <SummaryOfOverallLatency>
+                    <Best-caseLatency>0</Best-caseLatency>
+                    <Average-caseLatency>0</Average-caseLatency>
+                    <Worst-caseLatency>0</Worst-caseLatency>
+                    <Best-caseRealTimeLatency>0 ns</Best-caseRealTimeLatency>
+                    <Average-caseRealTimeLatency>0 ns</Average-caseRealTimeLatency>
+                    <Worst-caseRealTimeLatency>0 ns</Worst-caseRealTimeLatency>
+                    <PipelineInitiationInterval>0</PipelineInitiationInterval>
+                    <PipelineType>no</PipelineType>
+                </SummaryOfOverallLatency>
+                <SummaryOfViolations>
+                    <IssueType>-</IssueType>
+                    <ViolationType>-</ViolationType>
+                    <SourceLocation>../c_sources/dwt_idwt_cdf_5_3.c:187</SourceLocation>
+                </SummaryOfViolations>
+            </PerformanceEstimates>
+            <AreaEstimates>
+                <Resources>
+                    <FF>0</FF>
+                    <AVAIL_FF>433920</AVAIL_FF>
+                    <UTIL_FF>0</UTIL_FF>
+                    <LUT>2272</LUT>
+                    <AVAIL_LUT>216960</AVAIL_LUT>
+                    <UTIL_LUT>1</UTIL_LUT>
+                    <BRAM_18K>0</BRAM_18K>
+                    <AVAIL_BRAM>960</AVAIL_BRAM>
+                    <UTIL_BRAM>0</UTIL_BRAM>
+                    <DSP>0</DSP>
+                    <AVAIL_DSP>1824</AVAIL_DSP>
+                    <UTIL_DSP>0</UTIL_DSP>
+                    <URAM>0</URAM>
+                    <AVAIL_URAM>64</AVAIL_URAM>
+                    <UTIL_URAM>0</UTIL_URAM>
+                </Resources>
+            </AreaEstimates>
+            <BindNodes>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln210_fu_286_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:210" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln210" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln210_1_fu_296_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:210" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln210_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_fu_316_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:210" STORAGESUBTYPE="" URAM="0" VARIABLE="s" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln211_fu_326_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:211" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln211" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_1_fu_346_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:211" STORAGESUBTYPE="" URAM="0" VARIABLE="s_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln212_fu_356_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:212" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln212" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln212_1_fu_366_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:212" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln212_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_2_fu_386_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:212" STORAGESUBTYPE="" URAM="0" VARIABLE="s_2" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln213_fu_396_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:213" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln213" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln213_1_fu_406_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:213" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln213_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_3_fu_426_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:213" STORAGESUBTYPE="" URAM="0" VARIABLE="s_3" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln214_fu_436_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:214" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln214" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln214_1_fu_446_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:214" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln214_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_4_fu_466_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:214" STORAGESUBTYPE="" URAM="0" VARIABLE="s_4" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln215_fu_476_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:215" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln215" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln215_1_fu_486_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:215" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln215_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_5_fu_506_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:215" STORAGESUBTYPE="" URAM="0" VARIABLE="s_5" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln216_fu_516_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:216" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln216" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln216_1_fu_526_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:216" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln216_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_6_fu_546_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:216" STORAGESUBTYPE="" URAM="0" VARIABLE="s_6" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln217_fu_556_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:217" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln217" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln217_1_fu_566_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:217" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln217_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op sub" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="sub" PRAGMA="" RTLNAME="s_7_fu_586_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:217" STORAGESUBTYPE="" URAM="0" VARIABLE="s_7" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_fu_606_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_fu_612_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_fu_622_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_fu_630_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_1_fu_636_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_1_fu_654_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_1_fu_660_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_2_fu_670_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_1_fu_678_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_1" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_3_fu_684_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_3" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_2_fu_702_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_2_fu_708_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_4_fu_718_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_4" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_2_fu_726_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_2" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_5_fu_732_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_3_fu_750_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_3" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_3_fu_756_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_3" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_6_fu_766_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_6" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_3_fu_774_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_3" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_7_fu_780_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_7" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_4_fu_798_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_4" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_4_fu_804_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_4" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_8_fu_814_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_8" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_4_fu_822_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_4" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_9_fu_828_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_5_fu_846_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_5_fu_852_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_10_fu_862_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_10" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_5_fu_870_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_5" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_11_fu_876_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_11" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_6_fu_894_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_6" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_6_fu_900_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_6" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_12_fu_910_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_12" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_6_fu_918_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_6" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_13_fu_924_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_13" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_7_fu_942_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_7" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_7_fu_948_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_7" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_14_fu_958_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_14" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_7_fu_966_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_7" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_15_fu_972_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_15" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln228_fu_980_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:228" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln228" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln228_1_fu_1000_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:228" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln228_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_8_fu_1016_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_8" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_8_fu_1022_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_8" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_16_fu_1032_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_16" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_8_fu_1040_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_8" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_17_fu_1046_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_17" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln229_fu_1054_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:229" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln229" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln229_1_fu_1074_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:229" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln229_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_9_fu_1090_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_9_fu_1096_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_18_fu_1106_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_18" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_9_fu_1114_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_9" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_19_fu_1120_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_19" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln230_fu_1128_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:230" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln230" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln230_1_fu_1148_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:230" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln230_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_10_fu_1164_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_10" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_10_fu_1170_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_10" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_20_fu_1180_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_20" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_10_fu_1188_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_10" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_21_fu_1194_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_21" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln231_fu_1202_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:231" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln231" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln231_1_fu_1222_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:231" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln231_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_11_fu_1238_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_11" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_11_fu_1244_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_11" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_22_fu_1254_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_22" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_11_fu_1262_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_11" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_23_fu_1268_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_23" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln232_fu_1276_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:232" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln232" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln232_1_fu_1296_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:232" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln232_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_12_fu_1312_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_12" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_12_fu_1318_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_12" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_24_fu_1328_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_24" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_12_fu_1336_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_12" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_25_fu_1342_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_25" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln233_fu_1350_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:233" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln233" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln233_1_fu_1370_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:233" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln233_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_13_fu_1386_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_13" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_13_fu_1392_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_13" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_26_fu_1402_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_26" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_13_fu_1410_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_13" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_27_fu_1416_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_27" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln234_fu_1424_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:234" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln234" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln234_1_fu_1444_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:234" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln234_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_14_fu_1460_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_14" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_14_fu_1466_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_14" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_28_fu_1476_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_28" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_14_fu_1484_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_14" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_29_fu_1490_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_29" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln235_fu_1498_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:235" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln235" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op add" DSP="0" ID="" IMPL="fabric" LATENCY="0" LOOP="" OPTYPE="add" PRAGMA="" RTLNAME="add_ln235_1_fu_1518_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:235" STORAGESUBTYPE="" URAM="0" VARIABLE="add_ln235_1" VISIBLE="true"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setgt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setgt" PRAGMA="" RTLNAME="icmp_ln9_15_fu_1534_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln9_15" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op setlt" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="setlt" PRAGMA="" RTLNAME="icmp_ln10_15_fu_1540_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:10" STORAGESUBTYPE="" URAM="0" VARIABLE="icmp_ln10_15" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_30_fu_1550_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_30" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op or" DSP="0" ID="" IMPL="auto" LATENCY="0" LOOP="" OPTYPE="or" PRAGMA="" RTLNAME="or_ln9_15_fu_1558_p2" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="or_ln9_15" VISIBLE="false"/>
+                <BindNode BINDTYPE="op" BRAM="0" BUNDLEDNAME="" DISPNAME="bind_op select" DSP="0" ID="" IMPL="auto_sel" LATENCY="0" LOOP="" OPTYPE="select" PRAGMA="" RTLNAME="select_ln9_31_fu_1564_p3" SOURCE="../c_sources/dwt_idwt_cdf_5_3.c:9" STORAGESUBTYPE="" URAM="0" VARIABLE="select_ln9_31" VISIBLE="false"/>
+            </BindNodes>
+        </Module>
+        <Module>
+            <Name>HW_dwt53_inverse</Name>
+            <PerformanceEstimates>
+                <SummaryOfTimingAnalysis>
+                    <TargetClockPeriod>10.00</TargetClockPeriod>
+                    <ClockUncertainty>2.70</ClockUncertainty>
+                    <EstimatedClockPeriod>5.627</EstimatedClockPeriod>
+                </SummaryOfTimingAnalysis>
+                <SummaryOfOverallLatency>
+                    <Best-caseLatency>1</Best-caseLatency>
+                    <Average-caseLatency>1</Average-caseLatency>
+                    <Worst-caseLatency>1</Worst-caseLatency>
+                    <Best-caseRealTimeLatency>10.000 ns</Best-caseRealTimeLatency>
+                    <Average-caseRealTimeLatency>10.000 ns</Average-caseRealTimeLatency>
+                    <Worst-caseRealTimeLatency>10.000 ns</Worst-caseRealTimeLatency>
+                    <PipelineInitiationInterval>2</PipelineInitiationInterval>
+                    <PipelineType>no</PipelineType>
+                </SummaryOfOverallLatency>
+                <SummaryOfViolations>
+                    <IssueType>-</IssueType>
+                    <ViolationType>-</ViolationType>
+                    <SourceLocation>../c_sources/dwt_idwt_cdf_5_3.c:238</SourceLocation>
+                </SummaryOfViolations>
+            </PerformanceEstimates>
+            <AreaEstimates>
+                <Resources>
+                    <FF>2</FF>
+                    <AVAIL_FF>433920</AVAIL_FF>
+                    <UTIL_FF>~0</UTIL_FF>
+                    <LUT>2286</LUT>
+                    <AVAIL_LUT>216960</AVAIL_LUT>
+                    <UTIL_LUT>1</UTIL_LUT>
+                    <BRAM_18K>0</BRAM_18K>
+                    <AVAIL_BRAM>960</AVAIL_BRAM>
+                    <UTIL_BRAM>0</UTIL_BRAM>
+                    <DSP>0</DSP>
+                    <AVAIL_DSP>1824</AVAIL_DSP>
+                    <UTIL_DSP>0</UTIL_DSP>
+                    <URAM>0</URAM>
+                    <AVAIL_URAM>64</AVAIL_URAM>
+                    <UTIL_URAM>0</UTIL_URAM>
+                </Resources>
+            </AreaEstimates>
+        </Module>
+    </ModuleInformation>
+    <FIFOInformation/>
+    <UserConfigCommands/>
+    <Args>
+        <Arg ArgName="low_03" index="0" direction="in" srcType="long unsigned int" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="low_03" name="low_03" usage="data" direction="in"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="low_47" index="1" direction="in" srcType="long unsigned int" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="low_47" name="low_47" usage="data" direction="in"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="high_03" index="2" direction="in" srcType="long unsigned int" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="high_03" name="high_03" usage="data" direction="in"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="high_47" index="3" direction="in" srcType="long unsigned int" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="high_47" name="high_47" usage="data" direction="in"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="p_out_0" index="4" direction="out" srcType="long unsigned int*" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="p_out_0" name="p_out_0" usage="data" direction="out"/>
+                <hwRef type="port" interface="p_out_0_ap_vld" name="p_out_0_ap_vld" usage="control" direction="out"/>
+            </hwRefs>
+        </Arg>
+        <Arg ArgName="p_out_1" index="5" direction="out" srcType="long unsigned int*" srcSize="64">
+            <hwRefs>
+                <hwRef type="port" interface="p_out_1" name="p_out_1" usage="data" direction="out"/>
+                <hwRef type="port" interface="p_out_1_ap_vld" name="p_out_1_ap_vld" usage="control" direction="out"/>
+            </hwRefs>
+        </Arg>
+    </Args>
+    <Interfaces>
+        <Interface InterfaceName="ap_clk" type="clock" busTypeName="clock" mode="slave">
+            <busParams>
+                <busParam busParamName="ASSOCIATED_RESET">ap_rst</busParam>
+            </busParams>
+            <portMaps>
+                <portMap portMapName="ap_clk">CLK</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_clk</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="ap_rst" type="reset" busTypeName="reset" mode="slave">
+            <busParams>
+                <busParam busParamName="POLARITY">ACTIVE_HIGH</busParam>
+            </busParams>
+            <portMaps>
+                <portMap portMapName="ap_rst">RST</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_rst</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="ap_ctrl" type="ap_ctrl" busTypeName="acc_handshake" mode="slave">
+            <portMaps>
+                <portMap portMapName="ap_start">start</portMap>
+                <portMap portMapName="ap_done">done</portMap>
+                <portMap portMapName="ap_idle">idle</portMap>
+                <portMap portMapName="ap_ready">ready</portMap>
+            </portMaps>
+            <ports>
+                <port>ap_done</port>
+                <port>ap_idle</port>
+                <port>ap_ready</port>
+                <port>ap_start</port>
+            </ports>
+        </Interface>
+        <Interface InterfaceName="low_03" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="low_03">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>low_03</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="low_03"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="low_47" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="low_47">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>low_47</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="low_47"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="high_03" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="high_03">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>high_03</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="high_03"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="high_47" type="data" busTypeName="data" protocol="ap_none" mode="slave" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="high_47">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>high_47</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="high_47"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="p_out_0" type="data" busTypeName="data" protocol="ap_vld" mode="master" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="p_out_0">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>p_out_0</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="p_out_0"/>
+            </constraints>
+        </Interface>
+        <Interface InterfaceName="p_out_1" type="data" busTypeName="data" protocol="ap_vld" mode="master" dataWidth="64">
+            <portMaps>
+                <portMap portMapName="p_out_1">DATA</portMap>
+            </portMaps>
+            <ports>
+                <port>p_out_1</port>
+            </ports>
+            <constraints>
+                <constraint constraint_type="pragma interface" mode="ap_none" register_option="0" argName="p_out_1"/>
+            </constraints>
+        </Interface>
+    </Interfaces>
+    <ReportHWInterface>
+        <section name="HW Interfaces" level="0">
+            <item name="Other Ports">
+                <table>
+                    <keys size="4">Port, Mode, Direction, Bitwidth</keys>
+                    <column name="high_03">ap_none, in, 64</column>
+                    <column name="high_47">ap_none, in, 64</column>
+                    <column name="low_03">ap_none, in, 64</column>
+                    <column name="low_47">ap_none, in, 64</column>
+                    <column name="p_out_0">ap_vld, out, 64</column>
+                    <column name="p_out_1">ap_vld, out, 64</column>
+                </table>
+            </item>
+            <item name="TOP LEVEL CONTROL">
+                <table>
+                    <keys size="3">Interface, Type, Ports</keys>
+                    <column name="ap_clk">clock, ap_clk</column>
+                    <column name="ap_rst">reset, ap_rst</column>
+                    <column name="ap_ctrl">ap_ctrl_hs, ap_done ap_idle ap_ready ap_start</column>
+                </table>
+            </item>
+        </section>
+    </ReportHWInterface>
+    <ReportSWInterface>
+        <section name="SW I/O Information" level="0">
+            <item name="Top Function Arguments">
+                <table>
+                    <keys size="3">Argument, Direction, Datatype</keys>
+                    <column name="low_03">in, long unsigned int</column>
+                    <column name="low_47">in, long unsigned int</column>
+                    <column name="high_03">in, long unsigned int</column>
+                    <column name="high_47">in, long unsigned int</column>
+                    <column name="p_out_0">out, long unsigned int*</column>
+                    <column name="p_out_1">out, long unsigned int*</column>
+                </table>
+            </item>
+            <item name="SW-to-HW Mapping">
+                <table>
+                    <keys size="3">Argument, HW Interface, HW Type</keys>
+                    <column name="low_03">low_03, port</column>
+                    <column name="low_47">low_47, port</column>
+                    <column name="high_03">high_03, port</column>
+                    <column name="high_47">high_47, port</column>
+                    <column name="p_out_0">p_out_0, port</column>
+                    <column name="p_out_0">p_out_0_ap_vld, port</column>
+                    <column name="p_out_1">p_out_1, port</column>
+                    <column name="p_out_1">p_out_1_ap_vld, port</column>
+                </table>
+            </item>
+        </section>
+    </ReportSWInterface>
+    <ResolutionUrl key="ZZZ">docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&amp;url=ug1448-hls-guidance&amp;resourceid=ZZZ.html</ResolutionUrl>
+    <PragmaReport>
+        <Pragma type="latency" location="../c_sources/dwt_idwt_cdf_5_3.c:105" status="valid" parentFunction="hw_dwt53_forward" variable="" isDirective="0" options="min=1"/>
+        <Pragma type="latency" location="../c_sources/dwt_idwt_cdf_5_3.c:240" status="valid" parentFunction="hw_dwt53_inverse" variable="" isDirective="0" options="min=1"/>
+    </PragmaReport>
+</profile>
+

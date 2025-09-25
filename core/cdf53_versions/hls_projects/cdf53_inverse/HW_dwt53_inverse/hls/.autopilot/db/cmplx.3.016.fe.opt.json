@@ -1,0 +1,33 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "1",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 238,
+    "instructions": 154,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_inverse",
+    "stores": {
+      "L": 16,
+      "T": 2
+    },
+    "total_instructions": 339
+  },
+  "1": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 187,
+    "instructions": 185,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_inverse_core",
+    "stores": {
+      "L": 16
+    },
+    "total_instructions": 185
+  }
+}

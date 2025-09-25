@@ -1,0 +1,67 @@
+---
+MainSourceFile:  /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_18_1:  '
+    FileOffset:      18
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          13953
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_18_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_24_2:  '
+    FileOffset:      24
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          14073
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_24_2: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_30_3:  '
+    FileOffset:      30
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          14199
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_30_3: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_36_4:  '
+    FileOffset:      36
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          14338
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_36_4: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_165_1:  '
+    FileOffset:      165
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          18174
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_165_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_171_2:  '
+    FileOffset:      171
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          18289
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_171_2: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_177_3:  '
+    FileOffset:      177
+    FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/c_sources/dwt_idwt_cdf_5_3.c
+    Replacements:    
+      - FilePath:        /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_inverse/HW_dwt53_inverse/hls/.autopilot/db/dwt_idwt_cdf_5_3.pp.0.c
+        Offset:          18428
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_177_3: '
+...

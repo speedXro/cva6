@@ -1,0 +1,42 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "2",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 238,
+    "instructions": 162,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_inverse",
+    "stores": {
+      "L": 16,
+      "T": 18
+    },
+    "total_instructions": 472
+  },
+  "1": {
+    "basicblocks": 6,
+    "calls": "",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 8,
+    "instructions": 10,
+    "name": "clamp_i8",
+    "total_instructions": 10
+  },
+  "2": {
+    "basicblocks": 1,
+    "calls": "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1",
+    "file": "dwt_idwt_cdf_5_3.c",
+    "fileloc": 187,
+    "instructions": 150,
+    "loads": {
+      "L": 16
+    },
+    "name": "HW_dwt53_inverse_core",
+    "stores": {
+      "L": 16
+    },
+    "total_instructions": 310
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "cdf53_forward",
+  "type": "HLS",
+  "configuration": {
+    "componentType": "HLS",
+    "configFiles": [
+      "hls_config.cfg"
+    ],
+    "work_dir": "HW_dwt53_forward"
+  },
+  "template": "empty_hls_component"
+}

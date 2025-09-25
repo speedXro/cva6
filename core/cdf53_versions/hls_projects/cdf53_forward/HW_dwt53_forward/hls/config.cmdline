@@ -1,0 +1,3 @@
+relativeroot=/tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward
+original_argv=--mode hls --cosim --config /tools/repos/cva6/core/cdf53_versions/hls_projects/cdf53_forward/hls_config.cfg --work_dir HW_dwt53_forward 
+

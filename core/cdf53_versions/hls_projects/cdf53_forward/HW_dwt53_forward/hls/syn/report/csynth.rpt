@@ -1,0 +1,148 @@
+
+
+================================================================
+== Synthesis Summary Report of 'HW_dwt53_forward'
+================================================================
++ General Information: 
+    * Date:           Thu Sep 25 08:40:49 2025
+    * Version:        2024.2 (Build 5238294 on Nov  8 2024)
+    * Project:        HW_dwt53_forward
+    * Solution:       hls (Vivado IP Flow Target)
+    * Product family: kintexuplus
+    * Target device:  xcku5p-ffvb676-2-e
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +--------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+    |       Modules      | Issue|      | Latency | Latency| Iteration|         | Trip |          |      |    |         |           |     |
+    |       & Loops      | Type | Slack| (cycles)|  (ns)  |  Latency | Interval| Count| Pipelined| BRAM | DSP|    FF   |    LUT    | URAM|
+    +--------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+    |+ HW_dwt53_forward  |     -|  3.43|        1|  10.000|         -|        2|     -|        no|     -|   -|  2 (~0%)|  717 (~0%)|    -|
+    +--------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* Other Ports
++-----------+---------+-----------+----------+
+| Port      | Mode    | Direction | Bitwidth |
++-----------+---------+-----------+----------+
+| op1       | ap_none | in        | 64       |
+| op2       | ap_none | in        | 64       |
+| p_high_03 | ap_vld  | out       | 64       |
+| p_high_47 | ap_vld  | out       | 64       |
+| p_low_03  | ap_vld  | out       | 64       |
+| p_low_47  | ap_vld  | out       | 64       |
++-----------+---------+-----------+----------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst    | reset      | ap_rst                            |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++-----------+-----------+--------------------+
+| Argument  | Direction | Datatype           |
++-----------+-----------+--------------------+
+| op1       | in        | long unsigned int  |
+| op2       | in        | long unsigned int  |
+| p_low_03  | out       | long unsigned int* |
+| p_low_47  | out       | long unsigned int* |
+| p_high_03 | out       | long unsigned int* |
+| p_high_47 | out       | long unsigned int* |
++-----------+-----------+--------------------+
+
+* SW-to-HW Mapping
++-----------+------------------+---------+
+| Argument  | HW Interface     | HW Type |
++-----------+------------------+---------+
+| op1       | op1              | port    |
+| op2       | op2              | port    |
+| p_low_03  | p_low_03         | port    |
+| p_low_03  | p_low_03_ap_vld  | port    |
+| p_low_47  | p_low_47         | port    |
+| p_low_47  | p_low_47_ap_vld  | port    |
+| p_high_03 | p_high_03        | port    |
+| p_high_03 | p_high_03_ap_vld | port    |
+| p_high_47 | p_high_47        | port    |
+| p_high_47 | p_high_47_ap_vld | port    |
++-----------+------------------+---------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++------------------------+-----+--------+------------+-----+--------+---------+
+| Name                   | DSP | Pragma | Variable   | Op  | Impl   | Latency |
++------------------------+-----+--------+------------+-----+--------+---------+
+| + HW_dwt53_forward     | 0   |        |            |     |        |         |
+|   add_ln65_fu_336_p2   |     |        | add_ln65   | add | fabric | 0       |
+|   d_fu_356_p2          |     |        | d          | sub | fabric | 0       |
+|   add_ln66_fu_366_p2   |     |        | add_ln66   | add | fabric | 0       |
+|   d_16_fu_386_p2       |     |        | d_16       | sub | fabric | 0       |
+|   add_ln67_fu_396_p2   |     |        | add_ln67   | add | fabric | 0       |
+|   d_10_fu_416_p2       |     |        | d_10       | sub | fabric | 0       |
+|   add_ln68_fu_430_p2   |     |        | add_ln68   | add | fabric | 0       |
+|   d_17_fu_450_p2       |     |        | d_17       | sub | fabric | 0       |
+|   add_ln69_fu_464_p2   |     |        | add_ln69   | add | fabric | 0       |
+|   d_18_fu_484_p2       |     |        | d_18       | sub | fabric | 0       |
+|   add_ln70_fu_498_p2   |     |        | add_ln70   | add | fabric | 0       |
+|   d_19_fu_518_p2       |     |        | d_19       | sub | fabric | 0       |
+|   add_ln71_fu_532_p2   |     |        | add_ln71   | add | fabric | 0       |
+|   d_14_fu_552_p2       |     |        | d_14       | sub | fabric | 0       |
+|   add_ln72_fu_566_p2   |     |        | add_ln72   | add | fabric | 0       |
+|   d_20_fu_586_p2       |     |        | d_20       | sub | fabric | 0       |
+|   add_ln74_fu_600_p2   |     |        | add_ln74   | add | fabric | 0       |
+|   add_ln74_1_fu_610_p2 |     |        | add_ln74_1 | add | fabric | 0       |
+|   add_ln75_fu_634_p2   |     |        | add_ln75   | add | fabric | 0       |
+|   add_ln76_fu_658_p2   |     |        | add_ln76   | add | fabric | 0       |
+|   add_ln76_1_fu_668_p2 |     |        | add_ln76_1 | add | fabric | 0       |
+|   add_ln77_fu_692_p2   |     |        | add_ln77   | add | fabric | 0       |
+|   add_ln77_1_fu_702_p2 |     |        | add_ln77_1 | add | fabric | 0       |
+|   add_ln78_fu_726_p2   |     |        | add_ln78   | add | fabric | 0       |
+|   add_ln78_1_fu_736_p2 |     |        | add_ln78_1 | add | fabric | 0       |
+|   add_ln79_fu_760_p2   |     |        | add_ln79   | add | fabric | 0       |
+|   add_ln79_1_fu_770_p2 |     |        | add_ln79_1 | add | fabric | 0       |
+|   add_ln80_fu_794_p2   |     |        | add_ln80   | add | fabric | 0       |
+|   add_ln80_1_fu_804_p2 |     |        | add_ln80_1 | add | fabric | 0       |
+|   add_ln81_fu_828_p2   |     |        | add_ln81   | add | fabric | 0       |
+|   add_ln81_1_fu_838_p2 |     |        | add_ln81_1 | add | fabric | 0       |
+|   low_fu_862_p2        |     |        | low        | add | fabric | 0       |
+|   low_1_fu_868_p2      |     |        | low_1      | add | fabric | 0       |
+|   low_2_fu_874_p2      |     |        | low_2      | add | fabric | 0       |
+|   low_3_fu_880_p2      |     |        | low_3      | add | fabric | 0       |
+|   low_4_fu_886_p2      |     |        | low_4      | add | fabric | 0       |
+|   low_5_fu_892_p2      |     |        | low_5      | add | fabric | 0       |
+|   low_6_fu_898_p2      |     |        | low_6      | add | fabric | 0       |
+|   low_7_fu_904_p2      |     |        | low_7      | add | fabric | 0       |
++------------------------+-----+--------+------------+-----+--------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++---------+---------+---------------------------------------------------------+
+| Type    | Options | Location                                                |
++---------+---------+---------------------------------------------------------+
+| latency | min=1   | ../c_sources/dwt_idwt_cdf_5_3.c:105 in hw_dwt53_forward |
+| latency | min=1   | ../c_sources/dwt_idwt_cdf_5_3.c:240 in hw_dwt53_inverse |
++---------+---------+---------------------------------------------------------+
+
+

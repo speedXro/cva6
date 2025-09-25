@@ -1,0 +1,281 @@
+
+
+================================================================
+== Vitis HLS Report for 'HW_dwt53_forward'
+================================================================
+* Date:           Thu Sep 25 08:40:49 2025
+
+* Version:        2024.2 (Build 5238294 on Nov  8 2024)
+* Project:        HW_dwt53_forward
+* Solution:       hls (Vivado IP Flow Target)
+* Product family: kintexuplus
+* Target device:  xcku5p-ffvb676-2-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  3.869 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max    | min | max |   Type  |
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |        1|        1|  10.000 ns|  10.000 ns|    2|    2|       no|
+    +---------+---------+-----------+-----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 2
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 3.86>
+ST_1 : Operation 3 [1/1] (0.00ns)   --->   "%op2_read = read i64 @_ssdm_op_Read.ap_auto.i64, i64 %op2" [../c_sources/dwt_idwt_cdf_5_3.c:103]   --->   Operation 3 'read' 'op2_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 4 [1/1] (0.00ns)   --->   "%op1_read = read i64 @_ssdm_op_Read.ap_auto.i64, i64 %op1" [../c_sources/dwt_idwt_cdf_5_3.c:103]   --->   Operation 4 'read' 'op1_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 5 [1/1] (0.00ns)   --->   "%inputs = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 56, i32 63" [../c_sources/dwt_idwt_cdf_5_3.c:111]   --->   Operation 5 'partselect' 'inputs' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "%inputs_16 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 48, i32 55" [../c_sources/dwt_idwt_cdf_5_3.c:112]   --->   Operation 6 'partselect' 'inputs_16' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%inputs_17 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 40, i32 47" [../c_sources/dwt_idwt_cdf_5_3.c:113]   --->   Operation 7 'partselect' 'inputs_17' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%inputs_18 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 32, i32 39" [../c_sources/dwt_idwt_cdf_5_3.c:114]   --->   Operation 8 'partselect' 'inputs_18' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%inputs_19 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 24, i32 31" [../c_sources/dwt_idwt_cdf_5_3.c:115]   --->   Operation 9 'partselect' 'inputs_19' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%inputs_20 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 16, i32 23" [../c_sources/dwt_idwt_cdf_5_3.c:116]   --->   Operation 10 'partselect' 'inputs_20' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%inputs_21 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op1_read, i32 8, i32 15" [../c_sources/dwt_idwt_cdf_5_3.c:117]   --->   Operation 11 'partselect' 'inputs_21' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%inputs_22 = trunc i64 %op1_read" [../c_sources/dwt_idwt_cdf_5_3.c:118]   --->   Operation 12 'trunc' 'inputs_22' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%inputs_23 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 56, i32 63" [../c_sources/dwt_idwt_cdf_5_3.c:120]   --->   Operation 13 'partselect' 'inputs_23' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%inputs_24 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 48, i32 55" [../c_sources/dwt_idwt_cdf_5_3.c:121]   --->   Operation 14 'partselect' 'inputs_24' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%inputs_25 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 40, i32 47" [../c_sources/dwt_idwt_cdf_5_3.c:122]   --->   Operation 15 'partselect' 'inputs_25' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%inputs_26 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 32, i32 39" [../c_sources/dwt_idwt_cdf_5_3.c:123]   --->   Operation 16 'partselect' 'inputs_26' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%inputs_27 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 24, i32 31" [../c_sources/dwt_idwt_cdf_5_3.c:124]   --->   Operation 17 'partselect' 'inputs_27' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%inputs_28 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 16, i32 23" [../c_sources/dwt_idwt_cdf_5_3.c:125]   --->   Operation 18 'partselect' 'inputs_28' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%inputs_29 = partselect i8 @_ssdm_op_PartSelect.i8.i64.i32.i32, i64 %op2_read, i32 8, i32 15" [../c_sources/dwt_idwt_cdf_5_3.c:126]   --->   Operation 19 'partselect' 'inputs_29' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%inputs_30 = trunc i64 %op2_read" [../c_sources/dwt_idwt_cdf_5_3.c:127]   --->   Operation 20 'trunc' 'inputs_30' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%sext_ln44 = sext i8 %inputs" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 21 'sext' 'sext_ln44' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%sext_ln44_1 = sext i8 %inputs_17" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 22 'sext' 'sext_ln44_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%sext_ln44_2 = sext i8 %inputs_19" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 23 'sext' 'sext_ln44_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%sext_ln44_3 = sext i8 %inputs_21" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 24 'sext' 'sext_ln44_3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%sext_ln44_4 = sext i8 %inputs_23" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 25 'sext' 'sext_ln44_4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [1/1] (0.00ns)   --->   "%sext_ln44_5 = sext i8 %inputs_25" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 26 'sext' 'sext_ln44_5' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%sext_ln44_6 = sext i8 %inputs_27" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 27 'sext' 'sext_ln44_6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%sext_ln44_7 = sext i8 %inputs_29" [../c_sources/dwt_idwt_cdf_5_3.c:44->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 28 'sext' 'sext_ln44_7' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (0.00ns)   --->   "%sext_ln45 = sext i8 %inputs_16" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 29 'sext' 'sext_ln45' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 30 [1/1] (0.00ns)   --->   "%sext_ln45_1 = sext i8 %inputs_18" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 30 'sext' 'sext_ln45_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 31 [1/1] (0.00ns)   --->   "%sext_ln45_2 = sext i8 %inputs_20" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 31 'sext' 'sext_ln45_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 32 [1/1] (0.00ns)   --->   "%sext_ln45_3 = sext i8 %inputs_22" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 32 'sext' 'sext_ln45_3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 33 [1/1] (0.00ns)   --->   "%sext_ln45_4 = sext i8 %inputs_24" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 33 'sext' 'sext_ln45_4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 34 [1/1] (0.00ns)   --->   "%sext_ln45_5 = sext i8 %inputs_26" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 34 'sext' 'sext_ln45_5' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 35 [1/1] (0.00ns)   --->   "%sext_ln45_6 = sext i8 %inputs_28" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 35 'sext' 'sext_ln45_6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 36 [1/1] (0.00ns)   --->   "%sext_ln45_7 = sext i8 %inputs_30" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 36 'sext' 'sext_ln45_7' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 37 [1/1] (0.76ns)   --->   "%add_ln65 = add i9 %sext_ln44_1, i9 %sext_ln44" [../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 37 'add' 'add_ln65' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 38 [1/1] (0.00ns)   --->   "%trunc_ln = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln65, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 38 'partselect' 'trunc_ln' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 39 [1/1] (0.00ns)   --->   "%sext_ln65 = sext i8 %trunc_ln" [../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 39 'sext' 'sext_ln65' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 40 [1/1] (0.76ns)   --->   "%d = sub i9 %sext_ln45, i9 %sext_ln65" [../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 40 'sub' 'd' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%sext_ln45_8 = sext i9 %d" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 41 'sext' 'sext_ln45_8' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.76ns)   --->   "%add_ln66 = add i9 %sext_ln44_2, i9 %sext_ln44_1" [../c_sources/dwt_idwt_cdf_5_3.c:66->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 42 'add' 'add_ln66' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%trunc_ln1 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln66, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:66->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 43 'partselect' 'trunc_ln1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 44 [1/1] (0.00ns)   --->   "%sext_ln66 = sext i8 %trunc_ln1" [../c_sources/dwt_idwt_cdf_5_3.c:66->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 44 'sext' 'sext_ln66' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 45 [1/1] (0.76ns)   --->   "%d_16 = sub i9 %sext_ln45_1, i9 %sext_ln66" [../c_sources/dwt_idwt_cdf_5_3.c:66->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 45 'sub' 'd_16' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 46 [1/1] (0.00ns)   --->   "%sext_ln45_9 = sext i9 %d_16" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 46 'sext' 'sext_ln45_9' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 47 [1/1] (0.76ns)   --->   "%add_ln67 = add i9 %sext_ln44_3, i9 %sext_ln44_2" [../c_sources/dwt_idwt_cdf_5_3.c:67->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 47 'add' 'add_ln67' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 48 [1/1] (0.00ns)   --->   "%trunc_ln2 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln67, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:67->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 48 'partselect' 'trunc_ln2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 49 [1/1] (0.00ns)   --->   "%sext_ln67 = sext i8 %trunc_ln2" [../c_sources/dwt_idwt_cdf_5_3.c:67->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 49 'sext' 'sext_ln67' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 50 [1/1] (0.76ns)   --->   "%d_10 = sub i9 %sext_ln45_2, i9 %sext_ln67" [../c_sources/dwt_idwt_cdf_5_3.c:67->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 50 'sub' 'd_10' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 51 [1/1] (0.00ns)   --->   "%sext_ln45_10 = sext i9 %d_10" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 51 'sext' 'sext_ln45_10' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 52 [1/1] (0.00ns)   --->   "%sext_ln45_11 = sext i9 %d_10" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 52 'sext' 'sext_ln45_11' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 53 [1/1] (0.76ns)   --->   "%add_ln68 = add i9 %sext_ln44_4, i9 %sext_ln44_3" [../c_sources/dwt_idwt_cdf_5_3.c:68->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 53 'add' 'add_ln68' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 54 [1/1] (0.00ns)   --->   "%trunc_ln3 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln68, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:68->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 54 'partselect' 'trunc_ln3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 55 [1/1] (0.00ns)   --->   "%sext_ln68 = sext i8 %trunc_ln3" [../c_sources/dwt_idwt_cdf_5_3.c:68->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 55 'sext' 'sext_ln68' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 56 [1/1] (0.76ns)   --->   "%d_17 = sub i9 %sext_ln45_3, i9 %sext_ln68" [../c_sources/dwt_idwt_cdf_5_3.c:68->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 56 'sub' 'd_17' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 57 [1/1] (0.00ns)   --->   "%sext_ln45_12 = sext i9 %d_17" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 57 'sext' 'sext_ln45_12' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 58 [1/1] (0.00ns)   --->   "%sext_ln45_13 = sext i9 %d_17" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 58 'sext' 'sext_ln45_13' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 59 [1/1] (0.76ns)   --->   "%add_ln69 = add i9 %sext_ln44_5, i9 %sext_ln44_4" [../c_sources/dwt_idwt_cdf_5_3.c:69->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 59 'add' 'add_ln69' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 60 [1/1] (0.00ns)   --->   "%trunc_ln4 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln69, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:69->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 60 'partselect' 'trunc_ln4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 61 [1/1] (0.00ns)   --->   "%sext_ln69 = sext i8 %trunc_ln4" [../c_sources/dwt_idwt_cdf_5_3.c:69->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 61 'sext' 'sext_ln69' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 62 [1/1] (0.76ns)   --->   "%d_18 = sub i9 %sext_ln45_4, i9 %sext_ln69" [../c_sources/dwt_idwt_cdf_5_3.c:69->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 62 'sub' 'd_18' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 63 [1/1] (0.00ns)   --->   "%sext_ln45_14 = sext i9 %d_18" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 63 'sext' 'sext_ln45_14' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 64 [1/1] (0.00ns)   --->   "%sext_ln45_15 = sext i9 %d_18" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 64 'sext' 'sext_ln45_15' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 65 [1/1] (0.76ns)   --->   "%add_ln70 = add i9 %sext_ln44_6, i9 %sext_ln44_5" [../c_sources/dwt_idwt_cdf_5_3.c:70->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 65 'add' 'add_ln70' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 66 [1/1] (0.00ns)   --->   "%trunc_ln5 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln70, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:70->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 66 'partselect' 'trunc_ln5' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 67 [1/1] (0.00ns)   --->   "%sext_ln70 = sext i8 %trunc_ln5" [../c_sources/dwt_idwt_cdf_5_3.c:70->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 67 'sext' 'sext_ln70' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 68 [1/1] (0.76ns)   --->   "%d_19 = sub i9 %sext_ln45_5, i9 %sext_ln70" [../c_sources/dwt_idwt_cdf_5_3.c:70->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 68 'sub' 'd_19' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 69 [1/1] (0.00ns)   --->   "%sext_ln45_16 = sext i9 %d_19" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 69 'sext' 'sext_ln45_16' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 70 [1/1] (0.00ns)   --->   "%sext_ln45_17 = sext i9 %d_19" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 70 'sext' 'sext_ln45_17' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 71 [1/1] (0.76ns)   --->   "%add_ln71 = add i9 %sext_ln44_7, i9 %sext_ln44_6" [../c_sources/dwt_idwt_cdf_5_3.c:71->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 71 'add' 'add_ln71' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 72 [1/1] (0.00ns)   --->   "%trunc_ln6 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln71, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:71->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 72 'partselect' 'trunc_ln6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 73 [1/1] (0.00ns)   --->   "%sext_ln71 = sext i8 %trunc_ln6" [../c_sources/dwt_idwt_cdf_5_3.c:71->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 73 'sext' 'sext_ln71' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 74 [1/1] (0.76ns)   --->   "%d_14 = sub i9 %sext_ln45_6, i9 %sext_ln71" [../c_sources/dwt_idwt_cdf_5_3.c:71->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 74 'sub' 'd_14' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 75 [1/1] (0.00ns)   --->   "%sext_ln45_18 = sext i9 %d_14" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 75 'sext' 'sext_ln45_18' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 76 [1/1] (0.00ns)   --->   "%sext_ln45_19 = sext i9 %d_14" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 76 'sext' 'sext_ln45_19' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 77 [1/1] (0.76ns)   --->   "%add_ln72 = add i9 %sext_ln44_7, i9 %sext_ln44" [../c_sources/dwt_idwt_cdf_5_3.c:72->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 77 'add' 'add_ln72' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 78 [1/1] (0.00ns)   --->   "%trunc_ln7 = partselect i8 @_ssdm_op_PartSelect.i8.i9.i32.i32, i9 %add_ln72, i32 1, i32 8" [../c_sources/dwt_idwt_cdf_5_3.c:72->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 78 'partselect' 'trunc_ln7' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 79 [1/1] (0.00ns)   --->   "%sext_ln72 = sext i8 %trunc_ln7" [../c_sources/dwt_idwt_cdf_5_3.c:72->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 79 'sext' 'sext_ln72' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 80 [1/1] (0.76ns)   --->   "%d_20 = sub i9 %sext_ln45_7, i9 %sext_ln72" [../c_sources/dwt_idwt_cdf_5_3.c:72->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 80 'sub' 'd_20' <Predicate = true> <Delay = 0.76> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.76> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 81 [1/1] (0.00ns)   --->   "%sext_ln45_20 = sext i9 %d_20" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 81 'sext' 'sext_ln45_20' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 82 [1/1] (0.00ns)   --->   "%sext_ln45_21 = sext i9 %d_20" [../c_sources/dwt_idwt_cdf_5_3.c:45->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 82 'sext' 'sext_ln45_21' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 83 [1/1] (0.77ns)   --->   "%add_ln74 = add i10 %sext_ln45_8, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 83 'add' 'add_ln74' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 84 [1/1] (0.00ns)   --->   "%sext_ln74_1 = sext i10 %add_ln74" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 84 'sext' 'sext_ln74_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 85 [1/1] (0.78ns)   --->   "%add_ln74_1 = add i11 %sext_ln45_21, i11 %sext_ln74_1" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 85 'add' 'add_ln74_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 86 [1/1] (0.00ns)   --->   "%sext_ln74 = sext i8 %inputs" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 86 'sext' 'sext_ln74' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 87 [1/1] (0.00ns)   --->   "%tmp = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln74_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 87 'partselect' 'tmp' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 88 [1/1] (0.00ns)   --->   "%sext_ln74_2 = sext i9 %tmp" [../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 88 'sext' 'sext_ln74_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 89 [1/1] (0.78ns)   --->   "%add_ln75 = add i11 %sext_ln74_1, i11 %sext_ln45_9" [../c_sources/dwt_idwt_cdf_5_3.c:75->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 89 'add' 'add_ln75' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 90 [1/1] (0.00ns)   --->   "%sext_ln75 = sext i8 %inputs_17" [../c_sources/dwt_idwt_cdf_5_3.c:75->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 90 'sext' 'sext_ln75' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 91 [1/1] (0.00ns)   --->   "%tmp_1 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln75, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:75->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 91 'partselect' 'tmp_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 92 [1/1] (0.00ns)   --->   "%sext_ln75_1 = sext i9 %tmp_1" [../c_sources/dwt_idwt_cdf_5_3.c:75->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 92 'sext' 'sext_ln75_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 93 [1/1] (0.77ns)   --->   "%add_ln76 = add i10 %sext_ln45_11, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 93 'add' 'add_ln76' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 94 [1/1] (0.00ns)   --->   "%sext_ln76_1 = sext i10 %add_ln76" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 94 'sext' 'sext_ln76_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 95 [1/1] (0.78ns)   --->   "%add_ln76_1 = add i11 %sext_ln76_1, i11 %sext_ln45_9" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 95 'add' 'add_ln76_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 96 [1/1] (0.00ns)   --->   "%sext_ln76 = sext i8 %inputs_19" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 96 'sext' 'sext_ln76' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 97 [1/1] (0.00ns)   --->   "%tmp_2 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln76_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 97 'partselect' 'tmp_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 98 [1/1] (0.00ns)   --->   "%sext_ln76_2 = sext i9 %tmp_2" [../c_sources/dwt_idwt_cdf_5_3.c:76->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 98 'sext' 'sext_ln76_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 99 [1/1] (0.77ns)   --->   "%add_ln77 = add i10 %sext_ln45_13, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 99 'add' 'add_ln77' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 100 [1/1] (0.00ns)   --->   "%sext_ln77_1 = sext i10 %add_ln77" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 100 'sext' 'sext_ln77_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 101 [1/1] (0.78ns)   --->   "%add_ln77_1 = add i11 %sext_ln77_1, i11 %sext_ln45_10" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 101 'add' 'add_ln77_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 102 [1/1] (0.00ns)   --->   "%sext_ln77 = sext i8 %inputs_21" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 102 'sext' 'sext_ln77' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 103 [1/1] (0.00ns)   --->   "%tmp_3 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln77_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 103 'partselect' 'tmp_3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 104 [1/1] (0.00ns)   --->   "%sext_ln77_2 = sext i9 %tmp_3" [../c_sources/dwt_idwt_cdf_5_3.c:77->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 104 'sext' 'sext_ln77_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 105 [1/1] (0.77ns)   --->   "%add_ln78 = add i10 %sext_ln45_15, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 105 'add' 'add_ln78' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 106 [1/1] (0.00ns)   --->   "%sext_ln78_1 = sext i10 %add_ln78" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 106 'sext' 'sext_ln78_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 107 [1/1] (0.78ns)   --->   "%add_ln78_1 = add i11 %sext_ln78_1, i11 %sext_ln45_12" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 107 'add' 'add_ln78_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 108 [1/1] (0.00ns)   --->   "%sext_ln78 = sext i8 %inputs_23" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 108 'sext' 'sext_ln78' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 109 [1/1] (0.00ns)   --->   "%tmp_4 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln78_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 109 'partselect' 'tmp_4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 110 [1/1] (0.00ns)   --->   "%sext_ln78_2 = sext i9 %tmp_4" [../c_sources/dwt_idwt_cdf_5_3.c:78->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 110 'sext' 'sext_ln78_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 111 [1/1] (0.77ns)   --->   "%add_ln79 = add i10 %sext_ln45_17, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 111 'add' 'add_ln79' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 112 [1/1] (0.00ns)   --->   "%sext_ln79_1 = sext i10 %add_ln79" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 112 'sext' 'sext_ln79_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 113 [1/1] (0.78ns)   --->   "%add_ln79_1 = add i11 %sext_ln79_1, i11 %sext_ln45_14" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 113 'add' 'add_ln79_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 114 [1/1] (0.00ns)   --->   "%sext_ln79 = sext i8 %inputs_25" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 114 'sext' 'sext_ln79' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 115 [1/1] (0.00ns)   --->   "%tmp_5 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln79_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 115 'partselect' 'tmp_5' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 116 [1/1] (0.00ns)   --->   "%sext_ln79_2 = sext i9 %tmp_5" [../c_sources/dwt_idwt_cdf_5_3.c:79->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 116 'sext' 'sext_ln79_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 117 [1/1] (0.77ns)   --->   "%add_ln80 = add i10 %sext_ln45_19, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 117 'add' 'add_ln80' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 118 [1/1] (0.00ns)   --->   "%sext_ln80_1 = sext i10 %add_ln80" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 118 'sext' 'sext_ln80_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 119 [1/1] (0.78ns)   --->   "%add_ln80_1 = add i11 %sext_ln80_1, i11 %sext_ln45_16" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 119 'add' 'add_ln80_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 120 [1/1] (0.00ns)   --->   "%sext_ln80 = sext i8 %inputs_27" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 120 'sext' 'sext_ln80' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 121 [1/1] (0.00ns)   --->   "%tmp_6 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln80_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 121 'partselect' 'tmp_6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 122 [1/1] (0.00ns)   --->   "%sext_ln80_2 = sext i9 %tmp_6" [../c_sources/dwt_idwt_cdf_5_3.c:80->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 122 'sext' 'sext_ln80_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 123 [1/1] (0.77ns)   --->   "%add_ln81 = add i10 %sext_ln45_20, i10 2" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 123 'add' 'add_ln81' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 124 [1/1] (0.00ns)   --->   "%sext_ln81_1 = sext i10 %add_ln81" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 124 'sext' 'sext_ln81_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 125 [1/1] (0.78ns)   --->   "%add_ln81_1 = add i11 %sext_ln81_1, i11 %sext_ln45_18" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 125 'add' 'add_ln81_1' <Predicate = true> <Delay = 0.78> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.78> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 126 [1/1] (0.00ns)   --->   "%sext_ln81 = sext i8 %inputs_29" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 126 'sext' 'sext_ln81' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 127 [1/1] (0.00ns)   --->   "%tmp_7 = partselect i9 @_ssdm_op_PartSelect.i9.i11.i32.i32, i11 %add_ln81_1, i32 2, i32 10" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 127 'partselect' 'tmp_7' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 128 [1/1] (0.00ns)   --->   "%sext_ln81_2 = sext i9 %tmp_7" [../c_sources/dwt_idwt_cdf_5_3.c:81->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 128 'sext' 'sext_ln81_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 129 [1/1] (0.77ns)   --->   "%low = add i16 %sext_ln74_2, i16 %sext_ln74" [../c_sources/dwt_idwt_cdf_5_3.c:83->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 129 'add' 'low' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 130 [1/1] (0.77ns)   --->   "%low_1 = add i16 %sext_ln75_1, i16 %sext_ln75" [../c_sources/dwt_idwt_cdf_5_3.c:84->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 130 'add' 'low_1' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 131 [1/1] (0.77ns)   --->   "%low_2 = add i16 %sext_ln76_2, i16 %sext_ln76" [../c_sources/dwt_idwt_cdf_5_3.c:85->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 131 'add' 'low_2' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 132 [1/1] (0.77ns)   --->   "%low_3 = add i16 %sext_ln77_2, i16 %sext_ln77" [../c_sources/dwt_idwt_cdf_5_3.c:86->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 132 'add' 'low_3' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 133 [1/1] (0.77ns)   --->   "%low_4 = add i16 %sext_ln78_2, i16 %sext_ln78" [../c_sources/dwt_idwt_cdf_5_3.c:87->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 133 'add' 'low_4' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 134 [1/1] (0.77ns)   --->   "%low_5 = add i16 %sext_ln79_2, i16 %sext_ln79" [../c_sources/dwt_idwt_cdf_5_3.c:88->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 134 'add' 'low_5' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 135 [1/1] (0.77ns)   --->   "%low_6 = add i16 %sext_ln80_2, i16 %sext_ln80" [../c_sources/dwt_idwt_cdf_5_3.c:89->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 135 'add' 'low_6' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 136 [1/1] (0.77ns)   --->   "%low_7 = add i16 %sext_ln81_2, i16 %sext_ln81" [../c_sources/dwt_idwt_cdf_5_3.c:90->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 136 'add' 'low_7' <Predicate = true> <Delay = 0.77> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.77> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 137 [1/1] (0.00ns)   --->   "%sext_ln93 = sext i9 %d_16" [../c_sources/dwt_idwt_cdf_5_3.c:93->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 137 'sext' 'sext_ln93' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 138 [1/1] (0.00ns)   --->   "%sext_ln95 = sext i9 %d_17" [../c_sources/dwt_idwt_cdf_5_3.c:95->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 138 'sext' 'sext_ln95' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 139 [1/1] (0.00ns)   --->   "%sext_ln97 = sext i9 %d_19" [../c_sources/dwt_idwt_cdf_5_3.c:97->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 139 'sext' 'sext_ln97' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 140 [1/1] (0.00ns)   --->   "%sext_ln99 = sext i9 %d_20" [../c_sources/dwt_idwt_cdf_5_3.c:99->../c_sources/dwt_idwt_cdf_5_3.c:129]   --->   Operation 140 'sext' 'sext_ln99' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 141 [1/1] (0.00ns)   --->   "%or_ln = bitconcatenate i64 @_ssdm_op_BitConcatenate.i64.i16.i16.i16.i16, i16 %low, i16 %low_1, i16 %low_2, i16 %low_3" [../c_sources/dwt_idwt_cdf_5_3.c:136]   --->   Operation 141 'bitconcatenate' 'or_ln' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 142 [1/1] (0.00ns)   --->   "%write_ln136 = write void @_ssdm_op_Write.ap_auto.i64P0A, i64 %p_low_03, i64 %or_ln" [../c_sources/dwt_idwt_cdf_5_3.c:136]   --->   Operation 142 'write' 'write_ln136' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 143 [1/1] (0.00ns)   --->   "%or_ln1 = bitconcatenate i64 @_ssdm_op_BitConcatenate.i64.i16.i16.i16.i16, i16 %low_4, i16 %low_5, i16 %low_6, i16 %low_7" [../c_sources/dwt_idwt_cdf_5_3.c:143]   --->   Operation 143 'bitconcatenate' 'or_ln1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 144 [1/1] (0.00ns)   --->   "%write_ln143 = write void @_ssdm_op_Write.ap_auto.i64P0A, i64 %p_low_47, i64 %or_ln1" [../c_sources/dwt_idwt_cdf_5_3.c:143]   --->   Operation 144 'write' 'write_ln143' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 145 [1/1] (0.00ns)   --->   "%sext_ln150 = sext i9 %d_10" [../c_sources/dwt_idwt_cdf_5_3.c:150]   --->   Operation 145 'sext' 'sext_ln150' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 146 [1/1] (0.00ns)   --->   "%or_ln2 = bitconcatenate i57 @_ssdm_op_BitConcatenate.i57.i9.i16.i16.i16, i9 %d, i16 %sext_ln93, i16 %sext_ln150, i16 %sext_ln95" [../c_sources/dwt_idwt_cdf_5_3.c:150]   --->   Operation 146 'bitconcatenate' 'or_ln2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 147 [1/1] (0.00ns)   --->   "%sext_ln150_1 = sext i57 %or_ln2" [../c_sources/dwt_idwt_cdf_5_3.c:150]   --->   Operation 147 'sext' 'sext_ln150_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 148 [1/1] (0.00ns)   --->   "%write_ln150 = write void @_ssdm_op_Write.ap_auto.i64P0A, i64 %p_high_03, i64 %sext_ln150_1" [../c_sources/dwt_idwt_cdf_5_3.c:150]   --->   Operation 148 'write' 'write_ln150' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 149 [1/1] (0.00ns)   --->   "%sext_ln157 = sext i9 %d_14" [../c_sources/dwt_idwt_cdf_5_3.c:157]   --->   Operation 149 'sext' 'sext_ln157' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 150 [1/1] (0.00ns)   --->   "%or_ln3 = bitconcatenate i57 @_ssdm_op_BitConcatenate.i57.i9.i16.i16.i16, i9 %d_18, i16 %sext_ln97, i16 %sext_ln157, i16 %sext_ln99" [../c_sources/dwt_idwt_cdf_5_3.c:157]   --->   Operation 150 'bitconcatenate' 'or_ln3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 151 [1/1] (0.00ns)   --->   "%sext_ln157_1 = sext i57 %or_ln3" [../c_sources/dwt_idwt_cdf_5_3.c:157]   --->   Operation 151 'sext' 'sext_ln157_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 152 [1/1] (0.00ns)   --->   "%write_ln157 = write void @_ssdm_op_Write.ap_auto.i64P0A, i64 %p_high_47, i64 %sext_ln157_1" [../c_sources/dwt_idwt_cdf_5_3.c:157]   --->   Operation 152 'write' 'write_ln157' <Predicate = true> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 0.00>
+ST_2 : Operation 153 [1/1] (0.00ns)   --->   "%spectopmodule_ln103 = spectopmodule void @_ssdm_op_SpecTopModule, void @empty_1" [../c_sources/dwt_idwt_cdf_5_3.c:103]   --->   Operation 153 'spectopmodule' 'spectopmodule_ln103' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 154 [1/1] (0.00ns)   --->   "%speclatency_ln105 = speclatency void @_ssdm_op_SpecLatency, i64 1, i64 65535, void @empty_0" [../c_sources/dwt_idwt_cdf_5_3.c:105]   --->   Operation 154 'speclatency' 'speclatency_ln105' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 155 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %op1"   --->   Operation 155 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 156 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %op1, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 156 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 157 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %op2"   --->   Operation 157 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 158 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %op2, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 158 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 159 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %p_low_03"   --->   Operation 159 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 160 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %p_low_03, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 160 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 161 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %p_low_47"   --->   Operation 161 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 162 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %p_low_47, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 162 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 163 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %p_high_03"   --->   Operation 163 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 164 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %p_high_03, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 164 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 165 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i64 %p_high_47"   --->   Operation 165 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 166 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i64 %p_high_47, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 166 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 167 [1/1] (0.00ns)   --->   "%ret_ln159 = ret" [../c_sources/dwt_idwt_cdf_5_3.c:159]   --->   Operation 167 'ret' 'ret_ln159' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10.000ns, clock uncertainty: 2.700ns.
+
+ <State 1>: 3.869ns
+The critical path consists of the following:
+	wire read operation ('op1', ../c_sources/dwt_idwt_cdf_5_3.c:103) on port 'op1' (../c_sources/dwt_idwt_cdf_5_3.c:103) [22]  (0.000 ns)
+	'add' operation 9 bit ('add_ln65', ../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129) [55]  (0.765 ns)
+	'sub' operation 9 bit ('d', ../c_sources/dwt_idwt_cdf_5_3.c:65->../c_sources/dwt_idwt_cdf_5_3.c:129) [58]  (0.765 ns)
+	'add' operation 10 bit ('add_ln74', ../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129) [101]  (0.776 ns)
+	'add' operation 11 bit ('add_ln74_1', ../c_sources/dwt_idwt_cdf_5_3.c:74->../c_sources/dwt_idwt_cdf_5_3.c:129) [103]  (0.787 ns)
+	'add' operation 16 bit ('low', ../c_sources/dwt_idwt_cdf_5_3.c:83->../c_sources/dwt_idwt_cdf_5_3.c:129) [147]  (0.776 ns)
+
+ <State 2>: 0.000ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

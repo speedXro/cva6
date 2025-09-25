@@ -1,0 +1,3 @@
+<pragmas>
+<pragma file="../c_sources/dwt_idwt_cdf_5_3.c" line="105" pragmaType="latency" parentfunction="HW_dwt53_forward" min="1" max="65535"/>
+</pragmas>

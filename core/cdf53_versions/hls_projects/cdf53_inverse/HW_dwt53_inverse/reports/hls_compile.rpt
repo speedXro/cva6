@@ -1,0 +1,228 @@
+
+
+================================================================
+== Synthesis Summary Report of 'HW_dwt53_inverse'
+================================================================
++ General Information: 
+    * Date:           Thu Sep 25 08:43:59 2025
+    * Version:        2024.2 (Build 5238294 on Nov  8 2024)
+    * Project:        HW_dwt53_inverse
+    * Solution:       hls (Vivado IP Flow Target)
+    * Product family: kintexuplus
+    * Target device:  xcku5p-ffvb676-2-e
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +--------------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+    |          Modules         | Issue|      | Latency | Latency| Iteration|         | Trip |          |      |    |         |           |     |
+    |          & Loops         | Type | Slack| (cycles)|  (ns)  |  Latency | Interval| Count| Pipelined| BRAM | DSP|    FF   |    LUT    | URAM|
+    +--------------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+    |+ HW_dwt53_inverse        |     -|  1.67|        1|  10.000|         -|        2|     -|        no|     -|   -|  2 (~0%)|  2286 (1%)|    -|
+    | + HW_dwt53_inverse_core  |     -|  1.67|        0|   0.000|         -|        0|     -|        no|     -|   -|        -|  2272 (1%)|    -|
+    +--------------------------+------+------+---------+--------+----------+---------+------+----------+------+----+---------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* Other Ports
++---------+---------+-----------+----------+
+| Port    | Mode    | Direction | Bitwidth |
++---------+---------+-----------+----------+
+| high_03 | ap_none | in        | 64       |
+| high_47 | ap_none | in        | 64       |
+| low_03  | ap_none | in        | 64       |
+| low_47  | ap_none | in        | 64       |
+| p_out_0 | ap_vld  | out       | 64       |
+| p_out_1 | ap_vld  | out       | 64       |
++---------+---------+-----------+----------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst    | reset      | ap_rst                            |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+--------------------+
+| Argument | Direction | Datatype           |
++----------+-----------+--------------------+
+| low_03   | in        | long unsigned int  |
+| low_47   | in        | long unsigned int  |
+| high_03  | in        | long unsigned int  |
+| high_47  | in        | long unsigned int  |
+| p_out_0  | out       | long unsigned int* |
+| p_out_1  | out       | long unsigned int* |
++----------+-----------+--------------------+
+
+* SW-to-HW Mapping
++----------+----------------+---------+
+| Argument | HW Interface   | HW Type |
++----------+----------------+---------+
+| low_03   | low_03         | port    |
+| low_47   | low_47         | port    |
+| high_03  | high_03        | port    |
+| high_47  | high_47        | port    |
+| p_out_0  | p_out_0        | port    |
+| p_out_0  | p_out_0_ap_vld | port    |
+| p_out_1  | p_out_1        | port    |
+| p_out_1  | p_out_1_ap_vld | port    |
++----------+----------------+---------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-----------------------------+-----+--------+---------------+--------+----------+---------+
+| Name                        | DSP | Pragma | Variable      | Op     | Impl     | Latency |
++-----------------------------+-----+--------+---------------+--------+----------+---------+
+| + HW_dwt53_inverse          | 0   |        |               |        |          |         |
+|  + HW_dwt53_inverse_core    | 0   |        |               |        |          |         |
+|    add_ln210_fu_286_p2      |     |        | add_ln210     | add    | fabric   | 0       |
+|    add_ln210_1_fu_296_p2    |     |        | add_ln210_1   | add    | fabric   | 0       |
+|    s_fu_316_p2              |     |        | s             | sub    | fabric   | 0       |
+|    add_ln211_fu_326_p2      |     |        | add_ln211     | add    | fabric   | 0       |
+|    s_1_fu_346_p2            |     |        | s_1           | sub    | fabric   | 0       |
+|    add_ln212_fu_356_p2      |     |        | add_ln212     | add    | fabric   | 0       |
+|    add_ln212_1_fu_366_p2    |     |        | add_ln212_1   | add    | fabric   | 0       |
+|    s_2_fu_386_p2            |     |        | s_2           | sub    | fabric   | 0       |
+|    add_ln213_fu_396_p2      |     |        | add_ln213     | add    | fabric   | 0       |
+|    add_ln213_1_fu_406_p2    |     |        | add_ln213_1   | add    | fabric   | 0       |
+|    s_3_fu_426_p2            |     |        | s_3           | sub    | fabric   | 0       |
+|    add_ln214_fu_436_p2      |     |        | add_ln214     | add    | fabric   | 0       |
+|    add_ln214_1_fu_446_p2    |     |        | add_ln214_1   | add    | fabric   | 0       |
+|    s_4_fu_466_p2            |     |        | s_4           | sub    | fabric   | 0       |
+|    add_ln215_fu_476_p2      |     |        | add_ln215     | add    | fabric   | 0       |
+|    add_ln215_1_fu_486_p2    |     |        | add_ln215_1   | add    | fabric   | 0       |
+|    s_5_fu_506_p2            |     |        | s_5           | sub    | fabric   | 0       |
+|    add_ln216_fu_516_p2      |     |        | add_ln216     | add    | fabric   | 0       |
+|    add_ln216_1_fu_526_p2    |     |        | add_ln216_1   | add    | fabric   | 0       |
+|    s_6_fu_546_p2            |     |        | s_6           | sub    | fabric   | 0       |
+|    add_ln217_fu_556_p2      |     |        | add_ln217     | add    | fabric   | 0       |
+|    add_ln217_1_fu_566_p2    |     |        | add_ln217_1   | add    | fabric   | 0       |
+|    s_7_fu_586_p2            |     |        | s_7           | sub    | fabric   | 0       |
+|    icmp_ln9_fu_606_p2       |     |        | icmp_ln9      | setgt  | auto     | 0       |
+|    icmp_ln10_fu_612_p2      |     |        | icmp_ln10     | setlt  | auto     | 0       |
+|    select_ln9_fu_622_p3     |     |        | select_ln9    | select | auto_sel | 0       |
+|    or_ln9_fu_630_p2         |     |        | or_ln9        | or     | auto     | 0       |
+|    select_ln9_1_fu_636_p3   |     |        | select_ln9_1  | select | auto_sel | 0       |
+|    icmp_ln9_1_fu_654_p2     |     |        | icmp_ln9_1    | setgt  | auto     | 0       |
+|    icmp_ln10_1_fu_660_p2    |     |        | icmp_ln10_1   | setlt  | auto     | 0       |
+|    select_ln9_2_fu_670_p3   |     |        | select_ln9_2  | select | auto_sel | 0       |
+|    or_ln9_1_fu_678_p2       |     |        | or_ln9_1      | or     | auto     | 0       |
+|    select_ln9_3_fu_684_p3   |     |        | select_ln9_3  | select | auto_sel | 0       |
+|    icmp_ln9_2_fu_702_p2     |     |        | icmp_ln9_2    | setgt  | auto     | 0       |
+|    icmp_ln10_2_fu_708_p2    |     |        | icmp_ln10_2   | setlt  | auto     | 0       |
+|    select_ln9_4_fu_718_p3   |     |        | select_ln9_4  | select | auto_sel | 0       |
+|    or_ln9_2_fu_726_p2       |     |        | or_ln9_2      | or     | auto     | 0       |
+|    select_ln9_5_fu_732_p3   |     |        | select_ln9_5  | select | auto_sel | 0       |
+|    icmp_ln9_3_fu_750_p2     |     |        | icmp_ln9_3    | setgt  | auto     | 0       |
+|    icmp_ln10_3_fu_756_p2    |     |        | icmp_ln10_3   | setlt  | auto     | 0       |
+|    select_ln9_6_fu_766_p3   |     |        | select_ln9_6  | select | auto_sel | 0       |
+|    or_ln9_3_fu_774_p2       |     |        | or_ln9_3      | or     | auto     | 0       |
+|    select_ln9_7_fu_780_p3   |     |        | select_ln9_7  | select | auto_sel | 0       |
+|    icmp_ln9_4_fu_798_p2     |     |        | icmp_ln9_4    | setgt  | auto     | 0       |
+|    icmp_ln10_4_fu_804_p2    |     |        | icmp_ln10_4   | setlt  | auto     | 0       |
+|    select_ln9_8_fu_814_p3   |     |        | select_ln9_8  | select | auto_sel | 0       |
+|    or_ln9_4_fu_822_p2       |     |        | or_ln9_4      | or     | auto     | 0       |
+|    select_ln9_9_fu_828_p3   |     |        | select_ln9_9  | select | auto_sel | 0       |
+|    icmp_ln9_5_fu_846_p2     |     |        | icmp_ln9_5    | setgt  | auto     | 0       |
+|    icmp_ln10_5_fu_852_p2    |     |        | icmp_ln10_5   | setlt  | auto     | 0       |
+|    select_ln9_10_fu_862_p3  |     |        | select_ln9_10 | select | auto_sel | 0       |
+|    or_ln9_5_fu_870_p2       |     |        | or_ln9_5      | or     | auto     | 0       |
+|    select_ln9_11_fu_876_p3  |     |        | select_ln9_11 | select | auto_sel | 0       |
+|    icmp_ln9_6_fu_894_p2     |     |        | icmp_ln9_6    | setgt  | auto     | 0       |
+|    icmp_ln10_6_fu_900_p2    |     |        | icmp_ln10_6   | setlt  | auto     | 0       |
+|    select_ln9_12_fu_910_p3  |     |        | select_ln9_12 | select | auto_sel | 0       |
+|    or_ln9_6_fu_918_p2       |     |        | or_ln9_6      | or     | auto     | 0       |
+|    select_ln9_13_fu_924_p3  |     |        | select_ln9_13 | select | auto_sel | 0       |
+|    icmp_ln9_7_fu_942_p2     |     |        | icmp_ln9_7    | setgt  | auto     | 0       |
+|    icmp_ln10_7_fu_948_p2    |     |        | icmp_ln10_7   | setlt  | auto     | 0       |
+|    select_ln9_14_fu_958_p3  |     |        | select_ln9_14 | select | auto_sel | 0       |
+|    or_ln9_7_fu_966_p2       |     |        | or_ln9_7      | or     | auto     | 0       |
+|    select_ln9_15_fu_972_p3  |     |        | select_ln9_15 | select | auto_sel | 0       |
+|    add_ln228_fu_980_p2      |     |        | add_ln228     | add    | fabric   | 0       |
+|    add_ln228_1_fu_1000_p2   |     |        | add_ln228_1   | add    | fabric   | 0       |
+|    icmp_ln9_8_fu_1016_p2    |     |        | icmp_ln9_8    | setgt  | auto     | 0       |
+|    icmp_ln10_8_fu_1022_p2   |     |        | icmp_ln10_8   | setlt  | auto     | 0       |
+|    select_ln9_16_fu_1032_p3 |     |        | select_ln9_16 | select | auto_sel | 0       |
+|    or_ln9_8_fu_1040_p2      |     |        | or_ln9_8      | or     | auto     | 0       |
+|    select_ln9_17_fu_1046_p3 |     |        | select_ln9_17 | select | auto_sel | 0       |
+|    add_ln229_fu_1054_p2     |     |        | add_ln229     | add    | fabric   | 0       |
+|    add_ln229_1_fu_1074_p2   |     |        | add_ln229_1   | add    | fabric   | 0       |
+|    icmp_ln9_9_fu_1090_p2    |     |        | icmp_ln9_9    | setgt  | auto     | 0       |
+|    icmp_ln10_9_fu_1096_p2   |     |        | icmp_ln10_9   | setlt  | auto     | 0       |
+|    select_ln9_18_fu_1106_p3 |     |        | select_ln9_18 | select | auto_sel | 0       |
+|    or_ln9_9_fu_1114_p2      |     |        | or_ln9_9      | or     | auto     | 0       |
+|    select_ln9_19_fu_1120_p3 |     |        | select_ln9_19 | select | auto_sel | 0       |
+|    add_ln230_fu_1128_p2     |     |        | add_ln230     | add    | fabric   | 0       |
+|    add_ln230_1_fu_1148_p2   |     |        | add_ln230_1   | add    | fabric   | 0       |
+|    icmp_ln9_10_fu_1164_p2   |     |        | icmp_ln9_10   | setgt  | auto     | 0       |
+|    icmp_ln10_10_fu_1170_p2  |     |        | icmp_ln10_10  | setlt  | auto     | 0       |
+|    select_ln9_20_fu_1180_p3 |     |        | select_ln9_20 | select | auto_sel | 0       |
+|    or_ln9_10_fu_1188_p2     |     |        | or_ln9_10     | or     | auto     | 0       |
+|    select_ln9_21_fu_1194_p3 |     |        | select_ln9_21 | select | auto_sel | 0       |
+|    add_ln231_fu_1202_p2     |     |        | add_ln231     | add    | fabric   | 0       |
+|    add_ln231_1_fu_1222_p2   |     |        | add_ln231_1   | add    | fabric   | 0       |
+|    icmp_ln9_11_fu_1238_p2   |     |        | icmp_ln9_11   | setgt  | auto     | 0       |
+|    icmp_ln10_11_fu_1244_p2  |     |        | icmp_ln10_11  | setlt  | auto     | 0       |
+|    select_ln9_22_fu_1254_p3 |     |        | select_ln9_22 | select | auto_sel | 0       |
+|    or_ln9_11_fu_1262_p2     |     |        | or_ln9_11     | or     | auto     | 0       |
+|    select_ln9_23_fu_1268_p3 |     |        | select_ln9_23 | select | auto_sel | 0       |
+|    add_ln232_fu_1276_p2     |     |        | add_ln232     | add    | fabric   | 0       |
+|    add_ln232_1_fu_1296_p2   |     |        | add_ln232_1   | add    | fabric   | 0       |
+|    icmp_ln9_12_fu_1312_p2   |     |        | icmp_ln9_12   | setgt  | auto     | 0       |
+|    icmp_ln10_12_fu_1318_p2  |     |        | icmp_ln10_12  | setlt  | auto     | 0       |
+|    select_ln9_24_fu_1328_p3 |     |        | select_ln9_24 | select | auto_sel | 0       |
+|    or_ln9_12_fu_1336_p2     |     |        | or_ln9_12     | or     | auto     | 0       |
+|    select_ln9_25_fu_1342_p3 |     |        | select_ln9_25 | select | auto_sel | 0       |
+|    add_ln233_fu_1350_p2     |     |        | add_ln233     | add    | fabric   | 0       |
+|    add_ln233_1_fu_1370_p2   |     |        | add_ln233_1   | add    | fabric   | 0       |
+|    icmp_ln9_13_fu_1386_p2   |     |        | icmp_ln9_13   | setgt  | auto     | 0       |
+|    icmp_ln10_13_fu_1392_p2  |     |        | icmp_ln10_13  | setlt  | auto     | 0       |
+|    select_ln9_26_fu_1402_p3 |     |        | select_ln9_26 | select | auto_sel | 0       |
+|    or_ln9_13_fu_1410_p2     |     |        | or_ln9_13     | or     | auto     | 0       |
+|    select_ln9_27_fu_1416_p3 |     |        | select_ln9_27 | select | auto_sel | 0       |
+|    add_ln234_fu_1424_p2     |     |        | add_ln234     | add    | fabric   | 0       |
+|    add_ln234_1_fu_1444_p2   |     |        | add_ln234_1   | add    | fabric   | 0       |
+|    icmp_ln9_14_fu_1460_p2   |     |        | icmp_ln9_14   | setgt  | auto     | 0       |
+|    icmp_ln10_14_fu_1466_p2  |     |        | icmp_ln10_14  | setlt  | auto     | 0       |
+|    select_ln9_28_fu_1476_p3 |     |        | select_ln9_28 | select | auto_sel | 0       |
+|    or_ln9_14_fu_1484_p2     |     |        | or_ln9_14     | or     | auto     | 0       |
+|    select_ln9_29_fu_1490_p3 |     |        | select_ln9_29 | select | auto_sel | 0       |
+|    add_ln235_fu_1498_p2     |     |        | add_ln235     | add    | fabric   | 0       |
+|    add_ln235_1_fu_1518_p2   |     |        | add_ln235_1   | add    | fabric   | 0       |
+|    icmp_ln9_15_fu_1534_p2   |     |        | icmp_ln9_15   | setgt  | auto     | 0       |
+|    icmp_ln10_15_fu_1540_p2  |     |        | icmp_ln10_15  | setlt  | auto     | 0       |
+|    select_ln9_30_fu_1550_p3 |     |        | select_ln9_30 | select | auto_sel | 0       |
+|    or_ln9_15_fu_1558_p2     |     |        | or_ln9_15     | or     | auto     | 0       |
+|    select_ln9_31_fu_1564_p3 |     |        | select_ln9_31 | select | auto_sel | 0       |
++-----------------------------+-----+--------+---------------+--------+----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++---------+---------+---------------------------------------------------------+
+| Type    | Options | Location                                                |
++---------+---------+---------------------------------------------------------+
+| latency | min=1   | ../c_sources/dwt_idwt_cdf_5_3.c:105 in hw_dwt53_forward |
+| latency | min=1   | ../c_sources/dwt_idwt_cdf_5_3.c:240 in hw_dwt53_inverse |
++---------+---------+---------------------------------------------------------+
+
+

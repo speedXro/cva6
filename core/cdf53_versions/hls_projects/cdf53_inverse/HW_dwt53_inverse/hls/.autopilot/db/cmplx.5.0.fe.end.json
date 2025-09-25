@@ -1,0 +1,20 @@
+{
+    "1": {
+        "name": "HW_dwt53_inverse_core",
+        "file": "..\/c_sources\/dwt_idwt_cdf_5_3.c",
+        "fileloc": "187",
+        "instructions": "261",
+        "total_instructions": "261",
+        "calls": "",
+        "basicblocks": "1"
+    },
+    "0": {
+        "name": "HW_dwt53_inverse",
+        "file": "dwt_idwt_cdf_5_3.c",
+        "fileloc": "238",
+        "instructions": "56",
+        "total_instructions": "317",
+        "calls": "1",
+        "basicblocks": "1"
+    }
+}
