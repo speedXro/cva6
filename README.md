@@ -4,7 +4,7 @@ This is the KCU116 branch of the CVA6 fork used for AMD KCU116 development board
 This branch contains the DWT CDF 5/3 extensions files, the extension for implementing Discrete Wavelet Transform using CDF 5/3 lifting scheme:
 - */core/cdf53* - RTL files describing the DWT CDF 5/3 extension, the CV-X-IF adapter and the coprocessor wrapper;
 - *corev_apu/fpga/constraints* - the constraints file for the AMD KCU116 FPGA development board;
-- */verif/tests/custom/cdf53* - the files of DWT CDF 5/3 C library based on inline assembly snippets for GCC compiler named *CDF53_functions.h* and *CDF53_functions.c* and the C tests file *CDF53_tests.c*; also the Gtkwave template file is available in this directory;
+- */verif/tests/custom/cdf53* - the files of DWT CDF 5/3 C library based on inline assembly snippets for GCC compiler named *CDF53_functions.h* and *CDF53_functions.c* and the C tests file *CDF53_tests.c*;
 - */verif/regress/* - the bash script for executing the DWT CDF 5/3 tests named *cdf53_c_tests.sh*.
 
 Many thanks to [Florentin Ilie](https://github.com/florentin05) for pioneering the CVA6 support for KCU116 development board as part of his Computer Engineering bachelor thesis in the Department of Computer Engineering at Technical University of Iasi.
