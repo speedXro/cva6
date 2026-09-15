@@ -350,6 +350,49 @@ bool Compute_IDWT_DB_8(int16_t low[8], int16_t high[8], int8_t outputs[16])
     return true;
 }
 
+bool MDIO_PHY_Reset(void)
+{
+  uint64_t dummy=0;
+  uint64_t result;
+
+  asm volatile (
+		".insn r 0x7B, 0x5, 0x48, %0, %1, %2"
+		: "=r" (result)
+		: "r" (dummy) , "r" (dummy)
+	);
+
+  return (result == 0x96);
+}
+
+bool MDIO_WriteRegister(uint64_t reg_adr, uint64_t write_data)
+{
+  uint64_t result;
+
+  asm volatile (
+		".insn r 0x7B, 0x6, 0x48, %0, %1, %2"
+		: "=r" (result)
+		: "r" (reg_adr) , "r" (write_data)
+	);
+
+  return (result == 0xCA);
+}
+
+uint64_t MDIO_ReadRegister(uint64_t reg_adr)
+{
+  uint64_t dummy=0;
+  uint64_t result;
+
+  asm volatile (
+		".insn r 0x7B, 0x7, 0x48, %0, %1, %2"
+		: "=r" (result)
+		: "r" (reg_adr) , "r" (dummy)
+	);
+
+  return result;
+}
+
+
+
 /*uint64_t Get_Timestamp(void)
 {
   uint64_t rs1 = 0, rs2 = 0, result =0;

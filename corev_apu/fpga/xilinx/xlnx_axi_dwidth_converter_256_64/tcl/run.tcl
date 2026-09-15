@@ -16,7 +16,7 @@ set_property -dict [list \
   CONFIG.ADDR_WIDTH {30} \
   CONFIG.MI_DATA_WIDTH {256} \
   CONFIG.SI_DATA_WIDTH {64} \
-  CONFIG.SI_ID_WIDTH {5} \
+  CONFIG.SI_ID_WIDTH {6} \
 ] [get_ips $ipName]
 
 

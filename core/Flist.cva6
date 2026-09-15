@@ -82,13 +82,6 @@ ${CVA6_REPO_DIR}/core/cvxif_example/instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/compressed_instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/copro_alu.sv
 
-//DWT CDF53
-${CVA6_REPO_DIR}/core/cdf53/forward/fdwt_cdf_53.sv
-${CVA6_REPO_DIR}/core/cdf53/inverse/idwt_cdf_53.sv
-${CVA6_REPO_DIR}/core/cdf53/CDF53_CoProcessor.sv
-${CVA6_REPO_DIR}/core/cdf53/CDF53_CVXIF_Adapter.sv
-${CVA6_REPO_DIR}/core/cdf53/fi_dwt_hdl.v
-
 // Common Cells
 ${CVA6_REPO_DIR}/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
 ${CVA6_REPO_DIR}/vendor/pulp-platform/common_cells/src/fifo_v3.sv
@@ -205,5 +198,49 @@ ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_mmu.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_ptw.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_tlb.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_shared_tlb.sv
+
+
+// RVEXP Files
+${CVA6_REPO_DIR}/core/rvexp_pe/coprocessor/rvexp_CVXIF_Adapter.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/coprocessor/rvexp_coprocessor.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/control/rvexp_controller.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/control/axi4_lite_controller.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/rvexp_axis4.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/AXIS_PerfCnts.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/probes/AXIS_Probes.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/timers/DualTimer.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/counters/ValidLastCounters.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/srs_sipo.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/srs.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/regg.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/ctrl_sipo.sv
+
+
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/include/defines.svh
+
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/tops/top_pp_fdwt_cdf53_opt.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/tops/top_pp_idwt_cdf53_opt.sv
+
+
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/tops/top_pp_dwt_cdf53_opt.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/axis/axis_input.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/axis/axis_output.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/wiring/input_splitter.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/wiring/input_wiring_i.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/wiring/output_aggregator.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/wiring/output_wiring_o.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/wrapper_pipeline.sv
+
+
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/fdwt_cdf53_pipeline.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/fdwt_cdf53_stage_0.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/fdwt_cdf53_stage_1.sv
+
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/idwt_cdf53_pipeline.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/idwt_cdf53_stage_0.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/idwt_cdf53_stage_1.sv
+${CVA6_REPO_DIR}/core/pp_cdf53_opt/pp/idwt_cdf53_stage_2.sv
+
+
 
 // end of manifest

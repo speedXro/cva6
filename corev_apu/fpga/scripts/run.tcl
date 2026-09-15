@@ -31,7 +31,13 @@ if {$::env(BOARD) eq "genesys2"} {
 }
 
 read_ip { \
-      "xilinx/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.xci"
+      "xilinx/xlnx_axi_dwidth_converter_512_64/xlnx_axi_dwidth_converter_512_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_512_64/xlnx_axi_dwidth_converter_512_64.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_1024_64/xlnx_axi_dwidth_converter_1024_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_1024_64/xlnx_axi_dwidth_converter_1024_64.xci" \
+      "xilinx/xlnx_axis_data_fifo/xlnx_axis_data_fifo.srcs/sources_1/ip/xlnx_axis_data_fifo/xlnx_axis_data_fifo.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_64_32/xlnx_axi_dwidth_converter_64_32.srcs/sources_1/ip/xlnx_axi_dwidth_converter_64_32/xlnx_axi_dwidth_converter_64_32.xci" \
+      "xilinx/xlnx_axi_protocol_converter_32_32/xlnx_axi_protocol_converter_32_32.srcs/sources_1/ip/xlnx_axi_protocol_converter_32_32/xlnx_axi_protocol_converter_32_32.xci" \
+      "xilinx/xlnx_axi_dma/xlnx_axi_dma.srcs/sources_1/ip/xlnx_axi_dma/xlnx_axi_dma.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.xci" \
       "xilinx/xlnx_mig_ddr4/xlnx_mig_ddr4.srcs/sources_1/ip/xlnx_mig_ddr4/xlnx_mig_ddr4.xci" \
       "xilinx/xlnx_axi_clock_converter/xlnx_axi_clock_converter.srcs/sources_1/ip/xlnx_axi_clock_converter/xlnx_axi_clock_converter.xci" \
       "xilinx/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.srcs/sources_1/ip/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.xci" \
@@ -41,10 +47,6 @@ read_ip { \
       "xilinx/xlnx_axi_quad_spi/xlnx_axi_quad_spi.srcs/sources_1/ip/xlnx_axi_quad_spi/xlnx_axi_quad_spi.xci" \
       "xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xci" \
 }
-
-# read_ip xilinx/xlnx_protocol_checker/ip/xlnx_protocol_checker.xci
-#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
-#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
 
 set_property include_dirs { \
 	"src/axi_sd_bridge/include" \

@@ -50,6 +50,25 @@ module ariane_testharness #(
   output logic  ad_digitized*/
 );
 
+localparam RVEXP_NO_OF_ACCELERATORS          = 1;
+localparam RVEXP_AXIS4_DATAWITH              = 64;
+localparam RVEXP_ACCELERATOR_INPUT_BITWIDTH  = 1024;
+localparam RVEXP_ACCELERATOR_OUTPUT_BITWIDTH = 512;
+localparam ADATA_WIDTH                        = 64; 
+
+localparam int unsigned WR_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_INPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH);
+    localparam int unsigned RD_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH);
+
+    localparam int unsigned OP_ADDR_WIDTH = ((WR_OP_ADDR_WIDTH > RD_OP_ADDR_WIDTH) ? WR_OP_ADDR_WIDTH : RD_OP_ADDR_WIDTH);
+
+    localparam int unsigned BRAM_ADDR_WIDTH = (OP_ADDR_WIDTH + 1);
+    localparam int unsigned BRAM_DATA_WIDTH = RVEXP_AXIS4_DATAWITH; 
+
+    localparam int unsigned AXIS4_CMD_WIDTH = 1 + BRAM_ADDR_WIDTH + BRAM_DATA_WIDTH;
+
+    localparam int unsigned MINIMAL_DM_AXIS4_CMD_WIDTH = AXIS4_CMD_WIDTH;
+    localparam int unsigned DM_AXIS4_CMD_WIDTH = (1 <<($clog2(MINIMAL_DM_AXIS4_CMD_WIDTH)));
+
   localparam [7:0] hart_id = '0;
 
   // RVFI
@@ -517,6 +536,7 @@ module ariane_testharness #(
     '{ idx: ariane_soc::SPI,      start_addr: ariane_soc::SPIBase,      end_addr: ariane_soc::SPIBase + ariane_soc::SPILength           },
     '{ idx: ariane_soc::Ethernet, start_addr: ariane_soc::EthernetBase, end_addr: ariane_soc::EthernetBase + ariane_soc::EthernetLength },
     '{ idx: ariane_soc::GPIO,     start_addr: ariane_soc::GPIOBase,     end_addr: ariane_soc::GPIOBase + ariane_soc::GPIOLength         },
+    '{ idx: ariane_soc::ExpMem,   start_addr: ariane_soc::ExpMemBase,   end_addr: ariane_soc::ExpMemBase + ariane_soc::ExpMemLength     },
     '{ idx: ariane_soc::DRAM,     start_addr: ariane_soc::DRAMBase,     end_addr: ariane_soc::DRAMBase + ariane_soc::DRAMLength         }
   };
 
@@ -587,11 +607,25 @@ module ariane_testharness #(
   logic tx, rx;
   logic [1:0] irqs;
 
+  logic                               read_rvexp_in_axis4_tvalid;
+  logic                               read_rvexp_in_axis4_tready;
+  logic [AXIS4_CMD_WIDTH-1:0]    read_rvexp_in_axis4_tdata;
+
+  logic                               write_rvexp_in_axis4_tvalid;
+  logic                               write_rvexp_in_axis4_tready;
+  logic [BRAM_DATA_WIDTH-1:0]    write_rvexp_in_axis4_tdata;
+
   ariane_peripherals #(
     .AxiAddrWidth ( AXI_ADDRESS_WIDTH            ),
     .AxiDataWidth ( AXI_DATA_WIDTH               ),
     .AxiIdWidth   ( ariane_axi_soc::IdWidthSlave ),
     .AxiUserWidth ( AXI_USER_WIDTH               ),
+
+    .RVEXP_NO_OF_ACCELERATORS(RVEXP_NO_OF_ACCELERATORS),
+    .RVEXP_AXIS4_DATAWITH(RVEXP_AXIS4_DATAWITH),
+    .RVEXP_ACCELERATOR_INPUT_BITWIDTH(RVEXP_ACCELERATOR_INPUT_BITWIDTH),
+    .RVEXP_ACCELERATOR_OUTPUT_BITWIDTH(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH),
+    .ADATA_WIDTH(ADATA_WIDTH),
 `ifndef VERILATOR
     .InclUART     ( 1'b1                     ),
 `else
@@ -600,31 +634,32 @@ module ariane_testharness #(
     .InclSPI      ( 1'b0                     ),
     .InclEthernet ( 1'b0                     )
   ) i_ariane_peripherals (
-    .clk_i     ( clk_i                        ),
-    .rst_ni    ( ndmreset_n                   ),
-    .plic      ( master[ariane_soc::PLIC]     ),
-    .uart      ( master[ariane_soc::UART]     ),
-    .spi       ( master[ariane_soc::SPI]      ),
-    .ethernet  ( master[ariane_soc::Ethernet] ),
-    .timer     ( master[ariane_soc::Timer]    ),
-    .irq_o     ( irqs                         ),
-    .rx_i      ( rx                           ),
-    .tx_o      ( tx                           ),
-    .eth_txck  ( ),
-    .eth_rxck  ( ),
-    .eth_rxctl ( ),
-    .eth_rxd   ( ),
-    .eth_rst_n ( ),
-    .eth_tx_en ( ),
-    .eth_txd   ( ),
-    .phy_mdio  ( ),
-    .eth_mdc   ( ),
-    .mdio      ( ),
-    .mdc       ( ),
-    .spi_clk_o ( ),
-    .spi_mosi  ( ),
-    .spi_miso  ( ),
-    .spi_ss    ( )
+    .clk_i      ( clk_i                        ),
+    .rst_ni     ( ndmreset_n                   ),
+    .plic       ( master[ariane_soc::PLIC]     ),
+    .uart       ( master[ariane_soc::UART]     ),
+    .spi        ( master[ariane_soc::SPI]      ),
+    .ethernet   ( master[ariane_soc::Ethernet] ),
+    .timer      ( master[ariane_soc::Timer]    ),
+    .expmem_axi ( master[ariane_soc::ExpMem]   ),
+    .irq_o      ( irqs                         ),
+    .rx_i       ( rx                           ),
+    .tx_o       ( tx                           ),
+    .eth_txck   ( ),
+    .eth_rxck   ( ),
+    .eth_rxctl  ( ),
+    .eth_rxd    ( ),
+    .eth_rst_n  ( ),
+    .eth_tx_en  ( ),
+    .eth_txd    ( ),
+    .phy_mdio   ( ),
+    .eth_mdc    ( ),
+    .mdio       ( ),
+    .mdc        ( ),
+    .spi_clk_o  ( ),
+    .spi_mosi   ( ),
+    .spi_miso   ( ),
+    .spi_ss     ( )
   );
 
   uart_bus #(.BAUD_RATE(115200), .PARITY_EN(0)) i_uart_bus (.rx(tx), .tx(rx), .rx_en(1'b1));
@@ -640,13 +675,25 @@ module ariane_testharness #(
   rvfi_to_iti_t rvfi_to_iti;
   iti_to_encoder_t iti_to_encoder;
 
+  
+  logic us_uart_rx;
+  logic us_uart_tx;
+
+  assign us_uart_rx = 1'b1;
+  
+
   ariane #(
     .CVA6Cfg              ( CVA6Cfg             ),
     .rvfi_probes_instr_t  ( rvfi_probes_instr_t ),
     .rvfi_probes_csr_t    ( rvfi_probes_csr_t   ),
     .rvfi_probes_t        ( rvfi_probes_t       ),
     .noc_req_t            ( ariane_axi::req_t   ),
-    .noc_resp_t           ( ariane_axi::resp_t  )
+    .noc_resp_t           ( ariane_axi::resp_t  ),
+
+    .RVEXP_NO_OF_ACCELERATORS(RVEXP_NO_OF_ACCELERATORS),
+    .RVEXP_AXIS4_DATAWITH(RVEXP_AXIS4_DATAWITH),
+    .RVEXP_ACCELERATOR_INPUT_BITWIDTH(RVEXP_ACCELERATOR_INPUT_BITWIDTH),
+    .RVEXP_ACCELERATOR_OUTPUT_BITWIDTH(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH)
   ) i_ariane (
     .clk_i                ( clk_i               ),
     .rst_ni               ( ndmreset_n          ),
@@ -656,13 +703,20 @@ module ariane_testharness #(
     .ipi_i                ( ipi                 ),
     .time_irq_i           ( timer_irq           ),
     .rvfi_probes_o        ( rvfi_probes         ),
-    //.da_sync_n            ( da_sync_n           ),
-    //.da_sclk              ( da_sclk             ),
-    //.da_din               ( da_din              ),
-    //.ad_cs_n              ( ad_cs_n             ),
-    //.ad_sclk              ( ad_sclk             ),
-    //.ad_dout              ( ad_dout             ),
-    //.ad_digitized         ( ad_digitized        ),
+
+    .m_axis_mm2s_tdata('0),
+    .m_axis_mm2s_tkeep('0),
+    .m_axis_mm2s_tvalid(0),
+    .m_axis_mm2s_tlast(0),
+    .m_axis_mm2s_tready(),
+
+    .s_axis_s2mm_tdata(),
+    .s_axis_s2mm_tkeep(),
+    .s_axis_s2mm_tvalid(),
+    .s_axis_s2mm_tready(0),
+    .s_axis_s2mm_tlast(),
+
+
 // Disable Debug when simulating with Spike
 `ifdef SPIKE_TANDEM
     .debug_req_i          ( 1'b0                ),

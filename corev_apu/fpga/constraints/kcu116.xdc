@@ -149,55 +149,25 @@ set_property IOSTANDARD  SSTL12_DCI    [get_ports {c0_ddr4_cke}] ;# Bank  66 VCC
 
 
 
-##########################################Old ADA MAPPING######################################################
-#set_property PACKAGE_PIN A14       [get_ports da_sync_n] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_sync_n] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
-#set_property PACKAGE_PIN B14       [get_ports da_din] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_din] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
-#set_property PACKAGE_PIN A12       [get_ports spi_ss] ;# Bank  87 VCCO - VCC3V3   - IO_L11N_AD9N_87 P02
-#set_property IOSTANDARD  LVCMOS33  [get_ports spi_ss] ;# Bank  87 VCCO - VCC3V3   - IO_L11N_AD9N_87 P02
-#set_property PACKAGE_PIN A13       [get_ports da_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
 
-#set_property PACKAGE_PIN B12       [get_ports ad_digitized] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_digitized] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
-#set_property PACKAGE_PIN C12       [get_ports spi_mosi] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
-#set_property IOSTANDARD  LVCMOS33  [get_ports spi_mosi] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
-#set_property PACKAGE_PIN C13       [get_ports spi_miso] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
-#set_property IOSTANDARD  LVCMOS33  [get_ports spi_miso] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
-#set_property PACKAGE_PIN C14       [get_ports spi_clk_o] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
-#set_property IOSTANDARD  LVCMOS33  [get_ports spi_clk_o] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
-
-#set_property PACKAGE_PIN D13       [get_ports ad_cs_n] ;# Bank  87 VCCO - VCC3V3   - IO_L8N_HDGC_87 P10
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_cs_n] ;# Bank  87 VCCO - VCC3V3   - IO_L8N_HDGC_87 P10
-#set_property PACKAGE_PIN D14       [get_ports ad_dout] ;# Bank  87 VCCO - VCC3V3   - IO_L8P_HDGC_87 P11
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_dout] ;# Bank  87 VCCO - VCC3V3   - IO_L8P_HDGC_87 P11
-
-#set_property PACKAGE_PIN E13       [get_ports ad_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
-
-#set_property PACKAGE_PIN J14       [get_ports trst_n] ;# Bank  87 VCCO - VCC3V3   - IO_L4N_AD12N_87 P16
-#set_property IOSTANDARD  LVCMOS33  [get_ports trst_n] ;# Bank  87 VCCO - VCC3V3   - IO_L4N_AD12N_87 P16
-######################################################################################################################
-
-########################################## NEW ADA MAPPING ######################################################
-#set_property PACKAGE_PIN A14       [get_ports ad_cs_n] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_cs_n] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
-#set_property PACKAGE_PIN B14       [get_ports ad_dout] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_dout] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
+########################################## NEW MAPPING ######################################################
+#set_property PACKAGE_PIN A14       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L12N_AD8N_87 P00
+#set_property PACKAGE_PIN B14       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L12P_AD8P_87 P01
 set_property PACKAGE_PIN A12       [get_ports trst_n] ;# Bank  87 VCCO - VCC3V3   - IO_L11N_AD9N_87 P02
 set_property IOSTANDARD  LVCMOS33  [get_ports trst_n] ;# Bank  87 VCCO - VCC3V3   - IO_L11N_AD9N_87 P02
-#set_property PACKAGE_PIN A13       [get_ports ad_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
+#set_property PACKAGE_PIN A13       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L11P_AD9P_87 P03
 
-#set_property PACKAGE_PIN B12       [get_ports da_sync_n] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_sync_n] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
-#set_property PACKAGE_PIN C12       [get_ports da_din] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_din] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
-#set_property PACKAGE_PIN C13       [get_ports ad_digitized] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
-#set_property IOSTANDARD  LVCMOS33  [get_ports ad_digitized] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
-#set_property PACKAGE_PIN C14       [get_ports da_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
-#set_property IOSTANDARD  LVCMOS33  [get_ports da_sclk] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
+#set_property PACKAGE_PIN B12       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L10N_AD10N_87 P04
+#set_property PACKAGE_PIN C12       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L10P_AD10P_87 P05
+#set_property PACKAGE_PIN C13       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L9N_AD11N_87 P06
+#set_property PACKAGE_PIN C14       [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
+#set_property IOSTANDARD  LVCMOS33  [get_ports not_used] ;# Bank  87 VCCO - VCC3V3   - IO_L9P_AD11P_87 P07
 
 
 set_property PACKAGE_PIN D13       [get_ports tck] ;# Bank  87 VCCO - VCC3V3   - IO_L8N_HDGC_87 P10
@@ -208,9 +178,6 @@ set_property PACKAGE_PIN E12       [get_ports tdo] ;# Bank  87 VCCO - VCC3V3   -
 set_property IOSTANDARD  LVCMOS33  [get_ports tdo] ;# Bank  87 VCCO - VCC3V3   - IO_L7N_HDGC_87 P12
 set_property PACKAGE_PIN E13       [get_ports tms] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
 set_property IOSTANDARD  LVCMOS33  [get_ports tms] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
-
-#set_property PACKAGE_PIN F13       [get_ports ada_issued] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
-#set_property IOSTANDARD  LVCMOS33  [get_ports ada_issued] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
 
 set_property PACKAGE_PIN F13       [get_ports spi_ss] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
 set_property IOSTANDARD  LVCMOS33  [get_ports spi_ss] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
@@ -223,25 +190,6 @@ set_property IOSTANDARD  LVCMOS33  [get_ports spi_clk_o] ;# Bank  87 VCCO - VCC3
 
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets tck_IBUF_inst/O]
 ######################################################################################################################
-
-
-
-
-#AB12
-#set_property PACKAGE_PIN AD15       [get_ports tdi] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
-#set_property IOSTANDARD  LVCMOS33  [get_ports tdi] ;# Bank  87 VCCO - VCC3V3   - IO_L7P_HDGC_87 P13
-
-#Y10
-#set_property PACKAGE_PIN AD13       [get_ports tdo] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
-#set_property IOSTANDARD  LVCMOS33  [get_ports tdo] ;# Bank  87 VCCO - VCC3V3   - IO_L6N_HDGC_87 P14
-
-#AB10
-#set_property PACKAGE_PIN AF15       [get_ports tms] ;# Bank  87 VCCO - VCC3V3   - IO_L6P_HDGC_87 P15
-#set_property IOSTANDARD  LVCMOS33  [get_ports tms] ;# Bank  87 VCCO - VCC3V3   - IO_L6P_HDGC_87 P15
-
-#AE12
-#set_property PACKAGE_PIN AE13       [get_ports tck] ;# Bank  87 VCCO - VCC3V3   - IO_L4P_AD12P_87 P17
-#set_property IOSTANDARD  LVCMOS33  [get_ports tck] ;# Bank  87 VCCO - VCC3V3   - IO_L4P_AD12P_87 P17
 
 
 
@@ -354,3 +302,16 @@ set_property OUTPUT_IMPEDANCE RDRV_40_40 [ get_ports "c0_ddr4_dq[24]" ]
 set_property OUTPUT_IMPEDANCE RDRV_40_40 [ get_ports "c0_ddr4_dq[25]" ]
 
 set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+
+
+set_false_path -quiet -through [get_nets -hierarchical -filter {mr_ff == TRUE}]
+
+set_false_path -quiet -to [get_pins -filter {REF_PIN_NAME == PRE} -of_objects [get_cells -hierarchical -filter {ars_ff1 == TRUE || ars_ff2 == TRUE}]]
+
+set_max_delay 2 -quiet -from [get_pins -filter {REF_PIN_NAME == C} -of_objects [get_cells -hierarchical -filter {ars_ff1 == TRUE}]] -to [get_pins -filter {REF_PIN_NAME == D} -of_objects [get_cells -hierarchical -filter {ars_ff2 == TRUE}]]
+
+set_clock_groups -group [get_clocks -include_generated_clocks -of [get_nets eth_rx_clk]] -group [get_clocks -include_generated_clocks -of [get_nets eth_tx_clk]] -asynchronous
+
+set_clock_groups -group [get_clocks -include_generated_clocks -of [get_nets sys_clk]] -group [get_clocks -include_generated_clocks -of [get_nets eth_tx_clk]] -asynchronous
+
+set_clock_groups -group [get_clocks -include_generated_clocks -of [get_nets sys_clk]] -group [get_clocks -include_generated_clocks -of [get_nets eth_rx_clk]] -asynchronous

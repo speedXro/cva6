@@ -21,7 +21,13 @@ module ariane_peripherals #(
     parameter bit InclSPI      = 0,
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
-    parameter bit InclTimer    = 1
+    parameter bit InclTimer    = 1,
+
+    parameter integer       RVEXP_NO_OF_ACCELERATORS = 1,
+    parameter integer       RVEXP_AXIS4_DATAWITH =64,
+    parameter integer       RVEXP_ACCELERATOR_INPUT_BITWIDTH = 1024,
+    parameter integer       RVEXP_ACCELERATOR_OUTPUT_BITWIDTH = 512,
+    parameter integer       ADATA_WIDTH = 64
 ) (
     input  logic       clk_i           , // Clock
     input  logic       rst_ni          , // Asynchronous reset active low
@@ -30,6 +36,7 @@ module ariane_peripherals #(
     AXI_BUS.Slave      spi             ,
     AXI_BUS.Slave      ethernet        ,
     AXI_BUS.Slave      timer           ,
+    AXI_BUS.Slave      expmem_axi       ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -53,6 +60,25 @@ module ariane_peripherals #(
     input  logic       spi_miso        ,
     output logic       spi_ss
 );
+
+    function automatic int max2 (input int a, input int b);
+        return (a > b) ? a : b;
+    endfunction
+
+    
+
+    localparam int unsigned WR_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_INPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH);
+    localparam int unsigned RD_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH);
+
+    localparam int unsigned OP_ADDR_WIDTH = ((WR_OP_ADDR_WIDTH > RD_OP_ADDR_WIDTH) ? WR_OP_ADDR_WIDTH : RD_OP_ADDR_WIDTH);
+
+    localparam int unsigned BRAM_ADDR_WIDTH = (OP_ADDR_WIDTH + 1);
+    localparam int unsigned BRAM_DATA_WIDTH = RVEXP_AXIS4_DATAWITH; 
+
+    localparam int unsigned AXIS4_CMD_WIDTH = 1 + BRAM_ADDR_WIDTH + BRAM_DATA_WIDTH;
+
+    localparam int unsigned MINIMAL_DM_AXIS4_CMD_WIDTH = AXIS4_CMD_WIDTH;
+    localparam int unsigned DM_AXIS4_CMD_WIDTH = (1 <<($clog2(MINIMAL_DM_AXIS4_CMD_WIDTH)));
 
     // ---------------
     // 1. PLIC
@@ -615,5 +641,78 @@ module ariane_peripherals #(
             .PSLVERR ( timer_pslverr    ),
             .irq_o   ( irq_sources[6:3] )
         );
+
     end
+
+    /*axi2axis #(
+        .AXI4_ADDRESS_WIDTH ( AxiAddrWidth ),
+        .AXI4_RDATA_WIDTH   ( AxiDataWidth ),
+        .AXI4_WDATA_WIDTH   ( AxiDataWidth ),
+        .AXI4_ID_WIDTH      ( AxiIdWidth   ),
+        .AXI4_USER_WIDTH    ( AxiUserWidth ),
+        .BUFF_DEPTH_SLAVE   ( 2            ),
+        .APB_ADDR_WIDTH     ( 32           ),
+
+        .NO_OF_ACCELERATORS(RVEXP_NO_OF_ACCELERATORS),
+        .BUFFER_BITWIDTH(RVEXP_AXIS4_DATAWITH),
+        .ACCELERATOR_INPUT_BITWIDTH(RVEXP_ACCELERATOR_INPUT_BITWIDTH),
+        .ACCELERATOR_OUTPUT_BITWIDTH(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH),
+        .ADATA_WIDTH(ADATA_WIDTH)
+    ) i_axi2axis(
+        .ACLK      ( clk_i           ),
+        .ARESETn   ( rst_ni          ),
+        .test_en_i ( 1'b0            ),
+        .AWID_i    ( expmem_axi.aw_id     ),
+        .AWADDR_i  ( expmem_axi.aw_addr   ),
+        .AWLEN_i   ( expmem_axi.aw_len    ),
+        .AWSIZE_i  ( expmem_axi.aw_size   ),
+        .AWBURST_i ( expmem_axi.aw_burst  ),
+        .AWLOCK_i  ( expmem_axi.aw_lock   ),
+        .AWCACHE_i ( expmem_axi.aw_cache  ),
+        .AWPROT_i  ( expmem_axi.aw_prot   ),
+        .AWREGION_i( expmem_axi.aw_region ),
+        .AWUSER_i  ( expmem_axi.aw_user   ),
+        .AWQOS_i   ( expmem_axi.aw_qos    ),
+        .AWVALID_i ( expmem_axi.aw_valid  ),
+        .AWREADY_o ( expmem_axi.aw_ready  ),
+        .WDATA_i   ( expmem_axi.w_data    ),
+        .WSTRB_i   ( expmem_axi.w_strb    ),
+        .WLAST_i   ( expmem_axi.w_last    ),
+        .WUSER_i   ( expmem_axi.w_user    ),
+        .WVALID_i  ( expmem_axi.w_valid   ),
+        .WREADY_o  ( expmem_axi.w_ready   ),
+        .BID_o     ( expmem_axi.b_id      ),
+        .BRESP_o   ( expmem_axi.b_resp    ),
+        .BVALID_o  ( expmem_axi.b_valid   ),
+        .BUSER_o   ( expmem_axi.b_user    ),
+        .BREADY_i  ( expmem_axi.b_ready   ),
+        .ARID_i    ( expmem_axi.ar_id     ),
+        .ARADDR_i  ( expmem_axi.ar_addr   ),
+        .ARLEN_i   ( expmem_axi.ar_len    ),
+        .ARSIZE_i  ( expmem_axi.ar_size   ),
+        .ARBURST_i ( expmem_axi.ar_burst  ),
+        .ARLOCK_i  ( expmem_axi.ar_lock   ),
+        .ARCACHE_i ( expmem_axi.ar_cache  ),
+        .ARPROT_i  ( expmem_axi.ar_prot   ),
+        .ARREGION_i( expmem_axi.ar_region ),
+        .ARUSER_i  ( expmem_axi.ar_user   ),
+        .ARQOS_i   ( expmem_axi.ar_qos    ),
+        .ARVALID_i ( expmem_axi.ar_valid  ),
+        .ARREADY_o ( expmem_axi.ar_ready  ),
+        .RID_o     ( expmem_axi.r_id      ),
+        .RDATA_o   ( expmem_axi.r_data    ),
+        .RRESP_o   ( expmem_axi.r_resp    ),
+        .RLAST_o   ( expmem_axi.r_last    ),
+        .RUSER_o   ( expmem_axi.r_user    ),
+        .RVALID_o  ( expmem_axi.r_valid   ),
+        .RREADY_i  ( expmem_axi.r_ready   ),
+
+        .s_axis4_tvalid(),
+        .s_axis4_tready(0),
+        .s_axis4_tdata(),
+
+        .m_axis4_tvalid(0),
+        .m_axis4_tready(),
+        .m_axis4_tdata('0)
+    );*/
 endmodule

@@ -20,14 +20,19 @@
 #define UART_DLAB_LSB UART_BASE + 0
 #define UART_DLAB_MSB UART_BASE + 4
 
-void init_uart();
+extern uint8_t bin_to_hex_table[16];
 
+void write_reg_u8(uintptr_t addr, uint8_t value);
+uint8_t read_reg_u8(uintptr_t addr);
+int is_transmit_empty();
+char is_transmit_empty_altera();
+int is_receive_empty();
+void write_serial(char a);
 int read_serial(uint8_t *res);
 
+void init_uart();
+int read_serial(uint8_t *res);
 void print_uart(const char* str);
-
 void print_uart_int(uint32_t addr);
-
 void print_uart_addr(uint64_t addr);
-
 void print_uart_byte(uint8_t byte);

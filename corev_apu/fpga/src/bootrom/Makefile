@@ -25,6 +25,7 @@ PLATFORM_DEFINES = -DCLOCK_FREQUENCY=$(CLOCK_FREQUENCY) -DUART_BITRATE=$(UART_BI
 
 ifeq ($(XLEN), 64)
 CFLAGS = $(PLATFORM_DEFINES) -Os -ggdb -march=rv64im_zicsr -mabi=lp64 -Wall -mcmodel=medany -mexplicit-relocs -ffreestanding
+#CFLAGS = $(PLATFORM_DEFINES) -O0 -ggdb -march=rv64im_zicsr -mabi=lp64 -Wall -mcmodel=medany -mexplicit-relocs -ffreestanding
 else
 CFLAGS = $(PLATFORM_DEFINES) -O2 -ggdb  -march=rv32im_zicsr -mabi=ilp32 -W -Wall -mcmodel=medany -mexplicit-relocs -fno-builtin -ffreestanding
 endif
@@ -34,7 +35,8 @@ LDFLAGS = -nostdlib -nodefaultlibs -nostartfiles
 
 INCLUDES = -I./ -I./src
 
-SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c ../../../../verif/tests/custom/cdf53/CDF53_functions.c ../../../../verif/tests/custom/cdf53/cdf53.c ../../../../verif/tests/custom/cdf53/compression.c
+#SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c ../../../../verif/tests/custom/cdf53/CDF53_functions.c ../../../../verif/tests/custom/cdf53/cdf53.c ../../../../verif/tests/custom/cdf53/compression.c
+SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c src/upsf.c src/cdf53.c
 
 SRCS_ASM = startup.S
 OBJS_C = $(SRCS_C:.c=.o)

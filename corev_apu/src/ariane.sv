@@ -44,7 +44,22 @@ module ariane import ariane_pkg::*; #(
   parameter type axi_aw_chan_t = ariane_axi::aw_chan_t,
   parameter type axi_w_chan_t  = ariane_axi::w_chan_t,
   parameter type noc_req_t = ariane_axi::req_t,
-  parameter type noc_resp_t = ariane_axi::resp_t
+  parameter type noc_resp_t = ariane_axi::resp_t,
+
+  parameter integer       RVEXP_NO_OF_ACCELERATORS = 8,
+  parameter integer       RVEXP_AXIS4_DATAWITH = 128,
+  parameter integer       RVEXP_ACCELERATOR_INPUT_BITWIDTH = 64,
+  parameter integer       RVEXP_ACCELERATOR_OUTPUT_BITWIDTH = 128,
+
+  localparam int unsigned WR_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_INPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH),
+    localparam int unsigned RD_OP_ADDR_WIDTH = $clog2(RVEXP_ACCELERATOR_OUTPUT_BITWIDTH / RVEXP_AXIS4_DATAWITH),
+
+    localparam int unsigned OP_ADDR_WIDTH = ((WR_OP_ADDR_WIDTH > RD_OP_ADDR_WIDTH) ? WR_OP_ADDR_WIDTH : RD_OP_ADDR_WIDTH),
+
+    localparam int unsigned BRAM_ADDR_WIDTH = (OP_ADDR_WIDTH + 1),
+    localparam int unsigned BRAM_DATA_WIDTH = RVEXP_AXIS4_DATAWITH,
+
+    localparam int unsigned AXIS4_CMD_WIDTH = 1 + BRAM_ADDR_WIDTH + BRAM_DATA_WIDTH
 ) (
   input  logic                         clk_i,
   input  logic                         rst_ni,
@@ -63,7 +78,69 @@ module ariane import ariane_pkg::*; #(
   output rvfi_probes_t rvfi_probes_o,
   // memory side
   output noc_req_t                     noc_req_o,
-  input  noc_resp_t                    noc_resp_i
+  input  noc_resp_t                    noc_resp_i,
+
+  input  logic [ 511 : 0] m0_axis_mm2s_tdata, //output
+  input  logic [  63 : 0] m0_axis_mm2s_tkeep,  //output
+  input  logic 			      m0_axis_mm2s_tvalid,          //output
+  output logic 			      m0_axis_mm2s_tready,          //input
+  input  logic 			      m0_axis_mm2s_tlast,           //output
+  output logic [1023 : 0] s0_axis_s2mm_tdata, //input
+  output logic [ 127 : 0] s0_axis_s2mm_tkeep,  //input
+  output logic 		        s0_axis_s2mm_tvalid,           //input
+  input  logic 			      s0_axis_s2mm_tready,           //output
+  output logic 			      s0_axis_s2mm_tlast,             //input
+  
+  input  logic [1023 : 0] m1_axis_mm2s_tdata, //output
+  input  logic [ 127 : 0] m1_axis_mm2s_tkeep,  //output
+  input  logic 			      m1_axis_mm2s_tvalid,          //output
+  output logic 			      m1_axis_mm2s_tready,          //input
+  input  logic 			      m1_axis_mm2s_tlast,           //output
+  output logic [ 511 : 0] s1_axis_s2mm_tdata, //input
+  output logic [  63 : 0] s1_axis_s2mm_tkeep,  //input
+  output logic 		        s1_axis_s2mm_tvalid,           //input
+  input  logic 			      s1_axis_s2mm_tready,           //output
+  output logic 			      s1_axis_s2mm_tlast,             //input
+
+  output logic [31 : 0] m0_axi_awaddr,
+  output logic [ 2 : 0] m0_axi_awprot,
+  output logic          m0_axi_awvalid,
+  input  logic          m0_axi_awready,
+  output logic [31 : 0] m0_axi_wdata,
+  output logic [ 3 : 0] m0_axi_wstrb,
+  output logic          m0_axi_wvalid,
+  input  logic          m0_axi_wready,
+  input  logic [ 1 : 0] m0_axi_bresp,
+  input  logic          m0_axi_bvalid,
+  output logic          m0_axi_bready,
+  output logic [31 : 0] m0_axi_araddr,
+  output logic [ 2 : 0] m0_axi_arprot,
+  output logic          m0_axi_arvalid,
+  input  logic          m0_axi_arready,
+  input  logic [31 : 0] m0_axi_rdata,
+  input  logic [ 1 : 0] m0_axi_rresp,
+  input  logic          m0_axi_rvalid,
+  output logic          m0_axi_rready,
+  
+  output logic [31 : 0] m1_axi_awaddr,
+  output logic [ 2 : 0] m1_axi_awprot,
+  output logic          m1_axi_awvalid,
+  input  logic          m1_axi_awready,
+  output logic [31 : 0] m1_axi_wdata,
+  output logic [ 3 : 0] m1_axi_wstrb,
+  output logic          m1_axi_wvalid,
+  input  logic          m1_axi_wready,
+  input  logic [ 1 : 0] m1_axi_bresp,
+  input  logic          m1_axi_bvalid,
+  output logic          m1_axi_bready,
+  output logic [31 : 0] m1_axi_araddr,
+  output logic [ 2 : 0] m1_axi_arprot,
+  output logic          m1_axi_arvalid,
+  input  logic          m1_axi_arready,
+  input  logic [31 : 0] m1_axi_rdata,
+  input  logic [ 1 : 0] m1_axi_rresp,
+  input  logic          m1_axi_rvalid,
+  output logic          m1_axi_rready
 
 );
 
@@ -142,8 +219,8 @@ module ariane import ariane_pkg::*; #(
     assign cvxif_resp = '0;
   end*/
 
-  if (CVA6Cfg.CvxifEn) begin : gen_Risc_CDF53
-    CDF53_CoProcessor #(
+  if (CVA6Cfg.CvxifEn) begin : gen_rvexp_coprocessor
+    rvexp_coprocessor #(
       .NrRgprPorts (CVA6Cfg.NrRgprPorts),
       .XLEN (CVA6Cfg.XLEN),
       .X_HARTID_WIDTH(CVA6Cfg.X_HARTID_WIDTH),
@@ -164,11 +241,74 @@ module ariane import ariane_pkg::*; #(
       .x_result_t (x_result_t),
       .cvxif_req_t (cvxif_req_t),
       .cvxif_resp_t (cvxif_resp_t)
-    ) i_diwato_coprocessor (
+    ) i_rvexp_coprocessor (
       .clk_i                ( clk_i                          ),
       .rst_ni               ( rst_ni                         ),
+      
       .cvxif_req_i          ( cvxif_req                      ),
-      .cvxif_resp_o         ( cvxif_resp                     )
+      .cvxif_resp_o         ( cvxif_resp                     ),
+
+      .m0_axis_mm2s_tdata(m0_axis_mm2s_tdata),
+      .m0_axis_mm2s_tkeep(m0_axis_mm2s_tkeep),
+      .m0_axis_mm2s_tvalid(m0_axis_mm2s_tvalid),
+      .m0_axis_mm2s_tready(m0_axis_mm2s_tready),
+      .m0_axis_mm2s_tlast(m0_axis_mm2s_tlast),
+      .s0_axis_s2mm_tdata(s0_axis_s2mm_tdata),
+      .s0_axis_s2mm_tkeep(s0_axis_s2mm_tkeep),
+      .s0_axis_s2mm_tvalid(s0_axis_s2mm_tvalid),
+      .s0_axis_s2mm_tready(s0_axis_s2mm_tready),
+      .s0_axis_s2mm_tlast(s0_axis_s2mm_tlast),
+	  
+	  .m1_axis_mm2s_tdata(m1_axis_mm2s_tdata),
+      .m1_axis_mm2s_tkeep(m1_axis_mm2s_tkeep),
+      .m1_axis_mm2s_tvalid(m1_axis_mm2s_tvalid),
+      .m1_axis_mm2s_tready(m1_axis_mm2s_tready),
+      .m1_axis_mm2s_tlast(m1_axis_mm2s_tlast),
+      .s1_axis_s2mm_tdata(s1_axis_s2mm_tdata),
+      .s1_axis_s2mm_tkeep(s1_axis_s2mm_tkeep),
+      .s1_axis_s2mm_tvalid(s1_axis_s2mm_tvalid),
+      .s1_axis_s2mm_tready(s1_axis_s2mm_tready),
+      .s1_axis_s2mm_tlast(s1_axis_s2mm_tlast),
+
+      .m0_axi_awaddr(m0_axi_awaddr),
+      .m0_axi_awprot(m0_axi_awprot),
+      .m0_axi_awvalid(m0_axi_awvalid),
+      .m0_axi_awready(m0_axi_awready),
+      .m0_axi_wdata(m0_axi_wdata),
+      .m0_axi_wstrb(m0_axi_wstrb),
+      .m0_axi_wvalid(m0_axi_wvalid),
+      .m0_axi_wready(m0_axi_wready),
+      .m0_axi_bresp(m0_axi_bresp),
+      .m0_axi_bvalid(m0_axi_bvalid),
+      .m0_axi_bready(m0_axi_bready),
+      .m0_axi_araddr(m0_axi_araddr),
+      .m0_axi_arprot(m0_axi_arprot),
+      .m0_axi_arvalid(m0_axi_arvalid),
+      .m0_axi_arready(m0_axi_arready),
+      .m0_axi_rdata(m0_axi_rdata),
+      .m0_axi_rresp(m0_axi_rresp),
+      .m0_axi_rvalid(m0_axi_rvalid),
+      .m0_axi_rready(m0_axi_rready),
+	  
+	  .m1_axi_awaddr(m1_axi_awaddr),
+      .m1_axi_awprot(m1_axi_awprot),
+      .m1_axi_awvalid(m1_axi_awvalid),
+      .m1_axi_awready(m1_axi_awready),
+      .m1_axi_wdata(m1_axi_wdata),
+      .m1_axi_wstrb(m1_axi_wstrb),
+      .m1_axi_wvalid(m1_axi_wvalid),
+      .m1_axi_wready(m1_axi_wready),
+      .m1_axi_bresp(m1_axi_bresp),
+      .m1_axi_bvalid(m1_axi_bvalid),
+      .m1_axi_bready(m1_axi_bready),
+      .m1_axi_araddr(m1_axi_araddr),
+      .m1_axi_arprot(m1_axi_arprot),
+      .m1_axi_arvalid(m1_axi_arvalid),
+      .m1_axi_arready(m1_axi_arready),
+      .m1_axi_rdata(m1_axi_rdata),
+      .m1_axi_rresp(m1_axi_rresp),
+      .m1_axi_rvalid(m1_axi_rvalid),
+      .m1_axi_rready(m1_axi_rready)
     );
   end else begin
     always_comb begin
@@ -180,4 +320,5 @@ module ariane import ariane_pkg::*; #(
   end
 
 
-endmodule // ariane
+endmodule
+

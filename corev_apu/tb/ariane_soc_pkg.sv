@@ -17,7 +17,7 @@ package ariane_soc;
   localparam int unsigned NumSources = 30;
   localparam int unsigned MaxPriority = 7;
 
-  localparam NrSlaves = 2; // actually masters, but slaves on the crossbar
+  localparam NrSlaves = 4; // actually masters, but slaves on the crossbar
 
   typedef enum int unsigned {
     DRAM     = 0,
@@ -29,10 +29,16 @@ package ariane_soc;
     PLIC     = 6,
     CLINT    = 7,
     ROM      = 8,
-    Debug    = 9
+    Debug    = 9,
+    ExpMem   = 10
+    //DBG_UART = 10 //CoPo
+    //DBG_GPIO = 10 //CoPo
+    //RvExpMemCtrl = 10, //CoPo
+    //RvExpMemData = 11 //CoPo
+
   } axi_slaves_t;
 
-  localparam NB_PERIPHERALS = Debug + 1;
+  localparam NB_PERIPHERALS = ExpMem + 1; //CoPo
 
 
   localparam logic[63:0] DebugLength    = 64'h1000;
@@ -44,6 +50,9 @@ package ariane_soc;
   localparam logic[63:0] SPILength      = 64'h800000;
   localparam logic[63:0] EthernetLength = 64'h10000;
   localparam logic[63:0] GPIOLength     = 64'h1000;
+  localparam logic[63:0] ExpMemLength   = 64'h1000;
+  //localparam logic[63:0] DBG_GPIOLength = 64'h1000;
+
 `ifdef NEXYS_VIDEO
   localparam logic[63:0] DRAMLength     = 64'h20000000; // 512MByte of DDR on Nexys video board
 `else
@@ -63,6 +72,7 @@ package ariane_soc;
     SPIBase      = 64'h2000_0000,
     EthernetBase = 64'h3000_0000,
     GPIOBase     = 64'h4000_0000,
+    ExpMemBase   = 64'h5000_0000,
     DRAMBase     = 64'h8000_0000
   } soc_bus_start_t;
 
