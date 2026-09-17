@@ -16,12 +16,6 @@ module rvexp_controller (
     output logic        result_we,
     output logic [63:0] result_rd,
 
-    output logic          qm_we,
-    output logic [  7:0]  qm [0:63],
-
-    output logic          rm_we,
-    output logic [ 31:0]  rm [0:63],
-
     input logic [31:0] axis_timers_values [0:7],
 
     input logic [31:0] mvalid_cnt,
@@ -73,17 +67,6 @@ module rvexp_controller (
 
     //localparam int unsigned OPCODE = 7'b1111011; //0x7B
 
-    localparam bit [6:0] F7_SET_QM_WORD_0  = 7'h40;
-    localparam bit [6:0] F7_GET_QM_WORD_0  = 7'h50;
-
-    localparam bit [6:0] F7_SET_RM_WORD_0  = 7'h41;
-    localparam bit [6:0] F7_SET_RM_WORD_1  = 7'h42;
-   
-    localparam bit [6:0] F7_GET_RM_WORD_0  = 7'h51;
-    localparam bit [6:0] F7_GET_RM_WORD_1  = 7'h52;
-    localparam bit [6:0] F7_GET_RM_WORD_2  = 7'h53;
-    localparam bit [6:0] F7_GET_RM_WORD_3  = 7'h54;
-
     localparam bit [6:0] F7_GET_AXIS_TMRS  = 7'h60;
     localparam bit [6:0] F7_GET_AXIS_CNTS  = 7'h61;
 	
@@ -111,12 +94,6 @@ module rvexp_controller (
     logic [ 4:0] state;
 
     logic        dr;
-    
-    logic [ 511:0] qm_hold;
-    logic [2047:0] rm_hold;
-
-    logic [ 511:0]  qm_chunk;
-    logic [2047:0]  rm_chunk;
 	
 	logic        i_write_enable;
 	logic [31:0] i_write_address;
@@ -162,9 +139,6 @@ module rvexp_controller (
 
             result_we                     <= 1'd0;
             result_rd                     <= 64'd0;
-
-            qm_we                         <= 1'd0;
-            rm_we                         <= 1'd0;
 
             dr                            <= 1'b0;
 			
@@ -414,111 +388,7 @@ module rvexp_controller (
             result_rd 		<= {store_DST_STS, o_read_data};
 			state           <= 5'd31;
 		end
-		
-		//QM Set
-        else if(state == 5'd0 && instr_commit == 1'b1 && instr_funct7 == F7_SET_QM_WORD_0) begin
-            result_we <= 1'd1;
-            result_rd <= 64'd1;
-            state     <= 5'd31;
-            casez(instr_funct3)
-                3'h4: begin qm_hold[511:384] <= {instr_rs1_val, instr_rs2_val}; end
-                3'h5: begin qm_hold[383:256] <= {instr_rs1_val, instr_rs2_val}; end
-                3'h6: begin qm_hold[255:128] <= {instr_rs1_val, instr_rs2_val}; end
-                3'h7: begin qm_hold[127:  0] <= {instr_rs1_val, instr_rs2_val}; qm_we <= 1'b1; qm_chunk <= {qm_hold[511:128], instr_rs1_val, instr_rs2_val}; end
-                default: begin dr <= ~dr; end
-            endcase
-        end
-		
-		//QM Get
-        else if(state == 5'd0 && instr_commit == 1'b1 && instr_funct7 == F7_GET_QM_WORD_0) begin
-            result_we <= 1'd1;
-            casez(instr_funct3)
-                3'h0: begin result_rd <= qm_hold[511:448]; end
-                3'h1: begin result_rd <= qm_hold[447:384]; end
-                3'h2: begin result_rd <= qm_hold[383:320]; end
-                3'h3: begin result_rd <= qm_hold[319:256]; end
-                3'h4: begin result_rd <= qm_hold[255:192]; end
-                3'h5: begin result_rd <= qm_hold[191:128]; end
-                3'h6: begin result_rd <= qm_hold[127: 64]; end
-                3'h7: begin result_rd <= qm_hold[ 63:  0]; end
-                default: begin dr <= ~dr; end
-            endcase
-            state     <= 5'd31;
-        end
-
-		//RM Set
-        else if(state == 5'd0 && instr_commit == 1'b1 && (instr_funct7 == F7_SET_RM_WORD_0 || instr_funct7 == F7_SET_RM_WORD_1)) begin
-            result_we <= 1'd1;
-            result_rd <= 64'd2;
-            state     <= 5'd31;
-            casez({instr_funct7, instr_funct3})
-                {F7_SET_RM_WORD_0, 3'h0}: begin rm_hold[2047:1920]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h1}: begin rm_hold[1919:1792]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h2}: begin rm_hold[1791:1664]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h3}: begin rm_hold[1663:1536]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h4}: begin rm_hold[1535:1408]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h5}: begin rm_hold[1407:1280]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h6}: begin rm_hold[1279:1152]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_0, 3'h7}: begin rm_hold[1151:1024]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h0}: begin rm_hold[1023: 896]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h1}: begin rm_hold[ 895: 768]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h2}: begin rm_hold[ 767: 640]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h3}: begin rm_hold[ 639: 512]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h4}: begin rm_hold[ 511: 384]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h5}: begin rm_hold[ 383: 256]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h6}: begin rm_hold[ 255: 128]  <= {instr_rs1_val, instr_rs2_val}; end
-                {F7_SET_RM_WORD_1, 3'h7}: begin rm_hold[ 127:   0]  <= {instr_rs1_val, instr_rs2_val}; rm_we <= 1'b1; rm_chunk <= {rm_hold[2047:128], instr_rs1_val, instr_rs2_val}; end
-                default: begin dr <= ~dr; end
-            endcase
-        end
-
-		//RM Get
-        else if(state == 5'd0 && instr_commit == 1'b1 && (
-                instr_funct7 == F7_GET_RM_WORD_0 ||
-                instr_funct7 == F7_GET_RM_WORD_1 ||
-                instr_funct7 == F7_GET_RM_WORD_2 ||
-                instr_funct7 == F7_GET_RM_WORD_3
-            )    
-        ) begin
-            result_we <= 1'd1;
-            casez({instr_funct7, instr_funct3})
-                {F7_GET_RM_WORD_0, 3'h0}: begin result_rd <= rm_hold[2047:1984]; end
-                {F7_GET_RM_WORD_0, 3'h1}: begin result_rd <= rm_hold[1983:1920]; end
-                {F7_GET_RM_WORD_0, 3'h2}: begin result_rd <= rm_hold[1919:1856]; end
-                {F7_GET_RM_WORD_0, 3'h3}: begin result_rd <= rm_hold[1855:1792]; end
-                {F7_GET_RM_WORD_0, 3'h4}: begin result_rd <= rm_hold[1791:1728]; end
-                {F7_GET_RM_WORD_0, 3'h5}: begin result_rd <= rm_hold[1727:1664]; end
-                {F7_GET_RM_WORD_0, 3'h6}: begin result_rd <= rm_hold[1663:1600]; end
-                {F7_GET_RM_WORD_0, 3'h7}: begin result_rd <= rm_hold[1599:1536]; end
-                {F7_GET_RM_WORD_1, 3'h0}: begin result_rd <= rm_hold[1535:1472]; end
-                {F7_GET_RM_WORD_1, 3'h1}: begin result_rd <= rm_hold[1471:1408]; end
-                {F7_GET_RM_WORD_1, 3'h2}: begin result_rd <= rm_hold[1407:1344]; end
-                {F7_GET_RM_WORD_1, 3'h3}: begin result_rd <= rm_hold[1343:1280]; end
-                {F7_GET_RM_WORD_1, 3'h4}: begin result_rd <= rm_hold[1279:1216]; end
-                {F7_GET_RM_WORD_1, 3'h5}: begin result_rd <= rm_hold[1215:1152]; end
-                {F7_GET_RM_WORD_1, 3'h6}: begin result_rd <= rm_hold[1151:1088]; end
-                {F7_GET_RM_WORD_1, 3'h7}: begin result_rd <= rm_hold[1087:1024]; end
-                {F7_GET_RM_WORD_2, 3'h0}: begin result_rd <= rm_hold[1023: 960]; end
-                {F7_GET_RM_WORD_2, 3'h1}: begin result_rd <= rm_hold[ 959: 896]; end
-                {F7_GET_RM_WORD_2, 3'h2}: begin result_rd <= rm_hold[ 895: 832]; end
-                {F7_GET_RM_WORD_2, 3'h3}: begin result_rd <= rm_hold[ 831: 768]; end
-                {F7_GET_RM_WORD_2, 3'h4}: begin result_rd <= rm_hold[ 767: 704]; end
-                {F7_GET_RM_WORD_2, 3'h5}: begin result_rd <= rm_hold[ 703: 640]; end
-                {F7_GET_RM_WORD_2, 3'h6}: begin result_rd <= rm_hold[ 639: 576]; end
-                {F7_GET_RM_WORD_2, 3'h7}: begin result_rd <= rm_hold[ 575: 512]; end
-                {F7_GET_RM_WORD_3, 3'h0}: begin result_rd <= rm_hold[ 511: 448]; end
-                {F7_GET_RM_WORD_3, 3'h1}: begin result_rd <= rm_hold[ 447: 384]; end
-                {F7_GET_RM_WORD_3, 3'h2}: begin result_rd <= rm_hold[ 383: 320]; end
-                {F7_GET_RM_WORD_3, 3'h3}: begin result_rd <= rm_hold[ 319: 256]; end
-                {F7_GET_RM_WORD_3, 3'h4}: begin result_rd <= rm_hold[ 255: 192]; end
-                {F7_GET_RM_WORD_3, 3'h5}: begin result_rd <= rm_hold[ 191: 128]; end
-                {F7_GET_RM_WORD_3, 3'h6}: begin result_rd <= rm_hold[ 127:  64]; end
-                {F7_GET_RM_WORD_3, 3'h7}: begin result_rd <= rm_hold[  63:   0]; end
-                default: begin dr <= ~dr; end
-            endcase
-            state     <= 5'd31;
-        end
-
+        
 		//Get Perf Timers
         else if(state == 5'd0 && instr_commit == 1'b1 && instr_funct7 == F7_GET_AXIS_TMRS) begin
             result_we <= 1'd1;
@@ -554,28 +424,8 @@ module rvexp_controller (
 
             result_we                     <= 1'd0;
             result_rd                     <= 64'd0;
-
-            qm_we                         <= 1'b0;
-            rm_we                         <= 1'b0;
         end
     end
-
-
-
-    genvar i,j;
-    generate
-    for (i = 0; i < 64; i++) begin : gen_split_qm
-        assign qm[i] = qm_chunk[i*8 +: 8];
-        //assign qm[i] = qm_chunk[(63-i)*8 +: 8];
-    end
-    endgenerate
-
-    generate
-    for (j = 0; j < 64; j++) begin : gen_split_rm
-        assign rm[j] = rm_chunk[j*32 +: 32];
-        //assign rm[j] = qm_chunk[(63-j)*32 +: 32];
-    end
-    endgenerate
 	
 	assign i0_write_enable = dma_selection == 0 ? i_write_enable : 1'b0;
 	assign i1_write_enable = dma_selection == 1 ? i_write_enable : 1'b0;

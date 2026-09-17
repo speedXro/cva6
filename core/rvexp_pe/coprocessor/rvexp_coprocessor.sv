@@ -32,27 +32,27 @@ module rvexp_coprocessor
     input  cvxif_req_t  cvxif_req_i,
     output cvxif_resp_t cvxif_resp_o,
 
-	input  logic [ 511 : 0] m0_axis_mm2s_tdata, //output
-    input  logic [  63 : 0] m0_axis_mm2s_tkeep,  //output
-    input  logic            m0_axis_mm2s_tvalid,          //output
-    output logic            m0_axis_mm2s_tready,          //input
-    input  logic            m0_axis_mm2s_tlast,           //output
-    output logic [1023 : 0] s0_axis_s2mm_tdata, //input
-    output logic [ 127 : 0] s0_axis_s2mm_tkeep,  //input
-    output logic            s0_axis_s2mm_tvalid,           //input
-    input  logic            s0_axis_s2mm_tready,           //output
-    output logic            s0_axis_s2mm_tlast,             //input
+	input  logic [ 511 : 0] m0_axis_mm2s_tdata,
+    input  logic [  63 : 0] m0_axis_mm2s_tkeep, 
+    input  logic            m0_axis_mm2s_tvalid,         
+    output logic            m0_axis_mm2s_tready,         
+    input  logic            m0_axis_mm2s_tlast,          
+    output logic [1023 : 0] s0_axis_s2mm_tdata,
+    output logic [ 127 : 0] s0_axis_s2mm_tkeep,  
+    output logic            s0_axis_s2mm_tvalid,          
+    input  logic            s0_axis_s2mm_tready,          
+    output logic            s0_axis_s2mm_tlast,             
 
-    input  logic [1023 : 0] m1_axis_mm2s_tdata, //output
-    input  logic [ 127 : 0] m1_axis_mm2s_tkeep,  //output
-    input  logic            m1_axis_mm2s_tvalid,          //output
-    output logic            m1_axis_mm2s_tready,          //input
-    input  logic            m1_axis_mm2s_tlast,           //output
-    output logic [ 511 : 0] s1_axis_s2mm_tdata, //input
-    output logic [  63 : 0] s1_axis_s2mm_tkeep,  //input
-    output logic            s1_axis_s2mm_tvalid,           //input
-    input  logic            s1_axis_s2mm_tready,           //output
-    output logic            s1_axis_s2mm_tlast,             //input
+    input  logic [1023 : 0] m1_axis_mm2s_tdata,
+    input  logic [ 127 : 0] m1_axis_mm2s_tkeep,  
+    input  logic            m1_axis_mm2s_tvalid,         
+    output logic            m1_axis_mm2s_tready,          
+    input  logic            m1_axis_mm2s_tlast,           
+    output logic [ 511 : 0] s1_axis_s2mm_tdata, 
+    output logic [  63 : 0] s1_axis_s2mm_tkeep,  
+    output logic            s1_axis_s2mm_tvalid,           
+    input  logic            s1_axis_s2mm_tready,           
+    output logic            s1_axis_s2mm_tlast,             
 
     output logic [31 : 0] m0_axi_awaddr,
 	output logic [ 2 : 0] m0_axi_awprot,

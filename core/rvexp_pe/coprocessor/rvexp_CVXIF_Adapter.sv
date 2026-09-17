@@ -4,7 +4,7 @@ module rvexp_CVXIF_Adapter
 #(
     parameter XLEN           = 64,
     parameter X_HARTID_WIDTH = 64,
-    parameter X_ID_WIDTH     =  3,    // ($clog2(CVA6Cfg.NrScoreboardEntries); // NrScoreboardEntries = 8 for CV64A_IMAFDC)
+    parameter X_ID_WIDTH     =  3,   
     parameter X_DUALWRITE    =  0,
     parameter X_NUM_RS       =  2,
     
@@ -197,7 +197,6 @@ module rvexp_CVXIF_Adapter
 
         else if(state == 2'd0 && input_all_valid == 1'b0) begin
             state          <= 2'd0;
-            //$display("State 0 cu 0"); 
         end
         else if(state == 2'd0 && input_all_valid == 1'b1) begin
             hid            <= issue_hartid;
@@ -212,7 +211,6 @@ module rvexp_CVXIF_Adapter
             instr_rs2_val  <= register_rs_1_i;
 
             state          <= 2'd1;
-            //$display("State 0 cu 1 : %07b | %07b | %3b", instr_opcode, instr_funct7, instr_funct3);
         end
 
         else if(state == 2'd1 && i_result_we == 1'b0) begin

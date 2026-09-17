@@ -17,27 +17,27 @@ module rvexp_axis4 (
     output logic [   63:0]  result_rd,
 
     // AXIS4
-    input  logic [ 511: 0]  m0_axis_mm2s_tdata, //output
-    input  logic [  63: 0]  m0_axis_mm2s_tkeep,  //output
-    input  logic            m0_axis_mm2s_tvalid,          //output
-    output logic            m0_axis_mm2s_tready,          //input
-    input  logic            m0_axis_mm2s_tlast,           //output
-    output logic [1023 : 0] s0_axis_s2mm_tdata, //input
-    output logic [ 127 : 0] s0_axis_s2mm_tkeep,  //input
-    output logic            s0_axis_s2mm_tvalid,           //input
-    input  logic            s0_axis_s2mm_tready,           //output
-    output logic            s0_axis_s2mm_tlast,             //input
+    input  logic [ 511: 0]  m0_axis_mm2s_tdata, 
+    input  logic [  63: 0]  m0_axis_mm2s_tkeep,  
+    input  logic            m0_axis_mm2s_tvalid,          
+    output logic            m0_axis_mm2s_tready,       
+    input  logic            m0_axis_mm2s_tlast,          
+    output logic [1023 : 0] s0_axis_s2mm_tdata,
+    output logic [ 127 : 0] s0_axis_s2mm_tkeep, 
+    output logic            s0_axis_s2mm_tvalid,          
+    input  logic            s0_axis_s2mm_tready,         
+    output logic            s0_axis_s2mm_tlast,           
 	
-	input  logic [1023: 0]  m1_axis_mm2s_tdata, //output
-    input  logic [ 127: 0]  m1_axis_mm2s_tkeep,  //output
-    input  logic            m1_axis_mm2s_tvalid,          //output
-    output logic            m1_axis_mm2s_tready,          //input
-    input  logic            m1_axis_mm2s_tlast,           //output
-    output logic [ 511 : 0] s1_axis_s2mm_tdata, //input
-    output logic [  63 : 0] s1_axis_s2mm_tkeep,  //input
-    output logic            s1_axis_s2mm_tvalid,           //input
-    input  logic            s1_axis_s2mm_tready,           //output
-    output logic            s1_axis_s2mm_tlast,             //input
+	input  logic [1023: 0]  m1_axis_mm2s_tdata, 
+    input  logic [ 127: 0]  m1_axis_mm2s_tkeep, 
+    input  logic            m1_axis_mm2s_tvalid,         
+    output logic            m1_axis_mm2s_tready,         
+    input  logic            m1_axis_mm2s_tlast,           
+    output logic [ 511 : 0] s1_axis_s2mm_tdata, 
+    output logic [  63 : 0] s1_axis_s2mm_tkeep,  
+    output logic            s1_axis_s2mm_tvalid,           
+    input  logic            s1_axis_s2mm_tready,          
+    output logic            s1_axis_s2mm_tlast,            
 
     //AXI4 Lite Interface
 	output logic [31 : 0] m0_axi_awaddr,
@@ -81,15 +81,6 @@ module rvexp_axis4 (
 	output logic          m1_axi_rready
 );
 
-    logic          qm_we;
-    logic [  7:0]  qm [0:63];
-
-    logic          rm_we;
-    logic [ 31:0]  rm [0:63];
-
-    //assign result_we = 0;
-    //assign result_rd = '0;
-
     logic [31:0] axis_timers_values [0:7];
 
     logic [31:0] mvalid_cnt;
@@ -109,12 +100,6 @@ module rvexp_axis4 (
 
         .result_we(result_we),
         .result_rd(result_rd),
-
-        .qm_we(qm_we),
-        .qm(qm),
-
-        .rm_we(rm_we),
-        .rm(rm),
 
         .axis_timers_values(axis_timers_values),
 
