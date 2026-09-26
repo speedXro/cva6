@@ -6,19 +6,24 @@
 #include "spi.h"
 #include "sd.h"
 #include "gpt.h"
-#include "../../../../../verif/tests/custom/cdf53/CDF53_functions.h"
-#include "../../../../../verif/tests/custom/cdf53/cdf53.h"
-#include "../../../../../verif/tests/custom/cdf53/compression.h"
+#include "gpio.h"
+#include "upsf.h"
+
+//#include <stdint.h>
 
 // 1 second at 50MHz
-#define SECOND_CYCLES   (50 * 1000 * 1000)
+#define SECOND_CYCLES   (100 * 1000 * 1000)
+#define MS_CYCLES       (100 * 1000)
 #define WAIT_SECONDS    (5)
 
 uint64_t gccs(void);
+void DelayMs(int d);
+uint8_t ReadU8(void);
+uint8_t GetNibble(char);
+void Application(void);
 
-int Application_CDF53_Compression_SW(void);
-int Application_CDF53_Compression_HW(void);
-
+uint64_t start;
+uint64_t stop;
 
 static inline uintptr_t get_cycle_count() {
     uintptr_t cycle;
@@ -41,145 +46,87 @@ uint64_t gccs(void)
     return result;
 }
 
-int Application_CDF53_Compression_SW(void)
+void DelayMs(int d)
 {
-    uint64_t t_start=0;
-    uint64_t t_stop=0;
-    uint64_t tdiff=0;
+    uintptr_t t_start;
 
-    uint8_t text[NBYTES];
-    make_text_1024(text);
-
- 
-    uint8_t stream[NBYTES * 4];
-    uint8_t *p = stream;
-
-    t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++)
-    {
-        int8_t blk[BLK];
-        for (int i = 0; i < BLK; i++)
-        {
-            blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
-        }
-        size_t used = SW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
-        if (used == 0)
-        {
-            return 1;
-        }
-        p += used;
-    }
-    size_t enc_size = (size_t)(p - stream);
-    t_stop = gccs();
-    tdiff = t_stop-t_start;
-    print_uart("Compression SW :\r\n");
-    print_uart_int(tdiff);
-    print_uart("\r\n");
-
-    uint8_t *src = stream;
-    uint8_t *end = stream + enc_size;
-    t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++){
-        int8_t recon_blk[BLK];
-        size_t used = SW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
-        if (used == 0)
-        {
-            return 1;
-        }
-        for (int i = 0; i < BLK; i++)
-        {
-            int recon_byte = (int)recon_blk[i] + 128;
-            if (recon_byte != (int)text[b*BLK + i])
-            {
-                return 1;
-            }
-        }
-        src += used;
-    }
-    t_stop = gccs();
-    tdiff = t_stop-t_start;
-    print_uart("De-Compression SW :\r\n");
-    print_uart_int(tdiff);
-    print_uart("\r\n");
-
-    return 0;
+    t_start = get_cycle_count();
+    while(get_cycle_count() - t_start < (d * MS_CYCLES)) {}
 }
 
-int Application_CDF53_Compression_HW(void)
+uint8_t ReadU8(void)
 {
-    uint64_t t_start=0;
-    uint64_t t_stop=0;
-    uint64_t tdiff=0;
+    uint8_t rxb = 0xFF;
 
-    uint8_t text[NBYTES];
-    make_text_1024(text);
-
-    uint8_t stream[NBYTES * 4];
-    uint8_t *p = stream;
-
-    t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++)
+    while(1)
     {
-        int8_t blk[BLK];
-        for (int i = 0; i < BLK; i++)
+        if(read_serial(&rxb)==1)
         {
-            blk[i] = (int8_t)((int)text[b*BLK + i] - 128);
+            return rxb;
         }
-        size_t used = HW_encode_block_53_varbyte(blk, p, (size_t)(NBYTES*4 - (p - stream)));
-        if (used == 0)
-        {
-            return 1;
-        }
-        p += used;
+        start = get_cycle_count();
+        while(get_cycle_count() - start < 100) {}
     }
-    size_t enc_size = (size_t)(p - stream);
-    t_stop = gccs();
-    tdiff = t_stop-t_start;
-    print_uart("Compression HW :\r\n");
-    print_uart_int(tdiff);
-    print_uart("\r\n");
+    
+    return 0xFF;
+}
 
-    uint8_t *src = stream;
-    uint8_t *end = stream + enc_size;
-    t_start = gccs();
-    for (int b = 0; b < NBYTES/BLK; b++){
-        int8_t recon_blk[BLK];
-        size_t used = HW_decode_block_53_varbyte(src, (size_t)(end - src), recon_blk);
-        if (used == 0)
-        {
-            return 1;
-        }
-        for (int i = 0; i < BLK; i++){
-            int recon_byte = (int)recon_blk[i] + 128;
-            if (recon_byte != (int)text[b*BLK + i]){
-                return 1;
-            }
-        }
-        src += used;
+uint8_t GetNibble(char c)
+{
+    switch(c)
+    {
+        case '0': return  0;
+        case '1': return  1;
+        case '2': return  2;
+        case '3': return  3;
+        case '4': return  4;
+        case '5': return  5;
+        case '6': return  6;
+        case '7': return  7;
+        case '8': return  8;
+        case '9': return  9;
+        case 'A': 
+        case 'a': return 10;
+        case 'B': 
+        case 'b': return 11;
+        case 'C': 
+        case 'c': return 12;
+        case 'D': 
+        case 'd': return 13;
+        case 'E': 
+        case 'e': return 14;
+        case 'F': 
+        case 'f': return 15;
+        default:  return  0;
     }
-    t_stop = gccs();
-    tdiff = t_stop-t_start;
-    print_uart("De-Compression HW :\r\n");
-    print_uart_int(tdiff);
-    print_uart("\r\n");
+}
 
-    return 0;
+void Application(void)
+{
+    uint16_t i,j;
+    
+    uint8_t ch;
+    
+    uint8_t exit_now=0;
+
+    while (exit_now==0)
+    {
+        print_uart("Options: 0 = Boot to Linux\r\n");
+        ch = ReadU8();
+        if(ch == '0') exit_now=1;
+    }
 }
 
 
 int main()
 {
-    int result_SW, result_HW;
 
     init_uart(100000000, 115200); //not needed in intel setup as UART IP is already configured via HW
-    print_uart("Hello World DC TUIASI!\r\n");
-    print_uart("\r\n");
-    
-    result_SW = Application_CDF53_Compression_SW();
-    result_HW = Application_CDF53_Compression_HW();
+    print_uart("TUIASI Department of Computing\r\n");
 
-    if(result_SW == 0) print_uart("SW_SUCESS\r\n"); else print_uart("SW_ERROR\r\n");
-    if(result_HW == 0) print_uart("HW_SUCESS\r\n"); else print_uart("HW_ERROR\r\n");
+    print_uart("\r\n");
+
+    Application();
 
     int res;
     print_uart(" booting!\r\n");

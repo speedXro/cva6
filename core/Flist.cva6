@@ -37,6 +37,7 @@ ${CVA6_REPO_DIR}/vendor/pulp-platform/fpga-support/rtl/SyncDpRam_ind_r_w.sv
 +incdir+${CVA6_REPO_DIR}/vendor/pulp-platform/common_cells/src/
 +incdir+${CVA6_REPO_DIR}/vendor/pulp-platform/axi/include/
 +incdir+${CVA6_REPO_DIR}/common/local/util/
++incdir+${CVA6_REPO_DIR}/core/pp_stft/
 
 // Floating point unit
 ${CVA6_REPO_DIR}/core/cvfpu/src/fpnew_pkg.sv
@@ -81,13 +82,6 @@ ${CVA6_REPO_DIR}/core/cvxif_example/cvxif_example_coprocessor.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/compressed_instr_decoder.sv
 ${CVA6_REPO_DIR}/core/cvxif_example/copro_alu.sv
-
-//DWT CDF53
-${CVA6_REPO_DIR}/core/cdf53/forward/fdwt_cdf_53.sv
-${CVA6_REPO_DIR}/core/cdf53/inverse/idwt_cdf_53.sv
-${CVA6_REPO_DIR}/core/cdf53/CDF53_CoProcessor.sv
-${CVA6_REPO_DIR}/core/cdf53/CDF53_CVXIF_Adapter.sv
-${CVA6_REPO_DIR}/core/cdf53/fi_dwt_hdl.v
 
 // Common Cells
 ${CVA6_REPO_DIR}/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
@@ -205,5 +199,79 @@ ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_mmu.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_ptw.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_tlb.sv
 ${CVA6_REPO_DIR}/core/cva6_mmu/cva6_shared_tlb.sv
+
+
+// RVEXP Files
+${CVA6_REPO_DIR}/core/rvexp_pe/coprocessor/rvexp_CVXIF_Adapter.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/coprocessor/rvexp_coprocessor.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/control/rvexp_controller.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/control/axi4_lite_controller.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/control/pram_controller.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/rvexp_axis4.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/AXIS_PerfCnts.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/probes/AXIS_Probes.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/timers/DualTimer.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/counters/ValidLastCounters.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/srs_sipo.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/srs.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/regg.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/perf_cnts/srs/ctrl_sipo.sv
+${CVA6_REPO_DIR}/core/rvexp_pe/rvexp/include/defines.svh
+
+
+${CVA6_REPO_DIR}/core/pp_fdct2d/top/top_pp_fdct_2d.sv
+${CVA6_REPO_DIR}/core/pp_fdct2d/top/top_pp_idct_2d.sv 
+
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/fdct/pp_fdct_2d.sv 
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/fdct/pp_FDCT_stage.sv 
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/fdct/pp_quant80_stage.sv 
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/fdct/FDCT.sv 
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/fdct/quant80.sv
+
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/idct/IDCT.sv
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/idct/pp_IDCT_stage.sv
+${CVA6_REPO_DIR}/core/pp_fdct2d/pp/idct/pp_idct_2d.sv
+
+${CVA6_REPO_DIR}/core/pp_fdct2d/axis/axis_input.sv 
+${CVA6_REPO_DIR}/core/pp_fdct2d/axis/axis_output.sv
+
+
+${CVA6_REPO_DIR}/core/pp_stft/stft128_pkg.sv
+${CVA6_REPO_DIR}/core/pp_stft/axis_frame_loader.sv
+${CVA6_REPO_DIR}/core/pp_stft/axis_result_streamer.sv
+${CVA6_REPO_DIR}/core/pp_stft/cmplx_dpram.sv
+${CVA6_REPO_DIR}/core/pp_stft/fft128_engine.sv
+${CVA6_REPO_DIR}/core/pp_stft/stft128_core.sv
+
+
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/AD_Block.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/AD_Aq_Control.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/AD_BitBanging.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/AD_DP_BRAM.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/AD_Values_CDC.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ads/ClockDivider.sv 
+
+${CVA6_REPO_DIR}/core/rvexp_pe/ua/UA_Block.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ua/UA_DP_BRAM.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ua/UA_UART_Control.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ua/UA_UART_Sender.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ua/uart_tx.v 
+
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_Block.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/ClockDivider_p4.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_BB_Busy_CDC.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_BitBanging.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_Config_CDC.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_Configurator.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_Control.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_DP_BRAM.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_FourWrite.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_Module.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/da/DA_OneWrite.sv 
+
+${CVA6_REPO_DIR}/core/rvexp_pe/ur/UR_Block.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ur/UR_Control.sv 
+${CVA6_REPO_DIR}/core/rvexp_pe/ur/uart_rx.v 
+
 
 // end of manifest

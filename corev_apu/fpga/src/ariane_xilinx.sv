@@ -11,6 +11,7 @@
 // Description: Xilinx FPGA top-level
 // Author: Florian Zaruba <zarubaf@iis.ee.ethz.ch>
 `include "kcu116.svh"
+`define KCU116 //disable before exit
 module ariane_xilinx (
 // WARNING: Do not define input parameters. This causes the FPGA build to fail.
 `ifdef GENESYSII
@@ -199,6 +200,18 @@ module ariane_xilinx (
   output logic [ 7:0]  led             ,
   input logic  [4:0]   push_buttons    ,
 
+  output logic          ad_cs_n,
+  output logic          ad_sclk,
+  input  logic          ad_dout,
+
+  //input  logic          uart_rx,
+  output logic          o_uart_tx,
+  input  logic          i_uart_rx,
+
+  output logic          da_sync_n,
+  output logic          da_sclk,
+  output logic          da_din,
+
 `endif
   // SPI
   output logic        spi_mosi    ,
@@ -206,22 +219,15 @@ module ariane_xilinx (
   output logic        spi_ss      ,
   output logic        spi_clk_o   ,
   // common part
-  input logic         trst_n      ,
+  //input logic         trst_n      ,
   input  logic        tck         ,
   input  logic        tms         ,
   input  logic        tdi         ,
   output wire         tdo         ,
+  //input  logic        dbg_rx      ,
+  //output logic        dbg_tx      ,    
   input  logic        rx          ,
-  output logic        tx                    
-  
-  //,output logic  da_sync_n,
-  //output logic  da_sclk,
-  //output logic  da_din,
-
-  //output logic  ad_cs_n,
-  //output logic  ad_sclk,
-  //input  logic  ad_dout, 
-  //output logic  ad_digitized  
+  output logic        tx          
 );
 
 // CVA6 Xilinx configuration
@@ -249,11 +255,11 @@ localparam NumWords = (24 * 1024 * 1024) / 8;
   
 // WARNING: If NBSlave is modified, Xilinx's IPs under fpga/xilinx need to be updated with the new AXI id width and regenerated.
 // Otherwise reads and writes to DRAM may be returned to the wrong master and the crossbar will freeze. See issue #568.
-localparam NBSlave = 2; // debug, ariane
+localparam NBSlave = 6; // debug, ariane, DMA
 localparam AxiAddrWidth = 64;
 localparam AxiDataWidth = 64;
 localparam AxiIdWidthMaster = 4;
-localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(NBSlave); // 5
+localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(NBSlave); // 7 
 localparam AxiUserWidth = CVA6Cfg.AxiUserWidth;
 
 `AXI_TYPEDEF_ALL(axi_slave,
@@ -285,6 +291,7 @@ AXI_BUS #(
 ) master_to_dm[0:0]();
 
 // disable test-enable
+
 logic test_en;
 logic ndmreset;
 logic ndmreset_n;
@@ -341,6 +348,130 @@ logic          debug_resp_ready;
 dm::dmi_resp_t debug_resp;
 
 logic dmactive;
+
+logic [ 511 : 0] m0_axis_mm2s_tdata; 
+logic [  63 : 0] m0_axis_mm2s_tkeep;  
+logic 			     m0_axis_mm2s_tvalid;          
+logic 			     m0_axis_mm2s_tready;          
+logic	 		       m0_axis_mm2s_tlast;           
+logic [1023 : 0] s0_axis_s2mm_tdata; 
+logic [ 127 : 0] s0_axis_s2mm_tkeep;  
+logic 			     s0_axis_s2mm_tvalid;           
+logic 			     s0_axis_s2mm_tready;           
+logic 			     s0_axis_s2mm_tlast;            
+
+logic [1023 : 0] m1_axis_mm2s_tdata; 
+logic [ 127 : 0] m1_axis_mm2s_tkeep;  
+logic 			     m1_axis_mm2s_tvalid;          
+logic 			     m1_axis_mm2s_tready;          
+logic	 		       m1_axis_mm2s_tlast;           
+logic [ 511 : 0] s1_axis_s2mm_tdata; 
+logic [  63 : 0] s1_axis_s2mm_tkeep;  
+logic 			     s1_axis_s2mm_tvalid;           
+logic 			     s1_axis_s2mm_tready;           
+logic 			     s1_axis_s2mm_tlast;            
+
+logic [  15 : 0] m2_axis_mm2s_tdata; 
+logic [   1 : 0] m2_axis_mm2s_tkeep;  
+logic 			     m2_axis_mm2s_tvalid;          
+logic 			     m2_axis_mm2s_tready;          
+logic	 		       m2_axis_mm2s_tlast;           
+logic [  31 : 0] s2_axis_s2mm_tdata; 
+logic [   3 : 0] s2_axis_s2mm_tkeep;  
+logic 			     s2_axis_s2mm_tvalid;           
+logic 			     s2_axis_s2mm_tready;           
+logic 			     s2_axis_s2mm_tlast;            
+
+logic [ 511 : 0] m3_axis_mm2s_tdata; 
+logic [  63 : 0] m3_axis_mm2s_tkeep;  
+logic 			     m3_axis_mm2s_tvalid;          
+logic 			     m3_axis_mm2s_tready;          
+logic	 		       m3_axis_mm2s_tlast;           
+logic [ 511 : 0] s3_axis_s2mm_tdata; 
+logic [  63 : 0] s3_axis_s2mm_tkeep;  
+logic 			     s3_axis_s2mm_tvalid;           
+logic 			     s3_axis_s2mm_tready;           
+logic 			     s3_axis_s2mm_tlast;            
+
+logic [31 : 0] m0_axi_lite_awaddr;
+logic [ 2 : 0] m0_axi_lite_awprot;
+logic          m0_axi_lite_awvalid;
+logic          m0_axi_lite_awready;
+logic [31 : 0] m0_axi_lite_wdata;
+logic [ 3 : 0] m0_axi_lite_wstrb;
+logic          m0_axi_lite_wvalid;
+logic          m0_axi_lite_wready;
+logic [ 1 : 0] m0_axi_lite_bresp;
+logic          m0_axi_lite_bvalid;
+logic          m0_axi_lite_bready;
+logic [31 : 0] m0_axi_lite_araddr;
+logic [ 2 : 0] m0_axi_lite_arprot;
+logic          m0_axi_lite_arvalid;
+logic          m0_axi_lite_arready;
+logic [31 : 0] m0_axi_lite_rdata;
+logic [ 1 : 0] m0_axi_lite_rresp;
+logic          m0_axi_lite_rvalid;
+logic          m0_axi_lite_rready;
+
+logic [31 : 0] m1_axi_lite_awaddr;
+logic [ 2 : 0] m1_axi_lite_awprot;
+logic          m1_axi_lite_awvalid;
+logic          m1_axi_lite_awready;
+logic [31 : 0] m1_axi_lite_wdata;
+logic [ 3 : 0] m1_axi_lite_wstrb;
+logic          m1_axi_lite_wvalid;
+logic          m1_axi_lite_wready;
+logic [ 1 : 0] m1_axi_lite_bresp;
+logic          m1_axi_lite_bvalid;
+logic          m1_axi_lite_bready;
+logic [31 : 0] m1_axi_lite_araddr;
+logic [ 2 : 0] m1_axi_lite_arprot;
+logic          m1_axi_lite_arvalid;
+logic          m1_axi_lite_arready;
+logic [31 : 0] m1_axi_lite_rdata;
+logic [ 1 : 0] m1_axi_lite_rresp;
+logic          m1_axi_lite_rvalid;
+logic          m1_axi_lite_rready;
+
+logic [31 : 0] m2_axi_lite_awaddr;
+logic [ 2 : 0] m2_axi_lite_awprot;
+logic          m2_axi_lite_awvalid;
+logic          m2_axi_lite_awready;
+logic [31 : 0] m2_axi_lite_wdata;
+logic [ 3 : 0] m2_axi_lite_wstrb;
+logic          m2_axi_lite_wvalid;
+logic          m2_axi_lite_wready;
+logic [ 1 : 0] m2_axi_lite_bresp;
+logic          m2_axi_lite_bvalid;
+logic          m2_axi_lite_bready;
+logic [31 : 0] m2_axi_lite_araddr;
+logic [ 2 : 0] m2_axi_lite_arprot;
+logic          m2_axi_lite_arvalid;
+logic          m2_axi_lite_arready;
+logic [31 : 0] m2_axi_lite_rdata;
+logic [ 1 : 0] m2_axi_lite_rresp;
+logic          m2_axi_lite_rvalid;
+logic          m2_axi_lite_rready;
+
+logic [31 : 0] m3_axi_lite_awaddr;
+logic [ 2 : 0] m3_axi_lite_awprot;
+logic          m3_axi_lite_awvalid;
+logic          m3_axi_lite_awready;
+logic [31 : 0] m3_axi_lite_wdata;
+logic [ 3 : 0] m3_axi_lite_wstrb;
+logic          m3_axi_lite_wvalid;
+logic          m3_axi_lite_wready;
+logic [ 1 : 0] m3_axi_lite_bresp;
+logic          m3_axi_lite_bvalid;
+logic          m3_axi_lite_bready;
+logic [31 : 0] m3_axi_lite_araddr;
+logic [ 2 : 0] m3_axi_lite_arprot;
+logic          m3_axi_lite_arvalid;
+logic          m3_axi_lite_arready;
+logic [31 : 0] m3_axi_lite_rdata;
+logic [ 1 : 0] m3_axi_lite_rresp;
+logic          m3_axi_lite_rvalid;
+logic          m3_axi_lite_rready;
 
 // IRQ
 logic [1:0] irq;
@@ -424,7 +555,8 @@ dmi_jtag i_dmi_jtag (
     .dmi_resp_i           ( debug_resp           ),
     .tck_i                ( tck    ),
     .tms_i                ( tms    ),
-    .trst_ni              ( trst_n ),
+    //.trst_ni              ( trst_n ),
+    .trst_ni              ( 1'b1 ),
     .td_i                 ( tdi    ),
     .td_o                 ( tdo    ),
     .tdo_oe_o             (        )
@@ -503,28 +635,7 @@ axi2mem #(
     .data_o     ( dm_slave_wdata            ),
     .data_i     ( dm_slave_rdata            )
 );
-/*axi2mem #(
-    .AXI_ID_WIDTH   ( AxiIdWidthSlaves    ),
-    .AXI_ADDR_WIDTH ( AxiAddrWidth        ),
-    .AXI_DATA_WIDTH ( AxiDataWidth        ),
-    .AXI_USER_WIDTH ( AxiUserWidth        )
-) i_dm_axi2mem (
-    .clk_i      ( clk                       ),
-    .rst_ni     ( rst_n                     ),
-    .slave      ( master[ariane_soc::Debug] ),
-    .req_o      ( dm_slave_req              ),
-    .we_o       ( dm_slave_we               ),
-    .addr_o     ( dm_slave_addr             ),
-    .be_o       ( dm_slave_be               ),
-    .data_o     ( dm_slave_wdata            ),
-    .data_i     ( dm_slave_rdata            )
-);*/
-/*AXI_BUS #(
-    .AXI_ADDR_WIDTH ( riscv::XLEN      ),
-    .AXI_DATA_WIDTH ( riscv::XLEN      ),
-    .AXI_ID_WIDTH   ( AxiIdWidthSlaves ),
-    .AXI_USER_WIDTH ( AxiUserWidth     )
-) master_to_dm[0:0]();*/
+
 
 if (CVA6Cfg.XLEN==32 ) begin
 
@@ -833,15 +944,145 @@ ariane #(
     .rvfi_probes_o( /* open */          ),
     .debug_req_i  ( debug_req_irq       ),
     .noc_req_o    ( axi_ariane_req      ),
-    .noc_resp_i   ( axi_ariane_resp     )
+    .noc_resp_i   ( axi_ariane_resp     ),
 
-    //,.da_sync_n            ( da_sync_n           ),
-    //.da_sclk              ( da_sclk             ),
-    //.da_din               ( da_din              ),
-    //.ad_cs_n              ( ad_cs_n             ),
-    //.ad_sclk              ( ad_sclk             ),
-    //.ad_dout              ( ad_dout             ),
-    //.ad_digitized         ( ad_digitized        )
+
+    .m0_axis_mm2s_tdata(m0_axis_mm2s_tdata),
+    .m0_axis_mm2s_tkeep(m0_axis_mm2s_tkeep),
+    .m0_axis_mm2s_tvalid(m0_axis_mm2s_tvalid),
+    .m0_axis_mm2s_tready(m0_axis_mm2s_tready),
+    .m0_axis_mm2s_tlast(m0_axis_mm2s_tlast),
+    .s0_axis_s2mm_tdata(s0_axis_s2mm_tdata),
+    .s0_axis_s2mm_tkeep(s0_axis_s2mm_tkeep),
+    .s0_axis_s2mm_tvalid(s0_axis_s2mm_tvalid),
+    .s0_axis_s2mm_tready(s0_axis_s2mm_tready),
+    .s0_axis_s2mm_tlast(s0_axis_s2mm_tlast),
+
+    .m1_axis_mm2s_tdata(m1_axis_mm2s_tdata),
+    .m1_axis_mm2s_tkeep(m1_axis_mm2s_tkeep),
+    .m1_axis_mm2s_tvalid(m1_axis_mm2s_tvalid),
+    .m1_axis_mm2s_tready(m1_axis_mm2s_tready),
+    .m1_axis_mm2s_tlast(m1_axis_mm2s_tlast),
+    .s1_axis_s2mm_tdata(s1_axis_s2mm_tdata),
+    .s1_axis_s2mm_tkeep(s1_axis_s2mm_tkeep),
+    .s1_axis_s2mm_tvalid(s1_axis_s2mm_tvalid),
+    .s1_axis_s2mm_tready(s1_axis_s2mm_tready),
+    .s1_axis_s2mm_tlast(s1_axis_s2mm_tlast),
+
+    .m2_axis_mm2s_tdata(m2_axis_mm2s_tdata),
+    .m2_axis_mm2s_tkeep(m2_axis_mm2s_tkeep),
+    .m2_axis_mm2s_tvalid(m2_axis_mm2s_tvalid),
+    .m2_axis_mm2s_tready(m2_axis_mm2s_tready),
+    .m2_axis_mm2s_tlast(m2_axis_mm2s_tlast),
+    .s2_axis_s2mm_tdata(s2_axis_s2mm_tdata),
+    .s2_axis_s2mm_tkeep(s2_axis_s2mm_tkeep),
+    .s2_axis_s2mm_tvalid(s2_axis_s2mm_tvalid),
+    .s2_axis_s2mm_tready(s2_axis_s2mm_tready),
+    .s2_axis_s2mm_tlast(s2_axis_s2mm_tlast),
+
+    .m3_axis_mm2s_tdata(m3_axis_mm2s_tdata),
+    .m3_axis_mm2s_tkeep(m3_axis_mm2s_tkeep),
+    .m3_axis_mm2s_tvalid(m3_axis_mm2s_tvalid),
+    .m3_axis_mm2s_tready(m3_axis_mm2s_tready),
+    .m3_axis_mm2s_tlast(m3_axis_mm2s_tlast),
+    .s3_axis_s2mm_tdata(s3_axis_s2mm_tdata),
+    .s3_axis_s2mm_tkeep(s3_axis_s2mm_tkeep),
+    .s3_axis_s2mm_tvalid(s3_axis_s2mm_tvalid),
+    .s3_axis_s2mm_tready(s3_axis_s2mm_tready),
+    .s3_axis_s2mm_tlast(s3_axis_s2mm_tlast),
+
+
+
+    .m0_axi_awaddr(m0_axi_lite_awaddr),
+    .m0_axi_awprot(m0_axi_lite_awprot),
+    .m0_axi_awvalid(m0_axi_lite_awvalid),
+    .m0_axi_awready(m0_axi_lite_awready),
+    .m0_axi_wdata(m0_axi_lite_wdata),
+    .m0_axi_wstrb(m0_axi_lite_wstrb),
+    .m0_axi_wvalid(m0_axi_lite_wvalid),
+    .m0_axi_wready(m0_axi_lite_wready),
+    .m0_axi_bresp(m0_axi_lite_bresp),
+    .m0_axi_bvalid(m0_axi_lite_bvalid),
+    .m0_axi_bready(m0_axi_lite_bready),
+    .m0_axi_araddr(m0_axi_lite_araddr),
+    .m0_axi_arprot(m0_axi_lite_arprot),
+    .m0_axi_arvalid(m0_axi_lite_arvalid),
+    .m0_axi_arready(m0_axi_lite_arready),
+    .m0_axi_rdata(m0_axi_lite_rdata),
+    .m0_axi_rresp(m0_axi_lite_rresp),
+    .m0_axi_rvalid(m0_axi_lite_rvalid),
+    .m0_axi_rready(m0_axi_lite_rready),
+    
+    .m1_axi_awaddr(m1_axi_lite_awaddr),
+    .m1_axi_awprot(m1_axi_lite_awprot),
+    .m1_axi_awvalid(m1_axi_lite_awvalid),
+    .m1_axi_awready(m1_axi_lite_awready),
+    .m1_axi_wdata(m1_axi_lite_wdata),
+    .m1_axi_wstrb(m1_axi_lite_wstrb),
+    .m1_axi_wvalid(m1_axi_lite_wvalid),
+    .m1_axi_wready(m1_axi_lite_wready),
+    .m1_axi_bresp(m1_axi_lite_bresp),
+    .m1_axi_bvalid(m1_axi_lite_bvalid),
+    .m1_axi_bready(m1_axi_lite_bready),
+    .m1_axi_araddr(m1_axi_lite_araddr),
+    .m1_axi_arprot(m1_axi_lite_arprot),
+    .m1_axi_arvalid(m1_axi_lite_arvalid),
+    .m1_axi_arready(m1_axi_lite_arready),
+    .m1_axi_rdata(m1_axi_lite_rdata),
+    .m1_axi_rresp(m1_axi_lite_rresp),
+    .m1_axi_rvalid(m1_axi_lite_rvalid),
+    .m1_axi_rready(m1_axi_lite_rready),
+
+    .m2_axi_awaddr(m2_axi_lite_awaddr),
+    .m2_axi_awprot(m2_axi_lite_awprot),
+    .m2_axi_awvalid(m2_axi_lite_awvalid),
+    .m2_axi_awready(m2_axi_lite_awready),
+    .m2_axi_wdata(m2_axi_lite_wdata),
+    .m2_axi_wstrb(m2_axi_lite_wstrb),
+    .m2_axi_wvalid(m2_axi_lite_wvalid),
+    .m2_axi_wready(m2_axi_lite_wready),
+    .m2_axi_bresp(m2_axi_lite_bresp),
+    .m2_axi_bvalid(m2_axi_lite_bvalid),
+    .m2_axi_bready(m2_axi_lite_bready),
+    .m2_axi_araddr(m2_axi_lite_araddr),
+    .m2_axi_arprot(m2_axi_lite_arprot),
+    .m2_axi_arvalid(m2_axi_lite_arvalid),
+    .m2_axi_arready(m2_axi_lite_arready),
+    .m2_axi_rdata(m2_axi_lite_rdata),
+    .m2_axi_rresp(m2_axi_lite_rresp),
+    .m2_axi_rvalid(m2_axi_lite_rvalid),
+    .m2_axi_rready(m2_axi_lite_rready),
+    
+    .m3_axi_awaddr(m3_axi_lite_awaddr),
+    .m3_axi_awprot(m3_axi_lite_awprot),
+    .m3_axi_awvalid(m3_axi_lite_awvalid),
+    .m3_axi_awready(m3_axi_lite_awready),
+    .m3_axi_wdata(m3_axi_lite_wdata),
+    .m3_axi_wstrb(m3_axi_lite_wstrb),
+    .m3_axi_wvalid(m3_axi_lite_wvalid),
+    .m3_axi_wready(m3_axi_lite_wready),
+    .m3_axi_bresp(m3_axi_lite_bresp),
+    .m3_axi_bvalid(m3_axi_lite_bvalid),
+    .m3_axi_bready(m3_axi_lite_bready),
+    .m3_axi_araddr(m3_axi_lite_araddr),
+    .m3_axi_arprot(m3_axi_lite_arprot),
+    .m3_axi_arvalid(m3_axi_lite_arvalid),
+    .m3_axi_arready(m3_axi_lite_arready),
+    .m3_axi_rdata(m3_axi_lite_rdata),
+    .m3_axi_rresp(m3_axi_lite_rresp),
+    .m3_axi_rvalid(m3_axi_lite_rvalid),
+    .m3_axi_rready(m3_axi_lite_rready),
+
+    .ad_cs_n(ad_cs_n),
+    .ad_sclk(ad_sclk),
+    .ad_dout(ad_dout),
+
+    .o_uart_tx(o_uart_tx),
+    .i_uart_rx(i_uart_rx),
+
+    .da_sync_n(da_sync_n),
+    .da_sclk(da_sclk),
+    .da_din(da_din)
 );
 
 `AXI_ASSIGN_FROM_REQ(slave[0], axi_ariane_req)
@@ -933,6 +1174,7 @@ end
 
 logic clk_200MHz_ref;
 
+
 ariane_peripherals #(
     .AxiAddrWidth ( AxiAddrWidth     ),
     .AxiDataWidth ( AxiDataWidth     ),
@@ -962,6 +1204,7 @@ ariane_peripherals #(
 ) i_ariane_peripherals (
     .clk_i        ( clk                          ),
     .clk_200MHz_i ( clk_200MHz_ref               ),
+    .cpu_reset    ( cpu_reset                    ),
     .rst_ni       ( ndmreset_n                   ),
     .plic         ( master[ariane_soc::PLIC]     ),
     .uart         ( master[ariane_soc::UART]     ),
@@ -969,6 +1212,10 @@ ariane_peripherals #(
     .gpio         ( master[ariane_soc::GPIO]     ), 
     .ethernet     ( master[ariane_soc::Ethernet] ),
     .timer        ( master[ariane_soc::Timer]    ),
+    .mm0_axi        ( slave[2]),
+	  .mm1_axi        ( slave[3]),
+    .mm2_axi        ( slave[4]),
+	  .mm3_axi        ( slave[5]),		
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
@@ -987,6 +1234,130 @@ ariane_peripherals #(
     .phy_tx_clk_i   ( phy_tx_clk                  ),
     `endif
 
+    .m0_axis_mm2s_tdata(m0_axis_mm2s_tdata),
+    .m0_axis_mm2s_tkeep(m0_axis_mm2s_tkeep),
+    .m0_axis_mm2s_tvalid(m0_axis_mm2s_tvalid),
+    .m0_axis_mm2s_tready(m0_axis_mm2s_tready),
+    .m0_axis_mm2s_tlast(m0_axis_mm2s_tlast),
+    .s0_axis_s2mm_tdata(s0_axis_s2mm_tdata),
+    .s0_axis_s2mm_tkeep(s0_axis_s2mm_tkeep),
+    .s0_axis_s2mm_tvalid(s0_axis_s2mm_tvalid),
+    .s0_axis_s2mm_tready(s0_axis_s2mm_tready),
+    .s0_axis_s2mm_tlast(s0_axis_s2mm_tlast),
+	
+	  .m1_axis_mm2s_tdata(m1_axis_mm2s_tdata),
+    .m1_axis_mm2s_tkeep(m1_axis_mm2s_tkeep),
+    .m1_axis_mm2s_tvalid(m1_axis_mm2s_tvalid),
+    .m1_axis_mm2s_tready(m1_axis_mm2s_tready),
+    .m1_axis_mm2s_tlast(m1_axis_mm2s_tlast),
+    .s1_axis_s2mm_tdata(s1_axis_s2mm_tdata),
+    .s1_axis_s2mm_tkeep(s1_axis_s2mm_tkeep),
+    .s1_axis_s2mm_tvalid(s1_axis_s2mm_tvalid),
+    .s1_axis_s2mm_tready(s1_axis_s2mm_tready),
+    .s1_axis_s2mm_tlast(s1_axis_s2mm_tlast),
+
+    .m2_axis_mm2s_tdata(m2_axis_mm2s_tdata),
+    .m2_axis_mm2s_tkeep(m2_axis_mm2s_tkeep),
+    .m2_axis_mm2s_tvalid(m2_axis_mm2s_tvalid),
+    .m2_axis_mm2s_tready(m2_axis_mm2s_tready),
+    .m2_axis_mm2s_tlast(m2_axis_mm2s_tlast),
+    .s2_axis_s2mm_tdata(s2_axis_s2mm_tdata),
+    .s2_axis_s2mm_tkeep(s2_axis_s2mm_tkeep),
+    .s2_axis_s2mm_tvalid(s2_axis_s2mm_tvalid),
+    .s2_axis_s2mm_tready(s2_axis_s2mm_tready),
+    .s2_axis_s2mm_tlast(s2_axis_s2mm_tlast),
+	
+	  .m3_axis_mm2s_tdata(m3_axis_mm2s_tdata),
+    .m3_axis_mm2s_tkeep(m3_axis_mm2s_tkeep),
+    .m3_axis_mm2s_tvalid(m3_axis_mm2s_tvalid),
+    .m3_axis_mm2s_tready(m3_axis_mm2s_tready),
+    .m3_axis_mm2s_tlast(m3_axis_mm2s_tlast),
+    .s3_axis_s2mm_tdata(s3_axis_s2mm_tdata),
+    .s3_axis_s2mm_tkeep(s3_axis_s2mm_tkeep),
+    .s3_axis_s2mm_tvalid(s3_axis_s2mm_tvalid),
+    .s3_axis_s2mm_tready(s3_axis_s2mm_tready),
+    .s3_axis_s2mm_tlast(s3_axis_s2mm_tlast),
+
+    .m0_axi_awaddr(m0_axi_lite_awaddr),
+    .m0_axi_awprot(m0_axi_lite_awprot),
+    .m0_axi_awvalid(m0_axi_lite_awvalid),
+    .m0_axi_awready(m0_axi_lite_awready),
+    .m0_axi_wdata(m0_axi_lite_wdata),
+    .m0_axi_wstrb(m0_axi_lite_wstrb),
+    .m0_axi_wvalid(m0_axi_lite_wvalid),
+    .m0_axi_wready(m0_axi_lite_wready),
+    .m0_axi_bresp(m0_axi_lite_bresp),
+    .m0_axi_bvalid(m0_axi_lite_bvalid),
+    .m0_axi_bready(m0_axi_lite_bready),
+    .m0_axi_araddr(m0_axi_lite_araddr),
+    .m0_axi_arprot(m0_axi_lite_arprot),
+    .m0_axi_arvalid(m0_axi_lite_arvalid),
+    .m0_axi_arready(m0_axi_lite_arready),
+    .m0_axi_rdata(m0_axi_lite_rdata),
+    .m0_axi_rresp(m0_axi_lite_rresp),
+    .m0_axi_rvalid(m0_axi_lite_rvalid),
+    .m0_axi_rready(m0_axi_lite_rready),
+    
+    .m1_axi_awaddr(m1_axi_lite_awaddr),
+    .m1_axi_awprot(m1_axi_lite_awprot),
+    .m1_axi_awvalid(m1_axi_lite_awvalid),
+    .m1_axi_awready(m1_axi_lite_awready),
+    .m1_axi_wdata(m1_axi_lite_wdata),
+    .m1_axi_wstrb(m1_axi_lite_wstrb),
+    .m1_axi_wvalid(m1_axi_lite_wvalid),
+    .m1_axi_wready(m1_axi_lite_wready),
+    .m1_axi_bresp(m1_axi_lite_bresp),
+    .m1_axi_bvalid(m1_axi_lite_bvalid),
+    .m1_axi_bready(m1_axi_lite_bready),
+    .m1_axi_araddr(m1_axi_lite_araddr),
+    .m1_axi_arprot(m1_axi_lite_arprot),
+    .m1_axi_arvalid(m1_axi_lite_arvalid),
+    .m1_axi_arready(m1_axi_lite_arready),
+    .m1_axi_rdata(m1_axi_lite_rdata),
+    .m1_axi_rresp(m1_axi_lite_rresp),
+    .m1_axi_rvalid(m1_axi_lite_rvalid),
+    .m1_axi_rready(m1_axi_lite_rready),
+
+    .m2_axi_awaddr(m2_axi_lite_awaddr),
+    .m2_axi_awprot(m2_axi_lite_awprot),
+    .m2_axi_awvalid(m2_axi_lite_awvalid),
+    .m2_axi_awready(m2_axi_lite_awready),
+    .m2_axi_wdata(m2_axi_lite_wdata),
+    .m2_axi_wstrb(m2_axi_lite_wstrb),
+    .m2_axi_wvalid(m2_axi_lite_wvalid),
+    .m2_axi_wready(m2_axi_lite_wready),
+    .m2_axi_bresp(m2_axi_lite_bresp),
+    .m2_axi_bvalid(m2_axi_lite_bvalid),
+    .m2_axi_bready(m2_axi_lite_bready),
+    .m2_axi_araddr(m2_axi_lite_araddr),
+    .m2_axi_arprot(m2_axi_lite_arprot),
+    .m2_axi_arvalid(m2_axi_lite_arvalid),
+    .m2_axi_arready(m2_axi_lite_arready),
+    .m2_axi_rdata(m2_axi_lite_rdata),
+    .m2_axi_rresp(m2_axi_lite_rresp),
+    .m2_axi_rvalid(m2_axi_lite_rvalid),
+    .m2_axi_rready(m2_axi_lite_rready),
+    
+    .m3_axi_awaddr(m3_axi_lite_awaddr),
+    .m3_axi_awprot(m3_axi_lite_awprot),
+    .m3_axi_awvalid(m3_axi_lite_awvalid),
+    .m3_axi_awready(m3_axi_lite_awready),
+    .m3_axi_wdata(m3_axi_lite_wdata),
+    .m3_axi_wstrb(m3_axi_lite_wstrb),
+    .m3_axi_wvalid(m3_axi_lite_wvalid),
+    .m3_axi_wready(m3_axi_lite_wready),
+    .m3_axi_bresp(m3_axi_lite_bresp),
+    .m3_axi_bvalid(m3_axi_lite_bvalid),
+    .m3_axi_bready(m3_axi_lite_bready),
+    .m3_axi_araddr(m3_axi_lite_araddr),
+    .m3_axi_arprot(m3_axi_lite_arprot),
+    .m3_axi_arvalid(m3_axi_lite_arvalid),
+    .m3_axi_arready(m3_axi_lite_arready),
+    .m3_axi_rdata(m3_axi_lite_rdata),
+    .m3_axi_rresp(m3_axi_lite_rresp),
+    .m3_axi_rvalid(m3_axi_lite_rvalid),
+    .m3_axi_rready(m3_axi_lite_rready),
+
     .sd_clk_i       ( sd_clk_sys                  ),
     
     .spi_clk_o      ( spi_clk_o                   ),
@@ -1003,7 +1374,96 @@ ariane_peripherals #(
       .leds_o         ( led                       ),
       .dip_switches_i ( {3'd0,push_buttons}       )
     `endif
+
+    
 );
+
+/*fila i_fila(
+  .AXIS_FDCT_IN_tdata(m0_axis_mm2s_tdata),
+  .AXIS_FDCT_IN_tlast(m0_axis_mm2s_tlast),
+  .AXIS_FDCT_IN_tready(m0_axis_mm2s_tready),
+  .AXIS_FDCT_IN_tvalid(m0_axis_mm2s_tvalid),
+  
+  .AXIS_FDCT_OUT_tdata(s0_axis_s2mm_tdata),
+  .AXIS_FDCT_OUT_tlast(s0_axis_s2mm_tlast),
+  .AXIS_FDCT_OUT_tready(s0_axis_s2mm_tready),
+  .AXIS_FDCT_OUT_tvalid(s0_axis_s2mm_tvalid),
+
+  .AXI_FDCT_araddr(slave[2].ar_addr),
+  .AXI_FDCT_arburst(slave[2].ar_burst),
+  .AXI_FDCT_arcache(slave[2].ar_cache),
+  .AXI_FDCT_arlen(slave[2].ar_len),
+  .AXI_FDCT_arlock('0),
+  .AXI_FDCT_arprot(slave[2].ar_prot),
+  .AXI_FDCT_arqos('0),
+  .AXI_FDCT_arready(slave[2].ar_ready),
+  .AXI_FDCT_arregion('0),
+  .AXI_FDCT_arsize(slave[2].ar_size),
+  .AXI_FDCT_arvalid(slave[2].ar_valid),
+  .AXI_FDCT_awaddr(slave[2].aw_addr),
+  .AXI_FDCT_awburst(slave[2].aw_burst),
+  .AXI_FDCT_awcache(slave[2].aw_cache),
+  .AXI_FDCT_awlen(slave[2].aw_len),
+  .AXI_FDCT_awlock('0),
+  .AXI_FDCT_awprot(slave[2].aw_prot),
+  .AXI_FDCT_awqos('0),
+  .AXI_FDCT_awready(slave[2].aw_ready),
+  .AXI_FDCT_awregion('0),
+  .AXI_FDCT_awsize(slave[2].aw_size),
+  .AXI_FDCT_awvalid(slave[2].aw_valid),
+  .AXI_FDCT_bready(slave[2].b_ready),
+  .AXI_FDCT_bresp(slave[2].b_resp),
+  .AXI_FDCT_bvalid(slave[2].b_valid),
+  .AXI_FDCT_rdata(slave[2].r_data),
+  .AXI_FDCT_rlast(slave[2].r_last),
+  .AXI_FDCT_rready(slave[2].r_ready),
+  .AXI_FDCT_rresp(slave[2].r_resp),
+  .AXI_FDCT_rvalid(slave[2].r_valid),
+  .AXI_FDCT_wdata(slave[2].w_data),
+  .AXI_FDCT_wlast(slave[2].w_last),
+  .AXI_FDCT_wready(slave[2].w_ready),
+  .AXI_FDCT_wstrb(slave[2].w_strb),
+  .AXI_FDCT_wvalid(slave[2].w_valid),
+
+  .AXI_MIG_araddr(dram_dwidth_axi_araddr),
+  .AXI_MIG_arburst(dram_dwidth_axi_arburst),
+  .AXI_MIG_arcache(dram_dwidth_axi_arcache),
+  .AXI_MIG_arlen(dram_dwidth_axi_arlen),
+  .AXI_MIG_arlock(dram_dwidth_axi_arlock),
+  .AXI_MIG_arprot(dram_dwidth_axi_arprot),
+  .AXI_MIG_arqos(dram_dwidth_axi_arqos),
+  .AXI_MIG_arready(dram_dwidth_axi_arready),
+  .AXI_MIG_arregion('0),
+  .AXI_MIG_arsize(dram_dwidth_axi_arsize),
+  .AXI_MIG_arvalid(dram_dwidth_axi_arvalid),
+  .AXI_MIG_awaddr(dram_dwidth_axi_awaddr),
+  .AXI_MIG_awburst(dram_dwidth_axi_awburst),
+  .AXI_MIG_awcache(dram_dwidth_axi_awcache),
+  .AXI_MIG_awlen(dram_dwidth_axi_awlen),
+  .AXI_MIG_awlock(dram_dwidth_axi_awlock),
+  .AXI_MIG_awprot(dram_dwidth_axi_awprot),
+  .AXI_MIG_awqos(dram_dwidth_axi_awqos),
+  .AXI_MIG_awready(dram_dwidth_axi_awready),
+  .AXI_MIG_awregion('0),
+  .AXI_MIG_awsize(dram_dwidth_axi_awsize),
+  .AXI_MIG_awvalid(dram_dwidth_axi_awvalid),
+  .AXI_MIG_bready(dram_dwidth_axi_bready),
+  .AXI_MIG_bresp(dram_dwidth_axi_bresp),
+  .AXI_MIG_bvalid(dram_dwidth_axi_bvalid),
+  .AXI_MIG_rdata(dram_dwidth_axi_rdata),
+  .AXI_MIG_rlast(dram_dwidth_axi_rlast),
+  .AXI_MIG_rready(dram_dwidth_axi_rready),
+  .AXI_MIG_rresp(dram_dwidth_axi_rresp),
+  .AXI_MIG_rvalid(dram_dwidth_axi_rvalid),
+  .AXI_MIG_wdata(dram_dwidth_axi_wdata),
+  .AXI_MIG_wlast(dram_dwidth_axi_wlast),
+  .AXI_MIG_wready(dram_dwidth_axi_wready),
+  .AXI_MIG_wstrb(dram_dwidth_axi_wstrb),
+  .AXI_MIG_wvalid(dram_dwidth_axi_wvalid),
+
+  .aclk(clk),
+  .aclk1(ddr_clock_out)
+);*/
 
 
 // ---------------------

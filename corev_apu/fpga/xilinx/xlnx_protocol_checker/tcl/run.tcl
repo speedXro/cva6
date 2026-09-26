@@ -10,7 +10,7 @@ create_ip -name axi_protocol_checker -vendor xilinx.com -library ip -version 2.0
 
 set_property -dict [list  CONFIG.ADDR_WIDTH {64} \
                           CONFIG.DATA_WIDTH {64} \
-                          CONFIG.ID_WIDTH {5} \
+                          CONFIG.ID_WIDTH {7} \
                           CONFIG.AWUSER_WIDTH {1} \
                           CONFIG.ARUSER_WIDTH {1} \
                           CONFIG.RUSER_WIDTH {1} \
@@ -26,7 +26,6 @@ set_property -dict [list  CONFIG.ADDR_WIDTH {64} \
                           CONFIG.MAX_WRITE_TO_BVALID_WAITS {1024} \
                           CONFIG.MAX_CONTINUOUS_RTRANSFERS_WAITS {1024} \
                     ] [get_ips $ipName]
-
 
 generate_target {instantiation_template} [get_files ./$ipName.srcs/sources_1/ip/$ipName/$ipName.xci]
 generate_target all [get_files  ./$ipName.srcs/sources_1/ip/$ipName/$ipName.xci]

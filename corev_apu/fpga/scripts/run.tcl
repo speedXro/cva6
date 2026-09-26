@@ -30,8 +30,28 @@ if {$::env(BOARD) eq "genesys2"} {
       exit 1
 }
 
+#source scripts/sila02_bd.tcl
+#set sila_bd [get_files sila02.bd]
+#set_property synth_checkpoint_mode None $sila_bd
+#reset_target all $sila_bd
+#generate_target all $sila_bd
+
+#source scripts/fila_bd.tcl
+#set fila_bd [get_files fila.bd]
+#set_property synth_checkpoint_mode None $fila_bd
+#reset_target all $fila_bd
+#generate_target all $fila_bd
+
 read_ip { \
-      "xilinx/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.xci"
+      "xilinx/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_256_64/xlnx_axi_dwidth_converter_256_64.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_512_64/xlnx_axi_dwidth_converter_512_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_512_64/xlnx_axi_dwidth_converter_512_64.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_1024_64/xlnx_axi_dwidth_converter_1024_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_1024_64/xlnx_axi_dwidth_converter_1024_64.xci" \
+      "xilinx/xlnx_axis_data_fifo/xlnx_axis_data_fifo.srcs/sources_1/ip/xlnx_axis_data_fifo/xlnx_axis_data_fifo.xci" \
+      "xilinx/xlnx_axi_dwidth_converter_32_64/xlnx_axi_dwidth_converter_32_64.srcs/sources_1/ip/xlnx_axi_dwidth_converter_32_64/xlnx_axi_dwidth_converter_32_64.xci" \
+      "xilinx/xlnx_axi_dma/xlnx_axi_dma.srcs/sources_1/ip/xlnx_axi_dma/xlnx_axi_dma.xci" \
+      "xilinx/xlnx_axi_dma_16_32/xlnx_axi_dma_16_32.srcs/sources_1/ip/xlnx_axi_dma_16_32/xlnx_axi_dma_16_32.xci" \
+      "xilinx/xlnx_axi_dma_512_1024/xlnx_axi_dma_512_1024.srcs/sources_1/ip/xlnx_axi_dma_512_1024/xlnx_axi_dma_512_1024.xci" \
+      "xilinx/xlnx_axi_dma_1024_512/xlnx_axi_dma_1024_512.srcs/sources_1/ip/xlnx_axi_dma_1024_512/xlnx_axi_dma_1024_512.xci" \
       "xilinx/xlnx_mig_ddr4/xlnx_mig_ddr4.srcs/sources_1/ip/xlnx_mig_ddr4/xlnx_mig_ddr4.xci" \
       "xilinx/xlnx_axi_clock_converter/xlnx_axi_clock_converter.srcs/sources_1/ip/xlnx_axi_clock_converter/xlnx_axi_clock_converter.xci" \
       "xilinx/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.srcs/sources_1/ip/xlnx_axi_dwidth_converter/xlnx_axi_dwidth_converter.xci" \
@@ -41,10 +61,6 @@ read_ip { \
       "xilinx/xlnx_axi_quad_spi/xlnx_axi_quad_spi.srcs/sources_1/ip/xlnx_axi_quad_spi/xlnx_axi_quad_spi.xci" \
       "xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xci" \
 }
-
-# read_ip xilinx/xlnx_protocol_checker/ip/xlnx_protocol_checker.xci
-#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
-#     "xilinx/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.srcs/sources_1/ip/xlnx_mig_7_ddr3/xlnx_mig_7_ddr3.xci" \
 
 set_property include_dirs { \
 	"src/axi_sd_bridge/include" \

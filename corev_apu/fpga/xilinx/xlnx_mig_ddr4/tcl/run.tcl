@@ -12,6 +12,7 @@ set_property board_part $boardName [current_project]
 
 create_ip -name ddr4 -vendor xilinx.com -library ip -version 2.2 -module_name $ipName
 
+# 256 was original value for CONFIG.C0.DDR4_AxiDataWidth
 
 set_property -dict [list \
         CONFIG.C0_DDR4_BOARD_INTERFACE {ddr4_sdram_075} \

@@ -21,5 +21,3 @@ lint_off -rule WIDTHEXPAND -file "*/core/issue_read_operands.sv"
 lint_off -rule WIDTHEXPAND -file "*/core/ariane_regfile_ff.sv"
 lint_off -rule SELRANGE -file "*/core/commit_stage.sv"
 
-//DCTA
-

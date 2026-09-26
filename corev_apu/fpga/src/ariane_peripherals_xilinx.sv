@@ -13,6 +13,7 @@
 `include "register_interface/assign.svh"
 `include "register_interface/typedef.svh"
 `include "kcu116.svh"
+`define KCU116
 module ariane_peripherals #(
     parameter int AxiAddrWidth = -1,
     parameter int AxiDataWidth = -1,
@@ -23,9 +24,11 @@ module ariane_peripherals #(
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
     parameter bit InclTimer    = 1
+
 ) (
     input  logic       clk_i           , // Clock
     input  logic       clk_200MHz_i    ,
+    input  logic       cpu_reset       ,
     input  logic       rst_ni          , // Asynchronous reset active low
     AXI_BUS.Slave      plic            ,
     AXI_BUS.Slave      uart            ,
@@ -33,10 +36,22 @@ module ariane_peripherals #(
     AXI_BUS.Slave      gpio            ,
     AXI_BUS.Slave      ethernet        ,
     AXI_BUS.Slave      timer           ,
+    //AXI_BUS.Slave      dbg_uart        ,
+    //AXI_BUS.Slave      dbg_gpio        ,
+    AXI_BUS.Master      mm0_axi       ,
+	AXI_BUS.Master      mm1_axi       ,
+    AXI_BUS.Master      mm2_axi       ,
+	AXI_BUS.Master      mm3_axi       ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
     output logic       tx_o            ,
+    // DBG_UART
+    //input  logic       dbg_rx_i        ,
+    //output logic       dbg_tx_o        ,
+
+    
+
     `ifndef KCU116
     // Ethernet
     input  logic       eth_clk_i       ,
@@ -50,9 +65,134 @@ module ariane_peripherals #(
     inout  wire        eth_mdio        ,
     output logic       eth_mdc         ,
     input  logic       phy_tx_clk_i    , // 125 MHz Clock
+    `else
+
+    output logic [ 511 : 0] m0_axis_mm2s_tdata, 
+    output logic [  63 : 0] m0_axis_mm2s_tkeep,  
+    output logic 		 	m0_axis_mm2s_tvalid,          
+    input  logic 			m0_axis_mm2s_tready,          
+    output logic 			m0_axis_mm2s_tlast,           
+    input  logic [1023 : 0] s0_axis_s2mm_tdata, 
+    input  logic [ 127 : 0] s0_axis_s2mm_tkeep,  
+    input  logic 			s0_axis_s2mm_tvalid,           
+    output logic 			s0_axis_s2mm_tready,           
+    input  logic 			s0_axis_s2mm_tlast,            
+
+    output logic [1023 : 0] m1_axis_mm2s_tdata, 
+    output logic [ 127 : 0] m1_axis_mm2s_tkeep,  
+    output logic 		 	m1_axis_mm2s_tvalid,          
+    input  logic 			m1_axis_mm2s_tready,          
+    output logic 			m1_axis_mm2s_tlast,           
+    input  logic [ 511 : 0] s1_axis_s2mm_tdata, 
+    input  logic [  63 : 0] s1_axis_s2mm_tkeep,  
+    input  logic 			s1_axis_s2mm_tvalid,           
+    output logic 			s1_axis_s2mm_tready,           
+    input  logic 			s1_axis_s2mm_tlast,            
+
+    output logic [  15 : 0] m2_axis_mm2s_tdata, 
+    output logic [   1 : 0] m2_axis_mm2s_tkeep,  
+    output logic 		 	m2_axis_mm2s_tvalid,          
+    input  logic 			m2_axis_mm2s_tready,          
+    output logic 			m2_axis_mm2s_tlast,           
+    input  logic [  31 : 0] s2_axis_s2mm_tdata, 
+    input  logic [   3 : 0] s2_axis_s2mm_tkeep,  
+    input  logic 			s2_axis_s2mm_tvalid,           
+    output logic 			s2_axis_s2mm_tready,           
+    input  logic 			s2_axis_s2mm_tlast,            
+
+    output logic [ 511 : 0] m3_axis_mm2s_tdata, 
+    output logic [  63 : 0] m3_axis_mm2s_tkeep,  
+    output logic 		 	m3_axis_mm2s_tvalid,          
+    input  logic 			m3_axis_mm2s_tready,          
+    output logic 			m3_axis_mm2s_tlast,           
+    input  logic [ 511 : 0] s3_axis_s2mm_tdata, 
+    input  logic [  63 : 0] s3_axis_s2mm_tkeep,  
+    input  logic 			s3_axis_s2mm_tvalid,           
+    output logic 			s3_axis_s2mm_tready,           
+    input  logic 			s3_axis_s2mm_tlast,            
+
+
+    input logic [31 : 0]   m0_axi_awaddr,
+	input logic [ 2 : 0]   m0_axi_awprot,
+	input logic            m0_axi_awvalid,
+	output  logic          m0_axi_awready,
+	input logic [31 : 0]   m0_axi_wdata,
+	input logic [ 3 : 0]   m0_axi_wstrb,
+	input logic            m0_axi_wvalid,
+	output  logic          m0_axi_wready,
+    output  logic [ 1 : 0] m0_axi_bresp,
+	output  logic          m0_axi_bvalid,
+	input logic            m0_axi_bready,
+    input logic [31 : 0]   m0_axi_araddr,
+	input logic [ 2 : 0]   m0_axi_arprot,
+	input logic            m0_axi_arvalid,
+	output  logic          m0_axi_arready,
+    output  logic [31 : 0] m0_axi_rdata,
+	output  logic [ 1 : 0] m0_axi_rresp,
+	output  logic          m0_axi_rvalid,
+	input logic            m0_axi_rready,
+	
+	input logic [31 : 0]   m1_axi_awaddr,
+	input logic [ 2 : 0]   m1_axi_awprot,
+	input logic            m1_axi_awvalid,
+	output  logic          m1_axi_awready,
+	input logic [31 : 0]   m1_axi_wdata,
+	input logic [ 3 : 0]   m1_axi_wstrb,
+	input logic            m1_axi_wvalid,
+	output  logic          m1_axi_wready,
+    output  logic [ 1 : 0] m1_axi_bresp,
+	output  logic          m1_axi_bvalid,
+	input logic            m1_axi_bready,
+    input logic [31 : 0]   m1_axi_araddr,
+	input logic [ 2 : 0]   m1_axi_arprot,
+	input logic            m1_axi_arvalid,
+	output  logic          m1_axi_arready,
+    output  logic [31 : 0] m1_axi_rdata,
+	output  logic [ 1 : 0] m1_axi_rresp,
+	output  logic          m1_axi_rvalid,
+	input logic            m1_axi_rready,
+
+    input logic [31 : 0]   m2_axi_awaddr,
+	input logic [ 2 : 0]   m2_axi_awprot,
+	input logic            m2_axi_awvalid,
+	output  logic          m2_axi_awready,
+	input logic [31 : 0]   m2_axi_wdata,
+	input logic [ 3 : 0]   m2_axi_wstrb,
+	input logic            m2_axi_wvalid,
+	output  logic          m2_axi_wready,
+    output  logic [ 1 : 0] m2_axi_bresp,
+	output  logic          m2_axi_bvalid,
+	input logic            m2_axi_bready,
+    input logic [31 : 0]   m2_axi_araddr,
+	input logic [ 2 : 0]   m2_axi_arprot,
+	input logic            m2_axi_arvalid,
+	output  logic          m2_axi_arready,
+    output  logic [31 : 0] m2_axi_rdata,
+	output  logic [ 1 : 0] m2_axi_rresp,
+	output  logic          m2_axi_rvalid,
+	input logic            m2_axi_rready,
+	
+	input logic [31 : 0]   m3_axi_awaddr,
+	input logic [ 2 : 0]   m3_axi_awprot,
+	input logic            m3_axi_awvalid,
+	output  logic          m3_axi_awready,
+	input logic [31 : 0]   m3_axi_wdata,
+	input logic [ 3 : 0]   m3_axi_wstrb,
+	input logic            m3_axi_wvalid,
+	output  logic          m3_axi_wready,
+    output  logic [ 1 : 0] m3_axi_bresp,
+	output  logic          m3_axi_bvalid,
+	input logic            m3_axi_bready,
+    input logic [31 : 0]   m3_axi_araddr,
+	input logic [ 2 : 0]   m3_axi_arprot,
+	input logic            m3_axi_arvalid,
+	output  logic          m3_axi_arready,
+    output  logic [31 : 0] m3_axi_rdata,
+	output  logic [ 1 : 0] m3_axi_rresp,
+	output  logic          m3_axi_rvalid,
+	input logic            m3_axi_rready,
+
     `endif
-    
-    // MDIO Interface
     
     // SPI
     output logic       spi_clk_o       ,
@@ -62,8 +202,13 @@ module ariane_peripherals #(
     // SD Card
     input  logic       sd_clk_i        ,
     output logic [7:0] leds_o          ,
-    input  logic [7:0] dip_switches_i
+    input  logic [7:0] dip_switches_i  
+
 );
+
+    function automatic int max2 (input int a, input int b);
+        return (a > b) ? a : b;
+    endfunction
 
     // ---------------
     // 1. PLIC
@@ -71,7 +216,7 @@ module ariane_peripherals #(
     logic [ariane_soc::NumSources-1:0] irq_sources;
 
     // Unused interrupt sources
-    assign irq_sources[ariane_soc::NumSources-1:7] = '0;
+    assign irq_sources[ariane_soc::NumSources-1:8] = '0; //old :7
 
     REG_BUS #(
         .ADDR_WIDTH ( 32 ),
@@ -598,6 +743,12 @@ module ariane_peripherals #(
         assign ethernet.r_last = 1'b1;
     end
     `else
+
+    if (InclEthernet) begin : gen_axi_bram_adapter
+        
+    end
+    else begin
+
     assign irq_sources [2] = 1'b0;
     assign ethernet.aw_ready = 1'b1;
     assign ethernet.ar_ready = 1'b1;
@@ -612,6 +763,7 @@ module ariane_peripherals #(
     assign ethernet.r_resp = axi_pkg::RESP_SLVERR;
     assign ethernet.r_data = 'hdeadbeef;
     assign ethernet.r_last = 1'b1;
+    end
     `endif
 
 
@@ -852,5 +1004,173 @@ module ariane_peripherals #(
             .PSLVERR ( timer_pslverr    ),
             .irq_o   ( irq_sources[6:3] )
         );
+        
     end
+
+
+
+dma_wrapper_ixoy #(
+    .AXIS_MM2S_DATA_WIDTH(512),
+    .AXIS_S2MM_DATA_WIDTH(1024)
+) i0_dma_wrapper_fdct(
+
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .mm_axi(mm0_axi),
+
+    .m_axis_mm2s_tdata(m0_axis_mm2s_tdata),
+    .m_axis_mm2s_tkeep(m0_axis_mm2s_tkeep),
+    .m_axis_mm2s_tvalid(m0_axis_mm2s_tvalid),
+    .m_axis_mm2s_tready(m0_axis_mm2s_tready),
+    .m_axis_mm2s_tlast(m0_axis_mm2s_tlast),
+    .s_axis_s2mm_tdata(s0_axis_s2mm_tdata),
+    .s_axis_s2mm_tkeep(s0_axis_s2mm_tkeep),
+    .s_axis_s2mm_tvalid(s0_axis_s2mm_tvalid),
+    .s_axis_s2mm_tready(s0_axis_s2mm_tready),
+    .s_axis_s2mm_tlast(s0_axis_s2mm_tlast),
+
+    .m_axi_awaddr(m0_axi_awaddr),
+    .m_axi_awprot(m0_axi_awprot),
+    .m_axi_awvalid(m0_axi_awvalid),
+    .m_axi_awready(m0_axi_awready),
+    .m_axi_wdata(m0_axi_wdata),
+    .m_axi_wstrb(m0_axi_wstrb),
+    .m_axi_wvalid(m0_axi_wvalid),
+    .m_axi_wready(m0_axi_wready),
+    .m_axi_bresp(m0_axi_bresp),
+    .m_axi_bvalid(m0_axi_bvalid),
+    .m_axi_bready(m0_axi_bready),
+    .m_axi_araddr(m0_axi_araddr),
+    .m_axi_arprot(m0_axi_arprot),
+    .m_axi_arvalid(m0_axi_arvalid),
+    .m_axi_arready(m0_axi_arready),
+    .m_axi_rdata(m0_axi_rdata),
+    .m_axi_rresp(m0_axi_rresp),
+    .m_axi_rvalid(m0_axi_rvalid),
+    .m_axi_rready(m0_axi_rready)
+);
+
+dma_wrapper_ixoy #(
+    .AXIS_MM2S_DATA_WIDTH(1024),
+    .AXIS_S2MM_DATA_WIDTH(512)
+) i0_dma_wrapper_idct(
+
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .mm_axi(mm1_axi),
+
+    .m_axis_mm2s_tdata(m1_axis_mm2s_tdata),
+    .m_axis_mm2s_tkeep(m1_axis_mm2s_tkeep),
+    .m_axis_mm2s_tvalid(m1_axis_mm2s_tvalid),
+    .m_axis_mm2s_tready(m1_axis_mm2s_tready),
+    .m_axis_mm2s_tlast(m1_axis_mm2s_tlast),
+    .s_axis_s2mm_tdata(s1_axis_s2mm_tdata),
+    .s_axis_s2mm_tkeep(s1_axis_s2mm_tkeep),
+    .s_axis_s2mm_tvalid(s1_axis_s2mm_tvalid),
+    .s_axis_s2mm_tready(s1_axis_s2mm_tready),
+    .s_axis_s2mm_tlast(s1_axis_s2mm_tlast),
+
+    .m_axi_awaddr(m1_axi_awaddr),
+    .m_axi_awprot(m1_axi_awprot),
+    .m_axi_awvalid(m1_axi_awvalid),
+    .m_axi_awready(m1_axi_awready),
+    .m_axi_wdata(m1_axi_wdata),
+    .m_axi_wstrb(m1_axi_wstrb),
+    .m_axi_wvalid(m1_axi_wvalid),
+    .m_axi_wready(m1_axi_wready),
+    .m_axi_bresp(m1_axi_bresp),
+    .m_axi_bvalid(m1_axi_bvalid),
+    .m_axi_bready(m1_axi_bready),
+    .m_axi_araddr(m1_axi_araddr),
+    .m_axi_arprot(m1_axi_arprot),
+    .m_axi_arvalid(m1_axi_arvalid),
+    .m_axi_arready(m1_axi_arready),
+    .m_axi_rdata(m1_axi_rdata),
+    .m_axi_rresp(m1_axi_rresp),
+    .m_axi_rvalid(m1_axi_rvalid),
+    .m_axi_rready(m1_axi_rready)
+);
+
+dma_wrapper_16_32 i2_dma_wrapper_16_32(
+
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .mm_axi(mm2_axi),
+
+    .m_axis_mm2s_tdata(m2_axis_mm2s_tdata),
+    .m_axis_mm2s_tkeep(m2_axis_mm2s_tkeep),
+    .m_axis_mm2s_tvalid(m2_axis_mm2s_tvalid),
+    .m_axis_mm2s_tready(m2_axis_mm2s_tready),
+    .m_axis_mm2s_tlast(m2_axis_mm2s_tlast),
+    .s_axis_s2mm_tdata(s2_axis_s2mm_tdata),
+    .s_axis_s2mm_tkeep(s2_axis_s2mm_tkeep),
+    .s_axis_s2mm_tvalid(s2_axis_s2mm_tvalid),
+    .s_axis_s2mm_tready(s2_axis_s2mm_tready),
+    .s_axis_s2mm_tlast(s2_axis_s2mm_tlast),
+
+    .m_axi_awaddr(m2_axi_awaddr),
+    .m_axi_awprot(m2_axi_awprot),
+    .m_axi_awvalid(m2_axi_awvalid),
+    .m_axi_awready(m2_axi_awready),
+    .m_axi_wdata(m2_axi_wdata),
+    .m_axi_wstrb(m2_axi_wstrb),
+    .m_axi_wvalid(m2_axi_wvalid),
+    .m_axi_wready(m2_axi_wready),
+    .m_axi_bresp(m2_axi_bresp),
+    .m_axi_bvalid(m2_axi_bvalid),
+    .m_axi_bready(m2_axi_bready),
+    .m_axi_araddr(m2_axi_araddr),
+    .m_axi_arprot(m2_axi_arprot),
+    .m_axi_arvalid(m2_axi_arvalid),
+    .m_axi_arready(m2_axi_arready),
+    .m_axi_rdata(m2_axi_rdata),
+    .m_axi_rresp(m2_axi_rresp),
+    .m_axi_rvalid(m2_axi_rvalid),
+    .m_axi_rready(m2_axi_rready)
+);
+
+dma_wrapper #(
+    .AXIS_DATA_WIDTH(512)
+) i3_dma_wrapper_fifo_0(
+
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .mm_axi(mm3_axi),
+
+    .m_axis_mm2s_tdata(m3_axis_mm2s_tdata),
+    .m_axis_mm2s_tkeep(m3_axis_mm2s_tkeep),
+    .m_axis_mm2s_tvalid(m3_axis_mm2s_tvalid),
+    .m_axis_mm2s_tready(m3_axis_mm2s_tready),
+    .m_axis_mm2s_tlast(m3_axis_mm2s_tlast),
+    .s_axis_s2mm_tdata(s3_axis_s2mm_tdata),
+    .s_axis_s2mm_tkeep(s3_axis_s2mm_tkeep),
+    .s_axis_s2mm_tvalid(s3_axis_s2mm_tvalid),
+    .s_axis_s2mm_tready(s3_axis_s2mm_tready),
+    .s_axis_s2mm_tlast(s3_axis_s2mm_tlast),
+
+    .m_axi_awaddr(m3_axi_awaddr),
+    .m_axi_awprot(m3_axi_awprot),
+    .m_axi_awvalid(m3_axi_awvalid),
+    .m_axi_awready(m3_axi_awready),
+    .m_axi_wdata(m3_axi_wdata),
+    .m_axi_wstrb(m3_axi_wstrb),
+    .m_axi_wvalid(m3_axi_wvalid),
+    .m_axi_wready(m3_axi_wready),
+    .m_axi_bresp(m3_axi_bresp),
+    .m_axi_bvalid(m3_axi_bvalid),
+    .m_axi_bready(m3_axi_bready),
+    .m_axi_araddr(m3_axi_araddr),
+    .m_axi_arprot(m3_axi_arprot),
+    .m_axi_arvalid(m3_axi_arvalid),
+    .m_axi_arready(m3_axi_arready),
+    .m_axi_rdata(m3_axi_rdata),
+    .m_axi_rresp(m3_axi_rresp),
+    .m_axi_rvalid(m3_axi_rvalid),
+    .m_axi_rready(m3_axi_rready)
+);
+
 endmodule

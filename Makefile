@@ -15,7 +15,7 @@ top_level      ?= ariane_tb
 # Top level path
 top_level_path ?= corev_apu/tb/$(top_level).sv
 # Maximum amount of cycles for a successful simulation run
-max_cycles     ?= 10000000
+max_cycles     ?= 1000000000
 # Test case to run
 test_case      ?= core_test
 # QuestaSim Version
@@ -272,6 +272,9 @@ altera_filter := corev_apu/tb/ariane_testharness.sv \
 								corev_apu/fpga/src/apb/src/apb_test.sv \
 								corev_apu/fpga/src/ariane_xilinx.sv \
 								corev_apu/fpga/ariane_peripherals_xilinx.sv \
+								corev_apu/fpga/dma_wrapper.sv \
+								corev_apu/fpga/dma_wrapper_ixoy.sv \
+								corev_apu/fpga/dma_wrapper_16_32.sv \
 								corev_apu/fpga/src/apb/test/tb_apb_cdc.sv \
 								corev_apu/fpga/src/apb/test/tb_apb_regs.sv \
 								corev_apu/fpga/src/apb/test/tb_apb_demux.sv \
@@ -316,6 +319,8 @@ riscv-benchmarks          := $(shell xargs printf '\n%s' < $(riscv-benchmarks-li
 incdir := $(CVA6_REPO_DIR)/vendor/pulp-platform/common_cells/include/ $(CVA6_REPO_DIR)/vendor/pulp-platform/axi/include/ \
           $(CVA6_REPO_DIR)/corev_apu/register_interface/include/ $(CVA6_REPO_DIR)/corev_apu/tb/common/ \
           $(CVA6_REPO_DIR)/vendor/pulp-platform/axi/include/ \
+		  $(CVA6_REPO_DIR)/core/rvexp_pe/rvexp/include/ \
+		  $(CVA6_REPO_DIR)/core/pp_stft/ \
           $(CVA6_REPO_DIR)/verif/core-v-verif/lib/uvm_agents/uvma_rvfi/ \
           $(CVA6_REPO_DIR)/verif/core-v-verif/lib/uvm_components/uvmc_rvfi_reference_model/ \
           $(CVA6_REPO_DIR)/verif/core-v-verif/lib/uvm_components/uvmc_rvfi_scoreboard/ \
@@ -324,6 +329,8 @@ incdir := $(CVA6_REPO_DIR)/vendor/pulp-platform/common_cells/include/ $(CVA6_REP
           $(CVA6_REPO_DIR)/core/include/ \
           $(SPIKE_INSTALL_DIR)/include/disasm/
 
+#		  $(CVA6_REPO_DIR)/core/rvexp_pe/rvexp/include/ \
+#		  $(CVA6_REPO_DIR)/core/rvexp_pe_axis4/include/ \
 # Compile and sim flags
 compile_flag     += -incr -64 -nologo -quiet -suppress 13262 -suppress 8607 +permissive -svinputport=compat +define+$(defines) -suppress 8386 -suppress vlog-2577
 vopt_flag += -suppress 2085 -suppress 7063 -suppress 2698 -suppress 13262

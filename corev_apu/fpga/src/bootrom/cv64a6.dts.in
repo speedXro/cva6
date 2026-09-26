@@ -81,6 +81,16 @@
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
     };
+    uart@50000000 {
+      compatible = "ns16550a";
+      reg = <0x0 0x50000000 0x0 0x1000>;
+      clock-frequency = <CLOCK_FREQUENCY>;
+      current-speed = <UART_BITRATE>;
+      interrupt-parent = <&PLIC0>;
+      interrupts = <1>;
+      reg-shift = <2>; // regs are spaced on 32 bit boundary
+      reg-io-width = <4>; // only 32-bit access are supported
+    };
     timer@18000000 {
       compatible = "pulp,apb_timer";
       interrupts = <0x00000004 0x00000005 0x00000006 0x00000007>;

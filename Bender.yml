@@ -20,6 +20,7 @@ export_include_dirs:
 sources:
   - include_dirs:
       - core/include
+      - core/rvexp_pe
     files:
       - core/include/config_pkg.sv
       # Pick the right configuration by passing the right bender flag.
@@ -174,6 +175,8 @@ sources:
         include_dirs:
           - core/include
           - common/local/util
+          - core/rvexp_pe
+          - core/pp_stft
         files:
           # Tracer (behavioral code, not RTL)
           - core/include/instr_tracer_pkg.sv
