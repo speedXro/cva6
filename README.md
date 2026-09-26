@@ -1,13 +1,11 @@
 # CVA6 RISC-V CPU [![Build Status](https://github.com/openhwgroup/cva6/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/openhwgroup/cva6/actions/workflows/ci.yml) [![CVA6 dashboard](https://riscv-ci.pages.thales-invia.fr/dashboard/badge_master.svg)](https://riscv-ci.pages.thales-invia.fr/dashboard/dashboard_cva6.html) [![Documentation Status](https://readthedocs.com/projects/openhw-group-cva6-user-manual/badge/?version=latest)](https://docs.openhwgroup.org/projects/cva6-user-manual/?badge=latest) [![GitHub release](https://img.shields.io/github/release/openhwgroup/cva6?include_prereleases=&sort=semver&color=blue)](https://github.com/openhwgroup/cva6/releases/)
 
-This is the KCU116 branch of the CVA6 fork used for AMD KCU116 development board running at 100 MHz.
-This branch contains the DWT CDF 5/3 extensions files, the extension for implementing Discrete Wavelet Transform using CDF 5/3 lifting scheme:
-- */core/cdf53* - RTL files describing the DWT CDF 5/3 extension, the CV-X-IF adapter and the coprocessor wrapper;
-- *corev_apu/fpga/constraints* - the constraints file for the AMD KCU116 FPGA development board;
-- */verif/tests/custom/cdf53* - the files of DWT CDF 5/3 C library based on inline assembly snippets for GCC compiler named *CDF53_functions.h* and *CDF53_functions.c* and the C tests file *CDF53_tests.c*;
-- */verif/regress/* - the bash script for executing the DWT CDF 5/3 tests named *cdf53_c_tests.sh*.
-
-Many thanks to [Florentin Ilie](https://github.com/florentin05) for pioneering the CVA6 support for KCU116 development board as part of his Computer Engineering bachelor thesis in the Department of Computer Engineering at Technical University of Iasi.
+This is the tuiacc_isolde_demo branch of the CVA6 fork used for AMD KCU116 development board running at 100 MHz.
+This branch contains the STFT (Short Time Fourier Transform) and DCT2DQ (2-D Quantized Forward and Inverse Discrete Cosine Transform) accelerators deveoped by TUIASI in ISOLDE project and the CV-X-IF processor build for the CVA6 Linux Demosntrator. Usefull paths:
+- */core/pp_stft* - RTL files describing STFT accelerator;
+- */core/pp_fdct2d* - RTL files describing the F/I DCT2DQ accelerator;
+- */core/pp_fdct2d* - RTL files describing the F/I DCT2DQ accelerator;
+- */core/pp_rvexp* - RTL files describing RVEXP - the CV-X-IF coprocessor containing the proposed accelerators.
 
 CVA6 is a 6-stage, single-issue, in-order CPU which implements the 64-bit RISC-V instruction set. It fully implements I, M, A and C extensions as specified in Volume I: User-Level ISA V 2.3 as well as the draft privilege extension 1.10. It implements three privilege levels M, S, U to fully support a Unix-like operating system. Furthermore, it is compliant to the draft external debug spec 0.13.
 
