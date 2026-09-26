@@ -14,43 +14,47 @@ module UR_Control(
 
     output logic [7:0]  ur_qf,
     output logic [1:0]  ur_pf,
-    output logic        ur_ws       
+    output logic        ur_ws
 );
-    logic [7:0] w_pf;
-    logic [7:0] w_ws;
 
+    // Command decode
+    logic cmd_ready, cmd_stop, cmd_qf, cmd_pf, cmd_ws;
+
+    assign cmd_ready = o_Rx_DV && (o_Rx_Byte == 8'h97);
+    assign cmd_stop  = o_Rx_DV && (o_Rx_Byte == 8'h98);
+    assign cmd_qf    = o_Rx_DV && (o_Rx_Byte >= 8'h32) && (o_Rx_Byte <= 8'h95);
+    assign cmd_pf    = o_Rx_DV && (o_Rx_Byte >= 8'h2E) && (o_Rx_Byte <= 8'h31);
+    assign cmd_ws    = o_Rx_DV && (o_Rx_Byte >= 8'h2C) && (o_Rx_Byte <= 8'h2D);
+
+    logic [7:0] pf_diff, ws_diff;
+    assign pf_diff = o_Rx_Byte - 8'h2E;
+    assign ws_diff = o_Rx_Byte - 8'h2C;
+
+    // Flags: set has priority over clear (explicit)
     always_ff @(posedge clock) begin
-        if(reset_n == 1'b0) begin
-            ur_ready <= 1'd0;
-            ur_stop  <= 1'd0;
-            ur_qf    <= 8'd100;
-            ur_pf    <= 2'd0;
-            ur_ws    <= 1'd0;
-        end
-        else if(o_Rx_DV == 1'b1 && o_Rx_Byte == 8'h97) begin
-            ur_ready <= 1'b1;
-        end
-        else if(o_Rx_DV == 1'b1 && o_Rx_Byte == 8'h98) begin
-            ur_stop  <= 1'b1;
-        end
-        else if(o_Rx_DV == 1'b1 && (o_Rx_Byte >= 8'h32 && o_Rx_Byte <= 8'h95)) begin
-            ur_qf    <= o_Rx_Byte - 8'h31;
-        end
-        else if(o_Rx_DV == 1'b1 && (o_Rx_Byte >= 8'h2E && o_Rx_Byte <= 8'h31)) begin
-            ur_pf    <= w_pf[1:0];
-        end
-        else if(o_Rx_DV == 1'b1 && (o_Rx_Byte >= 8'h2C && o_Rx_Byte <= 8'h2D)) begin
-            ur_ws    <= w_ws[1:0];
-        end
-        else if(ur_clear_stop == 1'b1) begin
-            ur_stop <= 1'b0;
-        end
-        else if(ur_clear_ready == 1'b1) begin
+        if (!reset_n) begin
             ur_ready <= 1'b0;
+            ur_stop  <= 1'b0;
+        end else begin
+            if (cmd_ready)           ur_ready <= 1'b1;
+            else if (ur_clear_ready) ur_ready <= 1'b0;
+
+            if (cmd_stop)            ur_stop  <= 1'b1;
+            else if (ur_clear_stop)  ur_stop  <= 1'b0;
         end
     end
 
-    assign w_pf = o_Rx_Byte - 8'h2E;
-    assign w_ws = o_Rx_Byte - 8'h2C;
+    // Parameters
+    always_ff @(posedge clock) begin
+        if (!reset_n) begin
+            ur_qf <= 8'd100;
+            ur_pf <= 2'd0;
+            ur_ws <= 1'b0;
+        end else begin
+            if (cmd_qf) ur_qf <= o_Rx_Byte - 8'h31;
+            if (cmd_pf) ur_pf <= pf_diff[1:0];
+            if (cmd_ws) ur_ws <= ws_diff[0];
+        end
+    end
 
 endmodule
