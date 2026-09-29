@@ -4,8 +4,11 @@ This is the tuiacc_isolde_demo branch of the CVA6 fork used for AMD KCU116 devel
 This branch contains the STFT (Short Time Fourier Transform) and DCT2DQ (2-D Quantized Forward and Inverse Discrete Cosine Transform) accelerators deveoped by TUIASI in ISOLDE project and the CV-X-IF processor build for the CVA6 Linux Demosntrator. Usefull paths:
 - */core/pp_stft* - RTL files describing STFT accelerator;
 - */core/pp_fdct2d* - RTL files describing the F/I DCT2DQ accelerator;
-- */core/pp_fdct2d* - RTL files describing the F/I DCT2DQ accelerator;
 - */core/pp_rvexp* - RTL files describing RVEXP - the CV-X-IF coprocessor containing the proposed accelerators.
+
+<img src="isolde_cva6_linux_demo.drawio.svg"/>
+
+# CVA6
 
 CVA6 is a 6-stage, single-issue, in-order CPU which implements the 64-bit RISC-V instruction set. It fully implements I, M, A and C extensions as specified in Volume I: User-Level ISA V 2.3 as well as the draft privilege extension 1.10. It implements three privilege levels M, S, U to fully support a Unix-like operating system. Furthermore, it is compliant to the draft external debug spec 0.13.
 
