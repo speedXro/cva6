@@ -6,7 +6,65 @@ This branch contains the STFT (Short Time Fourier Transform) and DCT2DQ (2-D Qua
 - */core/pp_fdct2d* - RTL files describing the F/I DCT2DQ accelerator;
 - */core/pp_rvexp* - RTL files describing RVEXP - the CV-X-IF coprocessor containing the proposed accelerators.
 
+## Demonstrator SoC - Block Diagram
+
 <img src="isolde_cva6_linux_demo.drawio.svg"/>
+
+## RVEXP ISA Extension Instructions for FIDCT2DQ and for STFT Accelerators
+
+| Instruction Category | Instruction Name | funct7<br>31..25 | rs2<br>24..20 | rs1<br>19..15 | funct3<br>14..12 | rd<br>11..7 | opcode<br>6..0 |
+|---|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| **FIDCT2DQ** | FIDCT2DQ_Set_QM_Word_00 | 7'h40 | ????? | ????? | 3'h0 | ????? | 7'h7B |
+| | FIDCT2DQ_Set_QM_Word_01 | 7'h40 | ????? | ????? | 3'h1 | ????? | 7'h7B |
+| | FIDCT2DQ_Set_QM_Word_02 | 7'h40 | ????? | ????? | 3'h2 | ????? | 7'h7B |
+| | FIDCT2DQ_Set_QM_Word_03 | 7'h40 | ????? | ????? | 3'h3 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_0 | 7'h50 | xxxxx | xxxxx | 3'h0 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_1 | 7'h50 | xxxxx | xxxxx | 3'h1 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_2 | 7'h50 | xxxxx | xxxxx | 3'h2 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_3 | 7'h50 | xxxxx | xxxxx | 3'h3 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_4 | 7'h50 | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_5 | 7'h50 | xxxxx | xxxxx | 3'h5 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_6 | 7'h50 | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
+| | FIDCT2DQ_Get_QM_Word_7 | 7'h50 | xxxxx | xxxxx | 3'h7 | ????? | 7'h7B |
+| **STFT** | STFT_Configure | 7'h78 | xxxxx | ????? | 3'h4 | ????? | 7'h7B |
+| | STFT_Start | 7'h78 | xxxxx | xxxxx | 3'h5 | ????? | 7'h7B |
+| | STFT_Get_Status | 7'h78 | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
+| | STFT_Reset | 7'h78 | xxxxx | xxxxx | 3'h7 | ????? | 7'h7B |
+| **DMA** | DMA_Select_Device | 7'h70 | xxxxx | ????? | 3'h3 | ????? | 7'h7B |
+| | DMA_Reset | 7'h70 | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | DMA_Init | 7'h70 | xxxxx | xxxxx | 3'h5 | ????? | 7'h7B |
+| | DMA_Transfer | 7'h70 | ????? | ????? | 3'h6 | ????? | 7'h7B |
+| | DMA_Get_Status | 7'h70 | xxxxx | xxxxx | 3'h7 | ????? | 7'h7B |
+
+## RVEXP ISA Extension Instructions for Demonstrator Blocks
+
+| Instruction Category | Instruction Name | funct7<br>31..25 | rs2<br>24..20 | rs1<br>19..15 | funct3<br>14..12 | rd<br>11..7 | opcode<br>6..0 |
+|---|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| **Demo Blocks DP RAM Operations** | DemoBlock_Select_DP_RAM_Block | 7'h68 | xxxxx | ????? | 3'h5 | ????? | 7'h7B |
+| | DemoBLock_Write_DP_RAM_Word | 7'h68 | ????? | ????? | 3'h6 | ????? | 7'h7B |
+| | DemoBLock_Read_DP_RAM_Word | 7'h68 | xxxxx | ????? | 3'h7 | ????? | 7'h7B |
+| **Demo Block ADC** | DemoBlock_AD_Start | 7'h69 | xxxxx | xxxxx | 3'h1 | ????? | 7'h7B |
+| | DemoBlock_AD_Clear | 7'h69 | xxxxx | xxxxx | 3'h2 | ????? | 7'h7B |
+| | DemoBlock_AD_Get_Status | 7'h69 | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | DemoBlock_AD_Get_Wr_Cnt | 7'h69 | xxxxx | xxxxx | 3'h5 | ????? | 7'h7B |
+| | DemoBlock_AD_Set_Words_Limit | 7'h69 | xxxxx | ????? | 3'h7 | ????? | 7'h7B |
+| **Demo Block UART TX** | DemoBlock_UTX_Start | 7'h6A | xxxxx | xxxxx | 3'h1 | ????? | 7'h7B |
+| | DemoBlock_UTX_Clear | 7'h6A | xxxxx | xxxxx | 3'h2 | ????? | 7'h7B |
+| | DemoBlock_UTX_Get_Status | 7'h6A | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | DemoBlock_UTX_Get_Rd_Cnt | 7'h6A | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
+| | DemoBlock_UTX_Set_Words_Limit | 7'h6A | xxxxx | ????? | 3'h7 | ????? | 7'h7B |
+| **Demo Block DAC** | DemoBlock_DA_Start | 7'h6B | xxxxx | xxxxx | 3'h1 | ????? | 7'h7B |
+| | DemoBlock_DA_Clear | 7'h6B | xxxxx | xxxxx | 3'h2 | ????? | 7'h7B |
+| | DemoBlock_DA_Get_Status | 7'h6B | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | DemoBlock_DA_Get_Rd_Cnt | 7'h6B | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
+| | DemoBlock_DA_Set_Words_Limit | 7'h6B | xxxxx | ????? | 3'h7 | ????? | 7'h7B |
+| **Demo Block UART RX** | Demo_Block_URX_Get_Stop | 7'h6C | xxxxx | xxxxx | 3'h1 | ????? | 7'h7B |
+| | Demo_Block_URX_Get_Ready | 7'h6C | xxxxx | xxxxx | 3'h2 | ????? | 7'h7B |
+| | Demo_Block_URX_Clear_Stop | 7'h6C | xxxxx | xxxxx | 3'h3 | ????? | 7'h7B |
+| | Demo_Block_URX_Clear_Ready | 7'h6C | xxxxx | xxxxx | 3'h4 | ????? | 7'h7B |
+| | Demo_Block_URX_Get_QFact | 7'h6C | xxxxx | xxxxx | 3'h5 | ????? | 7'h7B |
+| | Demo_Block_URX_Get_PXF | 7'h6C | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
+| | Demo_Block_URX_Get_WSEL | 7'h6C | xxxxx | xxxxx | 3'h7 | ????? | 7'h7B |
 
 # CVA6
 

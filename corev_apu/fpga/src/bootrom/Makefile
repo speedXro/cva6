@@ -11,8 +11,8 @@ HAS_ETHERNET ?= 0
 else
 DRAM_SIZE_64 ?= 0x40000000 #1GB
 DRAM_SIZE_32 ?= 0x08000000 #128MB
-CLOCK_FREQUENCY ?= 100000000 #50MHz
-HALF_CLOCK_FREQUENCY ?= 50000000 #25MHz
+CLOCK_FREQUENCY ?= 100000000 #100MHz
+HALF_CLOCK_FREQUENCY ?= 50000000 #50MHz
 UART_BITRATE ?= 115200
 HAS_ETHERNET ?= 0
 endif
@@ -34,7 +34,7 @@ LDFLAGS = -nostdlib -nodefaultlibs -nostartfiles
 
 INCLUDES = -I./ -I./src
 
-SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c src/upsf.c 
+SRCS_C = src/main.c src/uart.c src/spi.c src/sd.c src/gpt.c src/gpio.c src/upsf.c src/fdct2d.c src/SWDCT2DQ.c src/stft_ref.c
 
 SRCS_ASM = startup.S
 OBJS_C = $(SRCS_C:.c=.o)

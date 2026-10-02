@@ -37,11 +37,11 @@ WSEL_BYTES = (("RECT", 0x2C), ("HANN", 0x2D))
 WSEL_DEFAULT = "RECT"
 
 
-PXF_BYTES = (("12 dB", 0x31),
-             ("24 dB", 0x2F),
-             ("48 dB", 0x2E),
-             ("96 dB", 0x30))
-PXF_DEFAULT = "48 dB"
+PXF_BYTES = (("-12 dB", 0x31),
+             ("-24 dB", 0x2F),
+             ("-48 dB", 0x2E),
+             ("-96 dB", 0x30))
+PXF_DEFAULT = "-48 dB"
 
 PKT_LEN = 9
 PAYLOAD = 8                    
@@ -80,7 +80,7 @@ FDCT2_ORDER = "row"
 
 
 FDCT_VIEWS = ("Columns", "Blocks", "Both")
-FDCT_VIEW_DEFAULT = "Columns"
+FDCT_VIEW_DEFAULT = "Blocks"
 
 
 MIRROR_COLUMN_MAPS = True
@@ -99,7 +99,7 @@ WIN_H_DEFAULT = 1000
 WIN_W_MIN = 700
 PLOTS_W_FIXED = 1600            # plot width when "Fit width" is off
 
-BUILD = "TUI-ACC - STFT+F/I DCT CVA6 Linux Demo - ISOLDE"
+BUILD = "TUI-ACC - STFT+F/I DCT2DQ CVA6 Linux Demo - ISOLDE"
 WIN_H_MIN = 550
 
 
@@ -554,7 +554,7 @@ class App(tk.Tk):
         ttk.Label(side, text="QF", font=("TkDefaultFont", 11, "bold"))\
             .pack(side="top", pady=(0, 4))
 
-        self.qf_var = tk.IntVar(value=50)
+        self.qf_var = tk.IntVar(value=100)
         self._qf_job = None
         self._qf_ready = False          # ignore callbacks fired during startup
         self.after(300, lambda: setattr(self, "_qf_ready", True))
