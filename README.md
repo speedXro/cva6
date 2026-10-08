@@ -66,6 +66,14 @@ This branch contains the STFT (Short Time Fourier Transform) and DCT2DQ (2-D Qua
 | | Demo_Block_URX_Get_PXF | 7'h6C | xxxxx | xxxxx | 3'h6 | ????? | 7'h7B |
 | | Demo_Block_URX_Get_WSEL | 7'h6C | xxxxx | xxxxx | 3'h7 | ????? | 7'h7B |
 
+## Accelerators Speedups for CVA6-Linux Demonstrator
+
+| Accelerator | Bare Metal | Linux |
+|---|:-:|:-:|
+| FDCT2DQ | 600x | 150x |
+| IDCT2DQ | 600x | 150x |
+| STFT | 130x | 26x |
+
 # CVA6
 
 CVA6 is a 6-stage, single-issue, in-order CPU which implements the 64-bit RISC-V instruction set. It fully implements I, M, A and C extensions as specified in Volume I: User-Level ISA V 2.3 as well as the draft privilege extension 1.10. It implements three privilege levels M, S, U to fully support a Unix-like operating system. Furthermore, it is compliant to the draft external debug spec 0.13.
